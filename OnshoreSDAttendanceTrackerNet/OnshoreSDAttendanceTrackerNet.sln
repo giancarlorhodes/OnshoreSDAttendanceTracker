@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerN
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE38-416F-93B2-B1975E04DB41}"
 	ProjectSection(SolutionItems) = preProject
+		ExceptionLogging.sql = ExceptionLogging.sql
 		OnshoreSDAttendanceTrackerDataAndSchemaV1.sql = OnshoreSDAttendanceTrackerDataAndSchemaV1.sql
 		UsersV1.sql = UsersV1.sql
 	EndProjectSection

@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE3
 		Team.sql = Team.sql
 		TeamManagement.sql = TeamManagement.sql
 		User.sql = User.sql
+		UserCredentials.sql = UserCredentials.sql
 	EndProjectSection
 EndProject
 Global

@@ -1,7 +1,7 @@
 ﻿USE [OnshoreSDAttendanceTracker]
 GO
 
-/****** Object:  Table [dbo].[User]    Script Date: 5/7/2019 2:09:53 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 5/7/2019 4:02:16 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -39,23 +39,11 @@ GO
 ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_Users_ModifiedUser]  DEFAULT ((0)) FOR [ModifiedUser_FK]
 GO
 
-ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_CreateUser] FOREIGN KEY([CreateUser_FK])
-REFERENCES [dbo].[User] ([UserID])
-GO
-
-ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_CreateUser]
-GO
-
-ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_ModifiedUser] FOREIGN KEY([ModifiedUser_FK])
-REFERENCES [dbo].[User] ([UserID])
-GO
-
-ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_ModifiedUser]
-GO
-
 ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_Role] FOREIGN KEY([RoleID_FK])
 REFERENCES [dbo].[Role] ([RoleID])
 GO
 
 ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_Role]
 GO
+
+

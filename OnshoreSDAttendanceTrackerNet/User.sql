@@ -1,29 +1,61 @@
 ﻿USE [OnshoreSDAttendanceTracker]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 5/6/2019 1:36:03 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 5/7/2019 2:09:53 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[Users](
-	[UserID] [int] NOT NULL,
+CREATE TABLE [dbo].[User](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [varchar](100) NOT NULL,
 	[LastName] [varchar](100) NOT NULL,
-	[RoleID] [int] NOT NULL,
+	[RoleID_FK] [int] NOT NULL,
 	[Email] [varchar](100) NOT NULL,
 	[Active] [int] NOT NULL,
 	[CreateDate] [date] NOT NULL,
-	[CreateUser] [int] NOT NULL,
+	[CreateUser_FK] [int] NOT NULL,
 	[ModifiedDate] [date] NOT NULL,
-	[ModifiedUser] [int] NOT NULL,
+	[ModifiedUser_FK] [int] NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[UserID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
-ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_Users_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
+GO
+
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_Users_CreateUser]  DEFAULT ((0)) FOR [CreateUser_FK]
+GO
+
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_Users_ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO
+
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_Users_ModifiedUser]  DEFAULT ((0)) FOR [ModifiedUser_FK]
+GO
+
+ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_CreateUser] FOREIGN KEY([CreateUser_FK])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_CreateUser]
+GO
+
+ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_ModifiedUser] FOREIGN KEY([ModifiedUser_FK])
+REFERENCES [dbo].[User] ([UserID])
+GO
+
+ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_ModifiedUser]
+GO
+
+ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_User_Role] FOREIGN KEY([RoleID_FK])
+REFERENCES [dbo].[Role] ([RoleID])
+GO
+
+ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_User_Role]
 GO

@@ -28,6 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT UserID,FirstName,LastName,RoleID_FK as RoleID,Email from dbo."User" where Active = 1
+	SELECT UserID,FirstName,LastName,RoleID_FK as RoleID,Email from dbo.[User] where Active = 1
 END
 GO

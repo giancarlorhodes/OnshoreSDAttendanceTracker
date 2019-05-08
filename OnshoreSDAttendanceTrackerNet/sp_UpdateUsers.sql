@@ -98,6 +98,8 @@ BEGIN
 
     END TRY
 	BEGIN CATCH
+	    set @msg=ERROR_MESSAGE()
+	    raiserror (@msg,15,-1)		  
         ROLLBACK TRANSACTION	   
 	END CATCH
 	COMMIT TRANSACTION

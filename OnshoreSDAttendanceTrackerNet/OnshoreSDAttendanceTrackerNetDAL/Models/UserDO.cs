@@ -12,6 +12,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Models
         public string LastName { get; set; }
         public int RoleID_FK { get; set; }
         public string Email { get; set; }
+        public int TeamID { get; set; }
         public bool Active { get; set; }
     }
 }

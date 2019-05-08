@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>4fbd5d0b-7081-4d01-8819-b0c245dacc0f</ProjectGuid>
+    <ProjectGuid>952db615-088b-4b66-ad60-b6145b60aaad</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OnshoreSDAttendanceTrackerNetDAL</RootNamespace>
-    <AssemblyName>OnshoreSDAttendanceTrackerNetDAL</AssemblyName>
+    <RootNamespace>OnshoreSDAttendanceTrackerNetBLL</RootNamespace>
+    <AssemblyName>OnshoreSDAttendanceTrackerNetBLL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

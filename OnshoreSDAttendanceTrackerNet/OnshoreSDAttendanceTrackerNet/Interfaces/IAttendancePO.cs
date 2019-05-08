@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnshoreSDAttendanceTrackerNet.Interfaces
 {
-    interface IAttendancePO
+    public interface IAttendancePO
     {
         int AbsenceTypeID { get; set; }
         string Name { get; set; }

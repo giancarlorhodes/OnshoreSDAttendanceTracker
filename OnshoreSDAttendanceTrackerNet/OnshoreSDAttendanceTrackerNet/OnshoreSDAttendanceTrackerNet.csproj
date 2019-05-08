@@ -134,11 +134,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IAttendanceMapper.cs" />
     <Compile Include="Interfaces\IAttendancePO.cs" />
+    <Compile Include="Interfaces\IExceptionMapper.cs" />
     <Compile Include="Interfaces\IExceptionPO.cs" />
+    <Compile Include="Interfaces\ITeamMapper.cs" />
     <Compile Include="Interfaces\ITeamPO.cs" />
+    <Compile Include="Interfaces\IUserCredentialsMapper.cs" />
     <Compile Include="Interfaces\IUserCredentialsPO.cs" />
+    <Compile Include="Interfaces\IUserMapper.cs" />
     <Compile Include="Interfaces\IUserPO.cs" />
+    <Compile Include="Mapper\AttendanceMapper.cs" />
+    <Compile Include="Mapper\ExceptionMapper.cs" />
+    <Compile Include="Mapper\TeamMapper.cs" />
+    <Compile Include="Mapper\UserCredentialsMapper.cs" />
+    <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\AttendancePO.cs" />
     <Compile Include="Models\ExceptionPO.cs" />
     <Compile Include="Models\TeamPO.cs" />
@@ -198,6 +208,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj">
+      <Project>{331DE320-3165-4BFB-9DC6-58F003298C42}</Project>
+      <Name>OnshoreSDAttendanceTrackerNetDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnshoreSDAttendanceTracketNetBLL\OnshoreSDAttendanceTracketNetBLL.csproj">
+      <Project>{5CE1E56B-128E-4229-90CB-EF5D843E2D22}</Project>
+      <Name>OnshoreSDAttendanceTracketNetBLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

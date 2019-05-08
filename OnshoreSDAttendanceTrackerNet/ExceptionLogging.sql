@@ -9,7 +9,7 @@ GO
   
 CREATE TABLE [dbo].[ExceptionLogging](  
     [Logid] [bigint] IDENTITY(1,1) NOT NULL,  
-    [ExceptionMsg] [varchar](100) NULL,  
+    [ExceptionMsg] [varchar](max) NULL,  
     [ExceptionType] [varchar](100) NULL,  
     [ExceptionSource] [nvarchar](max) NULL,  
     [ExceptionURL] [varchar](100) NULL,  

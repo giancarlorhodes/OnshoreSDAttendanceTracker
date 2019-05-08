@@ -16,7 +16,7 @@ CREATE TABLE [dbo].[AbsenceType](
 	[TeamID_FK] [int] NOT NULL,
 	[CreateDate] [date] NOT NULL,
 	[CreateUser_FK] [int] NOT NULL,
-	[ModfiedDate] [date] NOT NULL,
+	[ModifiedDate] [date] NOT NULL,
 	[ModifiedUser_FK] [int] NOT NULL,
  CONSTRAINT [PK_AbsenceType] PRIMARY KEY CLUSTERED 
 (

@@ -21,17 +21,18 @@ GO
 -- =============================================
 ALTER PROCEDURE sp_MakeUser
     @CreatedByUserId int,
-    @TeamId int,
-	@RoleId int,
 	@Email varchar(100),
 	@FName varchar(100),
-	@LName varchar(100)
-
+	@LName varchar(100),
+	@TeamName varchar(100),
+	@RoleNameShort varchar(100)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	Declare @roleId int=-1
+	Declare @teamId int
     Declare @active int=1
 	Declare @userId int
 	Declare @msg varchar(100)
@@ -41,31 +42,18 @@ BEGIN
 	   set @msg='created by user id must be greater than 0 and active'
 	   raiserror (@msg,15,-1)
     END
-
-    if @TeamId <= 0 or (Select Active from dbo.[Team] where TeamID=@TeamId) <> 1
-	BEGIN
-	   set @msg='team id must be greater than 0 and active'
-	   raiserror (@msg,15,-1)
-    END
-
-	 if @RoleId <= 0 or @RoleId is NULL
-	BEGIN
-	   set @msg='role id must be greater than 0 and non-null'
-	   raiserror (@msg,15,-1)
-    END
+	select @roleId=RoleID from  dbo.[Role] where RoleNameShort=@RoleNameShort
 
 	BEGIN TRANSACTION 
 	BEGIN TRY
 	    insert into dbo.[User] (FirstName,LastName,RoleID_FK,Email,Active,CreateDate,CreateUser_FK,ModifiedDate,ModifiedUser_FK)
-	    values (@FName,@LName,@RoleId,@Email,@active,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
+	    values (@FName,@LName,@roleId,@Email,@active,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
 	    set @userId=SCOPE_IDENTITY()
-
+        select @teamId=TeamID from dbo.[Team] where Name=@TeamName
 		insert into dbo.[TeamManagement]
-		values (@userId,@TeamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
+		values (@userId,@teamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
     END TRY
 	BEGIN CATCH
-		set @msg=ERROR_MESSAGE()
-	    raiserror (@msg,15,-1)
         ROLLBACK TRANSACTION	   
 	END CATCH
 	COMMIT TRANSACTION

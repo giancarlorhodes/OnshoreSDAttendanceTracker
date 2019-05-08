@@ -9,10 +9,10 @@ GO
   
 CREATE TABLE [dbo].[ExceptionLogging](  
     [Logid] [bigint] IDENTITY(1,1) NOT NULL,  
-    [ExceptionMsg] [varchar](100) NULL,  
-    [ExceptionType] [varchar](100) NULL,  
+    [ExceptionMsg] [nvarchar](max) NULL,  
+    [ExceptionType] [nvarchar](100) NULL,  
     [ExceptionSource] [nvarchar](max) NULL,  
-    [ExceptionURL] [varchar](100) NULL,  
+    [ExceptionURL] [nvarchar](500) NULL,  
     [Logdate] [datetime] NULL,  
  CONSTRAINT [PK_Tbl_ExceptionLoggingToDataBase] PRIMARY KEY CLUSTERED   
 (  

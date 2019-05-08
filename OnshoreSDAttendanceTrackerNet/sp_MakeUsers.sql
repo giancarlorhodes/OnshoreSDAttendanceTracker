@@ -36,19 +36,19 @@ BEGIN
 	Declare @userId int
 	Declare @msg varchar(100)
 
-	if @CreatedByUserId <= 0 or (Select Active from dbo.[User] where UserID=@CreatedByUserId) <> 1
+	if ISNULL(@CreatedByUserId,0) <= 0 or (Select Active from dbo.[User] where UserID=@CreatedByUserId) <> @active
 	BEGIN
 	   set @msg='created by user id must be greater than 0 and active'
 	   raiserror (@msg,15,-1)
     END
 
-    if @TeamId <= 0 or (Select Active from dbo.[Team] where TeamID=@TeamId) <> 1
+    if ISNULL(@TeamId,0) <= 0 or (Select Active from dbo.[Team] where TeamID=@TeamId) <> 1
 	BEGIN
 	   set @msg='team id must be greater than 0 and active'
 	   raiserror (@msg,15,-1)
     END
 
-	 if @RoleId <= 0 or @RoleId is NULL
+	 if ISNULL(@RoleId,0) <= 0 or @RoleId is NULL
 	BEGIN
 	   set @msg='role id must be greater than 0 and non-null'
 	   raiserror (@msg,15,-1)

@@ -25,13 +25,13 @@ ALTER PROCEDURE sp_RemoveUserById
 	@ModifiedByUserId int
 AS
 BEGIN
-    Declare @non_active bit=0
+    Declare @active bit=1
 	Declare @msg varchar(100)
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	if @ModifiedByUserId <= 0 or (Select Active from dbo.[User] where UserID=@ModifiedByUserId) <> 1
+	if @ModifiedByUserId <= 0 or (Select Active from dbo.[User] where UserID=@ModifiedByUserId) <> @active
 	BEGIN
 	   set @msg='modified by user id must be greater than 0 and active'
 	   raiserror (@msg,15,-1)

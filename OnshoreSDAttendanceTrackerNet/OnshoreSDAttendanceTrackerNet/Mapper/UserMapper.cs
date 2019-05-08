@@ -13,56 +13,84 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
     public class UserMapper : IUserMapper
     {
-        //public static UserBO Map(UserDO daUser)
-        //{
-        //    UserBO boUser = new UserBO();
-
-        //    var type_daUser = daUser.GetType();
-        //    var type_boUser = boUser.GetType();
-
-        //    foreach(var field_UserDO in type_daUser.GetFields())
-        //    {
-        //        var field_UserBO = type_boUser.GetField(field_UserDO.Name);
-        //        field_UserBO.SetValue(boUser, field_UserDO.GetValue(daUser));
-        //    }
-
-        //    foreach(var prop_UserDO in type_daUser.GetProperties())
-        //    {
-        //        var prop_UserBO = type_boUser.GetProperty(prop_UserDO.Name);
-        //        prop_UserBO.SetValue(boUser, prop_UserDO.GetValue(daUser));
-        //    }
-
-        //    return boUser;
-        //}
-
-        public List<IUserBO> MapListOfDOsToListOfBOs(List<IUserDO> userDOs)
+        public List<IUserBO> MapListOfDOsToListOfBOs(List<IUserBO> userDOs)
         {
-            throw new NotImplementedException();
+            var listOfUsers = new List<IUserBO>();
+
+            // Iterate through DOs
+            foreach (IUserDO user in userDOs)
+            {
+                var userBO = MapUserDOtoBO(user);
+                listOfUsers.Add(userBO);
+            }
+
+            return listOfUsers;
         }
 
         public List<UserPO> MapListOfDOsToListOfPOs(List<IUserDO> userDOs)
         {
-            throw new NotImplementedException();
+            var listOfUsers = new List<UserPO>();
+
+            // Iterate through DOs
+            foreach(IUserDO user in userDOs)
+            {
+                var userPO = MapUserDOtoPO(user);
+                listOfUsers.Add(userPO);
+            }
+
+            return listOfUsers;
         }
 
         public UserPO MapUserBOtoPO(UserBO userBO)
         {
-            throw new NotImplementedException();
+            var oUser = new UserPO();
+            oUser.UserID = userBO.UserID;
+            oUser.FirstName = userBO.FirstName;
+            oUser.LastName = userBO.LastName;
+            oUser.RoleID_FK = userBO.RoleID_FK;
+            oUser.Email = userBO.Email;
+            oUser.Active = userBO.Active;
+
+            return oUser;
         }
 
-        public IUserDO MapUserDOtoBO(IUserBO userBO)
+        public IUserBO MapUserDOtoBO(IUserDO userDO)
         {
-            throw new NotImplementedException();
+            IUserBO oUser = new UserBO();
+            oUser.UserID = userDO.UserID;
+            oUser.FirstName = userDO.FirstName;
+            oUser.LastName = userDO.LastName;
+            oUser.RoleID_FK = userDO.RoleID_FK;
+            oUser.Email = userDO.Email;
+            oUser.Active = userDO.Active;
+
+            return oUser;
         }
 
-        public IUserPO MapUserDOtoPO(IUserDO userDO)
+        public UserPO MapUserDOtoPO(IUserDO userDO)
         {
-            throw new NotImplementedException();
+            var oUser = new UserPO();
+            oUser.UserID = userDO.UserID;
+            oUser.FirstName = userDO.FirstName;
+            oUser.LastName = userDO.LastName;
+            oUser.RoleID_FK = userDO.RoleID_FK;
+            oUser.Email = userDO.Email;
+            oUser.Active = userDO.Active;
+
+            return oUser;
         }
 
-        public IUserDO MapUserPOtoDO(IUserPO userPO)
+        public IUserDO MapUserPOtoDO(UserPO userPO)
         {
-            throw new NotImplementedException();
+            IUserDO oUser = new UserDO();
+            oUser.UserID = userPO.UserID;
+            oUser.FirstName = userPO.FirstName;
+            oUser.LastName = userPO.LastName;
+            oUser.RoleID_FK = userPO.RoleID_FK;
+            oUser.Email = userPO.Email;
+            oUser.Active = userPO.Active;
+
+            return oUser;
         }
     }
 }

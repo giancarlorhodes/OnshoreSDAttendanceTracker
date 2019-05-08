@@ -4,7 +4,13 @@ using System.Text;
 
 namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
 {
-    interface IUserDO
+    public interface IUserDO
     {
+        int UserID { get; set; }
+        string FirstName { get; set; }
+        string LastName { get; set; }
+        int RoleID_FK { get; set; }
+        string Email { get; set; }
+        bool Active { get; set; }
     }
 }

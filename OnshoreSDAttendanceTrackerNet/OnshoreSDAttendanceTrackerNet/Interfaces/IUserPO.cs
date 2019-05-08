@@ -13,9 +13,5 @@ namespace OnshoreSDAttendanceTrackerNet.Interfaces
         int RoleID_FK { get; set; }
         string Email { get; set; }
         bool Active { get; set; }
-        DateTime CreateDate { get; set; }
-        int CreateUser_FK { get; set; }
-        DateTime ModifiedDate { get; set; }
-        int ModifiedUser_FK { get; set; }
     }
 }

@@ -11,11 +11,11 @@ namespace OnshoreSDAttendanceTrackerNet.Interfaces
 {
     public interface ITeamMapper
     {
-        ITeamDO MapUserPOtoDO(ITeamPO userPO);
-        ITeamPO MapUserDOtoPO(ITeamDO userDO);
-        ITeamDO MapUserDOtoBO(ITeamDO userBO);
-        ITeamPO MapUserBOtoPO(ITeamPO userBO);
-        List<TeamPO> MapListOfDOsToListOfPOs(List<ITeamDO> userDOs);
-        List<ITeamBO> MapListOfDOsToListOfBOs(List<ITeamDO> userDOs);
+        ITeamDO MapTeamPOtoDO(TeamPO TeamPO);
+        TeamPO MapTeamDOtoPO(ITeamDO TeamDO);
+        ITeamBO MapTeamDOtoBO(ITeamDO TeamBO);
+        TeamPO MapTeamBOtoPO(TeamBO TeamBO);
+        List<TeamPO> MapListOfDOsToListOfPOs(List<ITeamDO> TeamDOs);
+        List<ITeamBO> MapListOfDOsToListOfBOs(List<ITeamDO> TeamDOs);
     }
 }

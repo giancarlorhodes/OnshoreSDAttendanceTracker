@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE3
 		UserCredentials.sql = UserCredentials.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTracketNetBLL", "OnshoreSDAttendanceTracketNetBLL\OnshoreSDAttendanceTracketNetBLL.csproj", "{5CE1E56B-128E-4229-90CB-EF5D843E2D22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetDAL", "OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj", "{331DE320-3165-4BFB-9DC6-58F003298C42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,14 @@ Global
 		{2A0D15C4-B1FB-4487-B786-E1FD78059018}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A0D15C4-B1FB-4487-B786-E1FD78059018}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A0D15C4-B1FB-4487-B786-E1FD78059018}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE1E56B-128E-4229-90CB-EF5D843E2D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE1E56B-128E-4229-90CB-EF5D843E2D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE1E56B-128E-4229-90CB-EF5D843E2D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE1E56B-128E-4229-90CB-EF5D843E2D22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{331DE320-3165-4BFB-9DC6-58F003298C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{331DE320-3165-4BFB-9DC6-58F003298C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{331DE320-3165-4BFB-9DC6-58F003298C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{331DE320-3165-4BFB-9DC6-58F003298C42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,7 @@
 ﻿using OnshoreSDAttendanceTrackerNet.Interfaces;
 using OnshoreSDAttendanceTrackerNet.Models;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
+using OnshoreSDAttendanceTrackerNetDAL.Models;
 using OnshoreSDAttendanceTracketNetBLL.Models;
 using System;
 using System.Collections.Generic;
@@ -11,34 +12,76 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
     public class TeamMapper : ITeamMapper
     {
-        public List<ITeamBO> MapListOfDOsToListOfBOs(List<ITeamDO> userDOs)
+        public List<ITeamBO> MapListOfDOsToListOfBOs(List<ITeamDO> teamDOs)
         {
-            throw new NotImplementedException();
+            var listOfTeamBOs = new List<ITeamBO>();
+
+            // Iterate through DOs
+            foreach(ITeamDO team in teamDOs)
+            {
+                var teamPO = MapTeamDOtoBO(team);
+                listOfTeamBOs.Add(teamPO);
+            }
+
+            return listOfTeamBOs;
         }
 
-        public List<TeamPO> MapListOfDOsToListOfPOs(List<ITeamDO> userDOs)
+        public List<TeamPO> MapListOfDOsToListOfPOs(List<ITeamDO> teamDOs)
         {
-            throw new NotImplementedException();
+            var listOfTeamPOs = new List<TeamPO>();
+
+            // Iterate through DOs
+            foreach(ITeamDO team in teamDOs)
+            {
+                var teamPO = MapTeamDOtoPO(team);
+                listOfTeamPOs.Add(teamPO);
+            }
+
+            return listOfTeamPOs;
         }
 
-        public ITeamPO MapUserBOtoPO(ITeamPO userBO)
+        public TeamPO MapTeamBOtoPO(TeamBO teamBO)
         {
-            throw new NotImplementedException();
+            var oTeam = new TeamPO();
+            oTeam.TeamID = teamBO.TeamID;
+            oTeam.Name = teamBO.Name;
+            oTeam.Comment = teamBO.Comment;
+            oTeam.Active = teamBO.Active;
+
+            return oTeam;
         }
 
-        public ITeamDO MapUserDOtoBO(ITeamDO userBO)
+        public ITeamBO MapTeamDOtoBO(ITeamDO teamDO)
         {
-            throw new NotImplementedException();
+            ITeamBO oTeam = new TeamBO();
+            oTeam.TeamID = teamDO.TeamID;
+            oTeam.Name = teamDO.Name;
+            oTeam.Comment = teamDO.Comment;
+            oTeam.Active = teamDO.Active;
+
+            return oTeam;
         }
 
-        public ITeamPO MapUserDOtoPO(ITeamDO userDO)
+        public TeamPO MapTeamDOtoPO(ITeamDO teamDO)
         {
-            throw new NotImplementedException();
+            var oTeam = new TeamPO();
+            oTeam.TeamID = teamDO.TeamID;
+            oTeam.Name = teamDO.Name;
+            oTeam.Comment = teamDO.Comment;
+            oTeam.Active = teamDO.Active;
+
+            return oTeam;
         }
 
-        public ITeamDO MapUserPOtoDO(ITeamPO userPO)
+        public ITeamDO MapTeamPOtoDO(TeamPO teamPO)
         {
-            throw new NotImplementedException();
+            ITeamDO oTeam = new TeamDO();
+            oTeam.TeamID = teamPO.TeamID;
+            oTeam.Name = teamPO.Name;
+            oTeam.Comment = teamPO.Comment;
+            oTeam.Active = teamPO.Active;
+
+            return oTeam;
         }
     }
 }

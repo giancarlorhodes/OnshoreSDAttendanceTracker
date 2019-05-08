@@ -12,12 +12,11 @@ namespace OnshoreSDAttendanceTrackerNet.Interfaces
 {
     public interface IUserMapper
     {
-        IUserDO MapUserPOtoDO(IUserPO userPO);
-        IUserPO MapUserDOtoPO(IUserDO userDO);
-        IUserDO MapUserDOtoBO(IUserBO userBO);
+        IUserDO MapUserPOtoDO(UserPO userPO);
+        UserPO MapUserDOtoPO(IUserDO userDO);
+        IUserBO MapUserDOtoBO(IUserDO userDO);
         UserPO MapUserBOtoPO(UserBO userBO);
         List<UserPO> MapListOfDOsToListOfPOs(List<IUserDO> userDOs);
-        List<IUserBO> MapListOfDOsToListOfBOs(List<IUserDO> userDOs);
-
+        List<IUserBO> MapListOfDOsToListOfBOs(List<IUserBO> userDOs);
     }
 }

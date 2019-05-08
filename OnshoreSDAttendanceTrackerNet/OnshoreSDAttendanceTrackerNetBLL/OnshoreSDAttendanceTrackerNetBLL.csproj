@@ -54,5 +54,11 @@
     <Compile Include="Models\UserCredentialsBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj">
+      <Project>{34652338-b889-45ee-9653-9d251e6d9ae4}</Project>
+      <Name>OnshoreSDAttendanceTrackerNetDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

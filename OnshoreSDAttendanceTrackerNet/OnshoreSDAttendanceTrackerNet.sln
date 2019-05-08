@@ -16,15 +16,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE3
 		OnshoreSDAttendanceTrackerDataAndSchemaV1.sql = OnshoreSDAttendanceTrackerDataAndSchemaV1.sql
 		PointBank.sql = PointBank.sql
 		Role.sql = Role.sql
+		sp_GetLoggedErrors.sql = sp_GetLoggedErrors.sql
+		sp_GetTeamByID.sql = sp_GetTeamByID.sql
+		sp_LogError.sql = sp_LogError.sql
+		sp_TeamAddNew.sql = sp_TeamAddNew.sql
+		sp_TeamDeleteByID.sql = sp_TeamDeleteByID.sql
+		sp_TeamUpdate.sql = sp_TeamUpdate.sql
 		Team.sql = Team.sql
 		TeamManagement.sql = TeamManagement.sql
 		User.sql = User.sql
 		UserCredentials.sql = UserCredentials.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTracketNetBLL", "OnshoreSDAttendanceTracketNetBLL\OnshoreSDAttendanceTracketNetBLL.csproj", "{5CE1E56B-128E-4229-90CB-EF5D843E2D22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnshoreSDAttendanceTracketNetBLL", "OnshoreSDAttendanceTracketNetBLL\OnshoreSDAttendanceTracketNetBLL.csproj", "{5CE1E56B-128E-4229-90CB-EF5D843E2D22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetDAL", "OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj", "{331DE320-3165-4BFB-9DC6-58F003298C42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnshoreSDAttendanceTrackerNetDAL", "OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj", "{331DE320-3165-4BFB-9DC6-58F003298C42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

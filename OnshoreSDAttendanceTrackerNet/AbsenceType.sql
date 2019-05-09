@@ -1,7 +1,7 @@
 ﻿USE [OnshoreSDAttendanceTracker]
 GO
 
-/****** Object:  Table [dbo].[AbsenceType]    Script Date: 5/7/2019 2:13:02 PM ******/
+/****** Object:  Table [dbo].[AbsenceType]    Script Date: 5/9/2019 10:05:20 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -32,7 +32,7 @@ GO
 ALTER TABLE [dbo].[AbsenceType] ADD  CONSTRAINT [DF_AbsenceType_CreateUser]  DEFAULT ((0)) FOR [CreateUser_FK]
 GO
 
-ALTER TABLE [dbo].[AbsenceType] ADD  CONSTRAINT [DF_AbsenceType_ModfiedDate]  DEFAULT (getdate()) FOR [ModfiedDate]
+ALTER TABLE [dbo].[AbsenceType] ADD  CONSTRAINT [DF_AbsenceType_ModfiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
 GO
 
 ALTER TABLE [dbo].[AbsenceType] ADD  CONSTRAINT [DF_AbsenceType_ModifiedUser]  DEFAULT ((0)) FOR [ModifiedUser_FK]
@@ -58,4 +58,5 @@ GO
 
 ALTER TABLE [dbo].[AbsenceType] CHECK CONSTRAINT [FK_AbsenceType_Team]
 GO
+
 

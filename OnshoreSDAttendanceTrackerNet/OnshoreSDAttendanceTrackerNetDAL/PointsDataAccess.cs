@@ -26,7 +26,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             try
             {
                 // TODO: Pass connection string when all layers are built
-                using(SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString))
+                using(SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString))
                 {
                     using (SqlCommand command = new SqlCommand("sp_PointsUpdate", conn))
                     {

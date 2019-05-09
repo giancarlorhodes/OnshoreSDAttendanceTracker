@@ -1,5 +1,5 @@
 ﻿using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
-using OnshoreSDAttendanceTrackerErroLogger;
+using OnshoreSDAttendanceTrackerErrorLogger;
 using System;
 using System.Collections.Generic;
 using System.Linq;

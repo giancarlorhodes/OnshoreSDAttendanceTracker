@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
-using OnshoreSDAttendanceTrackerErroLogger;
+using OnshoreSDAttendanceTrackerErrorLogger;
 
 namespace OnshoreSDAttendanceTrackerNetDAL
 {

@@ -52,8 +52,8 @@ namespace OnshoreSDAttendanceTrackerNetBLL
 
             return calculatedPoints;
         }
-    }\
+    }
 
 
 }
-}
+

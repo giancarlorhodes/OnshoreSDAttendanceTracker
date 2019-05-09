@@ -64,9 +64,9 @@
     <Compile Include="UserDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErroLogger.csproj">
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj">
       <Project>{6d4cb5c7-ea03-48dc-9585-d843237d7a0a}</Project>
-      <Name>OnshoreSDAttendanceTrackerErroLogger</Name>
+      <Name>OnshoreSDAttendanceTrackerErrorLogger</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

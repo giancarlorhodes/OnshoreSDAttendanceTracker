@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
-using OnshoreSDAttendanceTrackerErroLogger;
+using OnshoreSDAttendanceTrackerErrorLogger;
 
 namespace OnshoreSDAttendanceTrackerNetDAL
 {
@@ -16,10 +16,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
     {
         private string conString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
 
-        public TeamDataAccess(string connString)
-        {
-            conString = connString;
-        }
+        //public TeamDataAccess(string connString)
+        //{
+        //    conString = connString;
+        //}
         //CREATe
         public string CreateNewTeam(ITeamDO newTeam, int userID)
         {

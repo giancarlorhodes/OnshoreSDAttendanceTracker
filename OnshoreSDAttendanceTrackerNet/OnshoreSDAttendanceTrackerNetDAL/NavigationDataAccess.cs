@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
-using OnshoreSDAttendanceTrackerErroLogger;
+using OnshoreSDAttendanceTrackerErrorLogger;
 using System.Data;
 using System.Data.SqlClient;
 

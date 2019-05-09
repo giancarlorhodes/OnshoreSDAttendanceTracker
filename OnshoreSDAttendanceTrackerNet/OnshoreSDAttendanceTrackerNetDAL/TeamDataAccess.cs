@@ -16,10 +16,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
     {
         private string conString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
 
-        public TeamDataAccess(string connString)
-        {
-            conString = connString;
-        }
+        //public TeamDataAccess(string connString)
+        //{
+        //    conString = connString;
+        //}
         //CREATe
         public string CreateNewTeam(ITeamDO newTeam, int userID)
         {

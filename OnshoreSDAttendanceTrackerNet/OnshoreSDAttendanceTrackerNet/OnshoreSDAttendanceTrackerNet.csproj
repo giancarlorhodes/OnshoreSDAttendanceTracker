@@ -209,6 +209,16 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerNetBLL\OnshoreSDAttendanceTrackerNetBLL.csproj">
+      <Project>{1a9def1a-d3af-48d5-83dc-684b0d539879}</Project>
+      <Name>OnshoreSDAttendanceTrackerNetBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj">
+      <Project>{34652338-b889-45ee-9653-9d251e6d9ae4}</Project>
+      <Name>OnshoreSDAttendanceTrackerNetDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

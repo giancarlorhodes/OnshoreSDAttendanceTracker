@@ -46,23 +46,27 @@
     <Compile Include="ExceptionDataAccess.cs" />
     <Compile Include="Interfaces\IAttendanceDO.cs" />
     <Compile Include="Interfaces\IExceptionDO.cs" />
+    <Compile Include="Interfaces\INavigationDO.cs" />
     <Compile Include="Interfaces\ITeamDO.cs" />
     <Compile Include="Interfaces\IUserCredentialsDO.cs" />
     <Compile Include="Interfaces\IUserDO.cs" />
     <Compile Include="Models\AttendanceDO.cs" />
     <Compile Include="Models\ExceptionDO.cs" />
+    <Compile Include="Models\NavigationDO.cs" />
     <Compile Include="Models\TeamDO.cs" />
     <Compile Include="Models\UserCredentialsDO.cs" />
     <Compile Include="Models\UserDO.cs" />
+    <Compile Include="NavigationDataAccess.cs" />
+    <Compile Include="PointsDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamDataAccess.cs" />
     <Compile Include="UserCredentialsDataAccess.cs" />
     <Compile Include="UserDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErroLogger.csproj">
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj">
       <Project>{6d4cb5c7-ea03-48dc-9585-d843237d7a0a}</Project>
-      <Name>OnshoreSDAttendanceTrackerErroLogger</Name>
+      <Name>OnshoreSDAttendanceTrackerErrorLogger</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

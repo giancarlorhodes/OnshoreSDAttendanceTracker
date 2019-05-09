@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceBusinessLogic.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="ExceptionBusinessLogic.cs" />
     <Compile Include="Interfaces\IAttendanceBO.cs" />
     <Compile Include="Interfaces\IExceptionBO.cs" />

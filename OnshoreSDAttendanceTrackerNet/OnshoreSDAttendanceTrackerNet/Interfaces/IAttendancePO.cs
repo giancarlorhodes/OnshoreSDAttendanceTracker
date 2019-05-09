@@ -13,5 +13,6 @@ namespace OnshoreSDAttendanceTrackerNet.Interfaces
         decimal Point { get; set; }
         bool Active { get; set; }
         int TeamID_FK { get; set; }
+        decimal RunningTotal { get; set; }
     }
 }

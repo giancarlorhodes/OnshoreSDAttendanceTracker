@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="UserDALTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -132,6 +133,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj">
+      <Project>{6d4cb5c7-ea03-48dc-9585-d843237d7a0a}</Project>
+      <Name>OnshoreSDAttendanceTrackerErrorLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnshoreSDAttendanceTrackerNetBLL\OnshoreSDAttendanceTrackerNetBLL.csproj">
       <Project>{1a9def1a-d3af-48d5-83dc-684b0d539879}</Project>
       <Name>OnshoreSDAttendanceTrackerNetBLL</Name>

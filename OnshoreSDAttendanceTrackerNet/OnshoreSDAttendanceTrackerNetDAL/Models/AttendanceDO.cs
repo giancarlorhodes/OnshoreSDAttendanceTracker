@@ -12,5 +12,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Models
         public decimal Point { get; set; }
         public bool Active { get; set; }
         public int TeamID_FK { get; set; }
+        public decimal RunningTotal { get; set; }
     }
 }

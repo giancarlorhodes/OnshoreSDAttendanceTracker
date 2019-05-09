@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnshoreSDAttendanceTrackerNetBLL
 {
-    public class Class1
+    public class UserCredentialsBusinessLogic
     {
     }
 }

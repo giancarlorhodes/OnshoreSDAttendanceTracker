@@ -42,13 +42,13 @@ BEGIN
 	   raiserror (@msg,15,-1)
     END
 
-    if ISNULL(@TeamId,0) <= 0 or (Select Active from dbo.[Team] where TeamID=@TeamId) <> 1
+    if ISNULL(@TeamId,0) <= 0 or (Select Active from dbo.[Team] where TeamID=@TeamId) <> @active
 	BEGIN
 	   set @msg='team id must be greater than 0 and active'
 	   raiserror (@msg,15,-1)
     END
 
-	 if ISNULL(@RoleId,0) <= 0 or @RoleId is NULL
+	 if ISNULL(@RoleId,0) <= 0 
 	BEGIN
 	   set @msg='role id must be greater than 0 and non-null'
 	   raiserror (@msg,15,-1)
@@ -61,7 +61,7 @@ BEGIN
 	    set @userId=SCOPE_IDENTITY()
 
 		insert into dbo.[TeamManagement]
-		values (@userId,@TeamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
+		values (@userId,@TeamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId,@active)
     END TRY
 	BEGIN CATCH
 		set @msg=ERROR_MESSAGE()

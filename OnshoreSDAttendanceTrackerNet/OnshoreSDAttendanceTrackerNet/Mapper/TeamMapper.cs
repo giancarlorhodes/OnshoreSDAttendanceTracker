@@ -10,9 +10,9 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
-    public class TeamMapper : ITeamMapper
+    public class TeamMapper
     {
-        public List<ITeamBO> MapListOfDOsToListOfBOs(List<ITeamDO> teamDOs)
+        public static List<ITeamBO> MapListOfDOsToListOfBOs(List<ITeamDO> teamDOs)
         {
             var listOfTeamBOs = new List<ITeamBO>();
 
@@ -26,7 +26,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfTeamBOs;
         }
 
-        public List<TeamPO> MapListOfDOsToListOfPOs(List<ITeamDO> teamDOs)
+        public static List<TeamPO> MapListOfDOsToListOfPOs(List<ITeamDO> teamDOs)
         {
             var listOfTeamPOs = new List<TeamPO>();
 
@@ -40,7 +40,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfTeamPOs;
         }
 
-        public TeamPO MapTeamBOtoPO(TeamBO teamBO)
+        public static TeamPO MapTeamBOtoPO(TeamBO teamBO)
         {
             var oTeam = new TeamPO();
             oTeam.TeamID = teamBO.TeamID;
@@ -51,7 +51,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oTeam;
         }
 
-        public ITeamBO MapTeamDOtoBO(ITeamDO teamDO)
+        public static ITeamBO MapTeamDOtoBO(ITeamDO teamDO)
         {
             ITeamBO oTeam = new TeamBO();
             oTeam.TeamID = teamDO.TeamID;
@@ -62,7 +62,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oTeam;
         }
 
-        public TeamPO MapTeamDOtoPO(ITeamDO teamDO)
+        public static TeamPO MapTeamDOtoPO(ITeamDO teamDO)
         {
             var oTeam = new TeamPO();
             oTeam.TeamID = teamDO.TeamID;
@@ -73,7 +73,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oTeam;
         }
 
-        public ITeamDO MapTeamPOtoDO(TeamPO teamPO)
+        public static ITeamDO MapTeamPOtoDO(TeamPO teamPO)
         {
             ITeamDO oTeam = new TeamDO();
             oTeam.TeamID = teamPO.TeamID;

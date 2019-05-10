@@ -145,6 +145,12 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
             return newTeam;
         }
+
+        public ITeamDO GetAllTeamsByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         //UPDATE
         public string UpdateTeam(ITeamDO newTeam, int userID)
         {
@@ -190,8 +196,14 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
             return result;
         }
+
+        public ITeamDO ViewUsersByTeamID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         //DELETe
-        public string DeleteTeam( int teamID)
+        public string DeactivateTeam( int teamID)
         {
             string result;
             try

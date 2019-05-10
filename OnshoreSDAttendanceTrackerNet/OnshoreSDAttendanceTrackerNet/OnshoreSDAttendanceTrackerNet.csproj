@@ -132,18 +132,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IAbsenceMapper.cs" />
     <Compile Include="Interfaces\IAbsencePO.cs" />
-    <Compile Include="Interfaces\IExceptionMapper.cs" />
     <Compile Include="Interfaces\IExceptionPO.cs" />
-    <Compile Include="Interfaces\ITeamMapper.cs" />
     <Compile Include="Interfaces\ITeamPO.cs" />
-    <Compile Include="Interfaces\IUserCredentialsMapper.cs" />
     <Compile Include="Interfaces\IUserCredentialsPO.cs" />
-    <Compile Include="Interfaces\IUserMapper.cs" />
     <Compile Include="Interfaces\IUserPO.cs" />
     <Compile Include="Mapper\AbsenceMapper.cs" />
     <Compile Include="Mapper\ExceptionMapper.cs" />
@@ -200,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Maint\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -215,6 +212,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj">
+      <Project>{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}</Project>
+      <Name>OnshoreSDAttendanceTrackerErrorLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnshoreSDAttendanceTrackerNetBLL\OnshoreSDAttendanceTrackerNetBLL.csproj">
       <Project>{1a9def1a-d3af-48d5-83dc-684b0d539879}</Project>
       <Name>OnshoreSDAttendanceTrackerNetBLL</Name>

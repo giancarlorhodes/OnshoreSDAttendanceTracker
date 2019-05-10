@@ -20,6 +20,7 @@ GO
 -- Description:	Create user and entries in associated tables
 -- =============================================
 ALTER PROCEDURE sp_MakeUser
+
     @CreatedByUserId int,
     @TeamId int,
 	@RoleId int,
@@ -60,8 +61,9 @@ BEGIN
 	    values (@FName,@LName,@RoleId,@Email,@active,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
 	    set @userId=SCOPE_IDENTITY()
 
-		insert into dbo.[TeamManagement]
-		values (@userId,@TeamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId,@active)
+		
+		insert into dbo.[TeamManagement] (UserID_FK,TeamID_FK,Active,CreateDate,CreateUser,ModifiedDate,ModifiedUser)
+		values (@userId,@TeamId,@active,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
     END TRY
 	BEGIN CATCH
 		set @msg=ERROR_MESSAGE()

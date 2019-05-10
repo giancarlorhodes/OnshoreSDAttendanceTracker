@@ -14,7 +14,7 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
         [ClassInitialize]
         public static void TestFixtureSetup(TestContext context)
         {
-            uda = new UserDataAccess("Data Source=LAPTOP-262;Initial Catalog=OnshoreSDAttendanceTracker;Integrated Security=True");
+            uda = new UserDataAccess();
         }
 
         [TestMethod]

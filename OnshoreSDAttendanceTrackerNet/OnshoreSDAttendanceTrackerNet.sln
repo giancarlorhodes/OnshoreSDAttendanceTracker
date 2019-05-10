@@ -29,7 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE3
 		create_User.sql = create_User.sql
 		create_UserCredentials.sql = create_UserCredentials.sql
 		InsertRoles.sql = InsertRoles.sql
-		MakeUsers.sql = MakeUsers.sql
 		OnshoreSDAttendanceTracker.bak = OnshoreSDAttendanceTracker.bak
 		OnshoreSDAttendanceTracker.zip = OnshoreSDAttendanceTracker.zip
 		OnshoreSDAttendanceTrackerDataAndSchemaV1_OLD_DO_NOT_USE.sql = OnshoreSDAttendanceTrackerDataAndSchemaV1_OLD_DO_NOT_USE.sql
@@ -53,7 +52,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE3
 		TeamManagement.sql = TeamManagement.sql
 		UpdateUsers.sql = UpdateUsers.sql
 		vw_EmployeePoints.sql = vw_EmployeePoints.sql
+		vw_EmployeePointsSummary.sql = vw_EmployeePointsSummary.sql
 		vw_TeamTeamManagementUser.sql = vw_TeamTeamManagementUser.sql
+		vw_UserUserCredentials.sql = vw_UserUserCredentials.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetDAL", "OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj", "{34652338-B889-45EE-9653-9D251E6D9AE4}"

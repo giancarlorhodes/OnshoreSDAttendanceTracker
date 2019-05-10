@@ -23,7 +23,7 @@ ALTER PROCEDURE sp_MakeUser
     @CreatedByUserId int,
     @TeamId int,
 	@RoleId int,
-	@Email varchar(100),
+	@Email varchar(100),  
 	@FName varchar(100),
 	@LName varchar(100)
 
@@ -66,7 +66,7 @@ BEGIN
 	BEGIN CATCH
 		set @msg=ERROR_MESSAGE()
 	    raiserror (@msg,15,-1)
-        ROLLBACK TRANSACTION	   
+        ROLLBACK TRANSACTION
 	END CATCH
 	COMMIT TRANSACTION
 

@@ -20,7 +20,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         {
             _ConnectionString = iConnectionString;
         }
-
         #region CreateUser
         public void CreateUser(IUserDO iUser)
         {

@@ -14,12 +14,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 {
     public class UserDataAccess
     {
-        private string _ConnectionString = (ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString);
-
-        public UserDataAccess(string iConnectionString)
-        {
-            _ConnectionString = iConnectionString;
-        }
+        private string _ConnectionString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
+      
         #region CreateUser
         public void CreateUser(IUserDO iUser)
         {
@@ -132,6 +128,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                     {
                         getComm.CommandType = CommandType.StoredProcedure;
                         getComm.CommandTimeout = 35;
+
+                        getComm.Connection = conn;
+                        conn.ConnectionString = _ConnectionString;
                         conn.Open();
 
                         using (SqlDataReader reader = getComm.ExecuteReader())

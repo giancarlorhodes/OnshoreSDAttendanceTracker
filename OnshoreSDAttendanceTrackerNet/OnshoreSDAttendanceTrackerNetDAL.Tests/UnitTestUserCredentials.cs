@@ -17,8 +17,7 @@
 
         public UnitTestUserCredential()
         {
-            string connection = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
-            _UserDataAccess = new UserDataAccess(connection);
+            _UserDataAccess = new UserDataAccess();
         }
 
         [TestMethod]

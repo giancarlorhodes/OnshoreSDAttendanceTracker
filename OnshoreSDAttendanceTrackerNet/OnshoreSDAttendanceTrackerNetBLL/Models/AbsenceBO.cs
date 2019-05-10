@@ -1,11 +1,11 @@
-﻿using OnshoreSDAttendanceTracketNetBLL.Interfaces;
+﻿using OnshoreSDAttendanceTrackerNetBLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OnshoreSDAttendanceTracketNetBLL.Models
+namespace OnshoreSDAttendanceTrackerNetBLL.Models
 {
-    public class AttendanceBO : IAttendanceBO
+    public class AbsenceBO : IAbsenceBO
     {
         public int AbsenceTypeID { get; set; }
         public string Name { get; set; }

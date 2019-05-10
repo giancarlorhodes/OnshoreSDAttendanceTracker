@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OnshoreSDAttendanceTrackerNetDAL.Models
 {
-    public class AttendanceDO : IAttendanceDO
+    public class AbsenceDO : IAbsenceDO
     {
         public int AbsenceTypeID { get; set; }
         public string Name { get; set; }

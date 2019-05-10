@@ -7,28 +7,28 @@ using System.Linq;
 
 namespace OnshoreSDAttendanceTrackerNetBLL
 {
-    public class AttendanceBusinessLogic
+    public class AbsenceBusinessLogic
     {
         private PointsDataAccess _PointsDA;
 
-        public AttendanceBusinessLogic()
+        public AbsenceBusinessLogic()
         {
             string connection = ConfigurationManager.ConnectionStrings[""].ConnectionString;
             _PointsDA = new PointsDataAccess(connection);
         }
 
-        public List<IAttendanceDO> CalculateUserPoints(List<IAttendanceDO> iAttendance)
+        public List<IAbsenceDO> CalculateUserPoints(List<IAbsenceDO> iAbsence)
         {
             // TODO: Need to add a way to pass the ID to this method based off of session
-            var userPoints = new List<IAttendanceDO>();
+            var userPoints = new List<IAbsenceDO>();
             decimal runningTotal = 0;
 
 
-            var grouping = from x in iAttendance
+            var grouping = from x in iAbsence
                            group x by x.Point into points
                            select points;
 
-            foreach (IAttendanceDO user in grouping)
+            foreach (IAbsenceDO user in grouping)
             {
                 userPoints.Add(user);
             }
@@ -43,10 +43,10 @@ namespace OnshoreSDAttendanceTrackerNetBLL
                                     RunningTotal = runningTotal
                                 };
                             });
-            var calculatedPoints = new List<IAttendanceDO>();
+            var calculatedPoints = new List<IAbsenceDO>();
             foreach (var item in query)
             {
-                var runningTotalList = new AttendanceDO() { RunningTotal = item.RunningTotal };
+                var runningTotalList = new AbsenceDO() { RunningTotal = item.RunningTotal };
                 calculatedPoints.Add(runningTotalList);
             }
 

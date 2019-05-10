@@ -14,11 +14,15 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 {
     public class UserDataAccess
     {
+<<<<<<< Updated upstream
         private string _ConnectionString;
+=======
+        private string _ConnectionString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
+>>>>>>> Stashed changes
 
-        public UserDataAccess(string iConnectionString)
+        public UserDataAccess()
         {
-            _ConnectionString = iConnectionString;
+
         }
 
         public void CreateUser(IUserDO iUser)
@@ -74,6 +78,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                     {
                         getComm.CommandType = CommandType.StoredProcedure;
                         getComm.CommandTimeout = 35;
+
+                        getComm.Connection = conn;
+                        conn.ConnectionString = _ConnectionString;
                         conn.Open();
 
                         using (SqlDataReader reader = getComm.ExecuteReader())

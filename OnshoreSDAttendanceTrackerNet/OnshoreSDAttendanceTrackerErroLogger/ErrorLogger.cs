@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
-namespace OnshoreSDAttendanceTrackerErroLogger
+namespace OnshoreSDAttendanceTrackerErrorLogger
 {
     public static class ErrorLogger
     {

@@ -1,7 +1,7 @@
 ﻿USE [OnshoreSDAttendanceTracker]
 GO
 
-/****** Object:  Table [dbo].[Role]    Script Date: 5/7/2019 3:33:38 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 5/9/2019 10:11:19 AM ******/
 SET ANSI_NULLS ON
 GO
 

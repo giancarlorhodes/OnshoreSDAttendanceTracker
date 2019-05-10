@@ -31,6 +31,7 @@ BEGIN
 	SET NOCOUNT ON;
     Declare @active bit=1
 	Declare @msg varchar(100)
+    Declare @teamId int=-1
 
 	if ISNULL(@CreatedByUserId,0) <= 0 or (Select Active from dbo.[User] where UserID=@CreatedByUserId) <> @active
 	BEGIN
@@ -50,10 +51,12 @@ BEGIN
 	   raiserror (@msg,15,-1)
     END
 
+
+	select @teamId=TeamID_FK from dbo.[TeamManagement] where TeamManagementID=@TeamMgtId and Active=@active
 	BEGIN TRANSACTION 
 	BEGIN TRY
 	    insert into dbo.[AbsenceType] (Name,Point,Active,TeamID_FK,CreateDate,CreateUser_FK,ModifiedDate,ModifiedUser_FK)
-	    values (@Name,@Point,@active,@TeamMgtId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
+	    values (@Name,@Point,@active,@teamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
     END TRY
 	BEGIN CATCH
         ROLLBACK TRANSACTION

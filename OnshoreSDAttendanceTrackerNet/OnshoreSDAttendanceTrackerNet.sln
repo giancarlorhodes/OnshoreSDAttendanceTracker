@@ -9,36 +9,63 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerN
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE38-416F-93B2-B1975E04DB41}"
 	ProjectSection(SolutionItems) = preProject
+		[sp_CreateNavigationItem].sql = [sp_CreateNavigationItem].sql
+		[sp_GetLoggedErrors].sql = [sp_GetLoggedErrors].sql
+		[sp_GetNavigationItemsByRoleID].sql = [sp_GetNavigationItemsByRoleID].sql
+		[sp_GetPointsByID].sql = [sp_GetPointsByID].sql
+		[sp_GetTeamByID].sql = [sp_GetTeamByID].sql
+		[sp_GetTeams].sql = [sp_GetTeams].sql
+		[sp_LogError].sql = [sp_LogError].sql
+		[sp_PointsAddNew].sql = [sp_PointsAddNew].sql
+		[sp_PointsUpdate].sql = [sp_PointsUpdate].sql
+		[sp_TeamAddNew].sql = [sp_TeamAddNew].sql
+		[sp_TeamDeleteByID].sql = [sp_TeamDeleteByID].sql
+		[sp_TeamUpdate].sql = [sp_TeamUpdate].sql
+		[sp_UpdateNavigationItem].sql = [sp_UpdateNavigationItem].sql
 		AbsenceType.sql = AbsenceType.sql
-		ExceptionLogging.sql = ExceptionLogging.sql
+		all.sql = all.sql
+		create_ExceptionLogging.sql = create_ExceptionLogging.sql
+		create_NavigationMenu.sql = create_NavigationMenu.sql
+		create_User.sql = create_User.sql
+		create_UserCredentials.sql = create_UserCredentials.sql
 		InsertRoles.sql = InsertRoles.sql
-		MakeUsers.sql = MakeUsers.sql
-		NavigationMenu.sql = NavigationMenu.sql
-		OnshoreSDAttendanceTrackerDataAndSchemaV1.sql = OnshoreSDAttendanceTrackerDataAndSchemaV1.sql
+		OnshoreSDAttendanceTracker.bak = OnshoreSDAttendanceTracker.bak
+		OnshoreSDAttendanceTracker.zip = OnshoreSDAttendanceTracker.zip
+		OnshoreSDAttendanceTrackerDataAndSchemaV1_OLD_DO_NOT_USE.sql = OnshoreSDAttendanceTrackerDataAndSchemaV1_OLD_DO_NOT_USE.sql
 		PointBank.sql = PointBank.sql
 		Role.sql = Role.sql
+		sp_GetAttendances.sql = sp_GetAttendances.sql
 		sp_GetLoggedErrors.sql = sp_GetLoggedErrors.sql
-		sp_GetPointsByID.sql = sp_GetPointsByID.sql
-		sp_GetTeamByID.sql = sp_GetTeamByID.sql
-		sp_LogError.sql = sp_LogError.sql
-		sp_PointsAddNew.sql = sp_PointsAddNew.sql
-		sp_PointsUpdate.sql = sp_PointsUpdate.sql
-		sp_TeamAddNew.sql = sp_TeamAddNew.sql
-		sp_TeamDeleteByID.sql = sp_TeamDeleteByID.sql
-		sp_TeamUpdate.sql = sp_TeamUpdate.sql
+		sp_GetNavigationItemsByRoleID.sql = sp_GetNavigationItemsByRoleID.sql
+		sp_GetTeamsByUserId.sql = sp_GetTeamsByUserId.sql
+		sp_GetUserById.sql = sp_GetUserById.sql
+		sp_GetUsers.sql = sp_GetUsers.sql
+		sp_MakeAttendanceTypeByUserId.sql = sp_MakeAttendanceTypeByUserId.sql
+		sp_MakeUsers.sql = sp_MakeUsers.sql
+		sp_RemoveAttendanceById.sql = sp_RemoveAttendanceById.sql
+		sp_RemoveUserById.sql = sp_RemoveUserById.sql
+		sp_UpdateAttendanceTypeById.sql = sp_UpdateAttendanceTypeById.sql
+		sp_UpdateUsers.sql = sp_UpdateUsers.sql
 		sp_UserCredentialsAddOrEdit.sql = sp_UserCredentialsAddOrEdit.sql
 		sp_UserCredentialsDelete.sql = sp_UserCredentialsDelete.sql
 		Team.sql = Team.sql
 		TeamManagement.sql = TeamManagement.sql
-		User.sql = User.sql
-		UserCredentials.sql = UserCredentials.sql
+		UpdateUsers.sql = UpdateUsers.sql
+		vw_EmployeePoints.sql = vw_EmployeePoints.sql
+		vw_EmployeePointsSummary.sql = vw_EmployeePointsSummary.sql
+		vw_TeamTeamManagementUser.sql = vw_TeamTeamManagementUser.sql
+		vw_UserUserCredentials.sql = vw_UserUserCredentials.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetDAL", "OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj", "{34652338-B889-45EE-9653-9D251E6D9AE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetBLL", "OnshoreSDAttendanceTrackerNetBLL\OnshoreSDAttendanceTrackerNetBLL.csproj", "{1A9DEF1A-D3AF-48D5-83DC-684B0D539879}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerErroLogger", "OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErroLogger.csproj", "{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerErrorLogger", "OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj", "{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetDAL.Tests", "OnshoreSDAttendanceTrackerNetDAL.Tests\OnshoreSDAttendanceTrackerNetDAL.Tests.csproj", "{EB93F3E1-E730-47B4-A5BF-7D1C54698389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetBLL.Tests", "OnshoreSDAttendanceTrackerNetBLL.Tests\OnshoreSDAttendanceTrackerNetBLL.Tests.csproj", "{6713A604-A09D-446A-BF98-4804E0D39265}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +93,14 @@ Global
 		{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,10 +20,11 @@ GO
 -- Description:	Create user and entries in associated tables
 -- =============================================
 ALTER PROCEDURE sp_MakeUser
+
     @CreatedByUserId int,
     @TeamId int,
 	@RoleId int,
-	@Email varchar(100),
+	@Email varchar(100),  
 	@FName varchar(100),
 	@LName varchar(100)
 
@@ -42,13 +43,13 @@ BEGIN
 	   raiserror (@msg,15,-1)
     END
 
-    if ISNULL(@TeamId,0) <= 0 or (Select Active from dbo.[Team] where TeamID=@TeamId) <> 1
+    if ISNULL(@TeamId,0) <= 0 or (Select Active from dbo.[Team] where TeamID=@TeamId) <> @active
 	BEGIN
 	   set @msg='team id must be greater than 0 and active'
 	   raiserror (@msg,15,-1)
     END
 
-	 if ISNULL(@RoleId,0) <= 0 or @RoleId is NULL
+	 if ISNULL(@RoleId,0) <= 0 
 	BEGIN
 	   set @msg='role id must be greater than 0 and non-null'
 	   raiserror (@msg,15,-1)
@@ -60,13 +61,14 @@ BEGIN
 	    values (@FName,@LName,@RoleId,@Email,@active,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
 	    set @userId=SCOPE_IDENTITY()
 
-		insert into dbo.[TeamManagement]
-		values (@userId,@TeamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
+		
+		insert into dbo.[TeamManagement] (UserID_FK,TeamID_FK,Active,CreateDate,CreateUser,ModifiedDate,ModifiedUser)
+		values (@userId,@TeamId,@active,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
     END TRY
 	BEGIN CATCH
 		set @msg=ERROR_MESSAGE()
 	    raiserror (@msg,15,-1)
-        ROLLBACK TRANSACTION	   
+        ROLLBACK TRANSACTION
 	END CATCH
 	COMMIT TRANSACTION
 

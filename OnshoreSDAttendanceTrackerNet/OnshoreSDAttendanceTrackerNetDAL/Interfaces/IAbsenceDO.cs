@@ -4,6 +4,8 @@ using System.Text;
 
 namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
 {
+
+
     public interface IAbsenceDO
     {
         int AbsenceTypeID { get; set; }
@@ -13,4 +15,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
         int TeamID_FK { get; set; }
         decimal RunningTotal { get; set; }
     }
+
+
+
+
 }

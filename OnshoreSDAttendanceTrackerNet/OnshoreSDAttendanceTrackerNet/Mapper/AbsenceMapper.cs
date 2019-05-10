@@ -13,80 +13,80 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
     public class AbsenceMapper : IAbsenceMapper
     {
-        public List<IAttendanceBO> MapListOfDOsToListOfBOs(List<IAttendanceDO> attendanceDOs)
+        public List<IAbsenceBO> MapListOfDOsToListOfBOs(List<IAbsenceDO> absenceDOs)
         {
-            var listOfAttendanceBOs = new List<IAttendanceBO>();
+            var listOfAbsenceBOs = new List<IAbsenceBO>();
 
             // Iterate through DOs
-            foreach(IAttendanceDO entry in attendanceDOs)
+            foreach(IAbsenceDO entry in absenceDOs)
             {
-                var attendanceBO = MapAttendanceDOtoBO(entry);
-                listOfAttendanceBOs.Add(attendanceBO);
+                var absenceBO = MapAbsenceDOtoBO(entry);
+                listOfAbsenceBOs.Add(absenceBO);
             }
 
-            return listOfAttendanceBOs;
+            return listOfAbsenceBOs;
         }
 
-        public List<AbsencePO> MapListOfDOsToListOfPOs(List<IAttendanceDO> attendanceDOs)
+        public List<AbsencePO> MapListOfDOsToListOfPOs(List<IAbsenceDO> absenceDOs)
         {
-            var listOfAttendancePOs = new List<AbsencePO>();
+            var listOfAbsencePOs = new List<AbsencePO>();
 
             // Map each object in the list
-            foreach(IAttendanceDO entry in attendanceDOs)
+            foreach(IAbsenceDO entry in absenceDOs)
             {
-                var attendancePO = MapAttendanceDOtoPO(entry);
-                listOfAttendancePOs.Add(attendancePO);
+                var absencePO = MapAbsenceDOtoPO(entry);
+                listOfAbsencePOs.Add(absencePO);
             }
 
-            return listOfAttendancePOs;
+            return listOfAbsencePOs;
         }
 
-        public AbsencePO MapAttendanceBOtoPO(AttendanceBO attendanceBO)
+        public AbsencePO MapAbsenceBOtoPO(AbsenceBO absenceBO)
         {
-            var oAttendance = new AbsencePO();
-            oAttendance.AbsenceTypeID = attendanceBO.AbsenceTypeID;
-            oAttendance.Name = attendanceBO.Name;
-            oAttendance.Point = attendanceBO.Point;
-            oAttendance.Active = attendanceBO.Active;
-            oAttendance.TeamID_FK = attendanceBO.TeamID_FK;
+            var oAbsence = new AbsencePO();
+            oAbsence.AbsenceTypeID = absenceBO.AbsenceTypeID;
+            oAbsence.Name = absenceBO.Name;
+            oAbsence.Point = absenceBO.Point;
+            oAbsence.Active = absenceBO.Active;
+            oAbsence.TeamID_FK = absenceBO.TeamID_FK;
 
-            return oAttendance;
+            return oAbsence;
         }
 
-        public IAttendanceBO MapAttendanceDOtoBO(IAttendanceDO attendanceDO)
+        public IAbsenceBO MapAbsenceDOtoBO(IAbsenceDO absenceDO)
         {
-            IAttendanceBO oAttendance = new AttendanceBO();
-            oAttendance.AbsenceTypeID = attendanceDO.AbsenceTypeID;
-            oAttendance.Name = attendanceDO.Name;
-            oAttendance.Point = attendanceDO.Point;
-            oAttendance.Active = attendanceDO.Active;
-            oAttendance.TeamID_FK = attendanceDO.TeamID_FK;
+            IAbsenceBO oAbsence = new AbsenceBO();
+            oAbsence.AbsenceTypeID = absenceDO.AbsenceTypeID;
+            oAbsence.Name = absenceDO.Name;
+            oAbsence.Point = absenceDO.Point;
+            oAbsence.Active = absenceDO.Active;
+            oAbsence.TeamID_FK = absenceDO.TeamID_FK;
 
-            return oAttendance;
+            return oAbsence;
         }
 
-        public AbsencePO MapAttendanceDOtoPO(IAttendanceDO attendanceDO)
+        public AbsencePO MapAbsenceDOtoPO(IAbsenceDO absenceDO)
         {
-            var oAttendance = new AbsencePO();
-            oAttendance.AbsenceTypeID = attendanceDO.AbsenceTypeID;
-            oAttendance.Name = attendanceDO.Name;
-            oAttendance.Point = attendanceDO.Point;
-            oAttendance.Active = attendanceDO.Active;
-            oAttendance.TeamID_FK = attendanceDO.TeamID_FK;
+            var oAbsence = new AbsencePO();
+            oAbsence.AbsenceTypeID = absenceDO.AbsenceTypeID;
+            oAbsence.Name = absenceDO.Name;
+            oAbsence.Point = absenceDO.Point;
+            oAbsence.Active = absenceDO.Active;
+            oAbsence.TeamID_FK = absenceDO.TeamID_FK;
 
-            return oAttendance;
+            return oAbsence;
         }
 
-        public IAttendanceDO MapAttendancePOtoDO(AbsencePO attendancePO)
+        public IAbsenceDO MapAbsencePOtoDO(AbsencePO absencePO)
         {
-            IAttendanceDO oAttendance = new AbsenceDO();
-            oAttendance.AbsenceTypeID = attendancePO.AbsenceTypeID;
-            oAttendance.Name = attendancePO.Name;
-            oAttendance.Point = attendancePO.Point;
-            oAttendance.Active = attendancePO.Active;
-            oAttendance.TeamID_FK = attendancePO.TeamID_FK;
+            IAbsenceDO oAbsence = new AbsenceDO();
+            oAbsence.AbsenceTypeID = absencePO.AbsenceTypeID;
+            oAbsence.Name = absencePO.Name;
+            oAbsence.Point = absencePO.Point;
+            oAbsence.Active = absencePO.Active;
+            oAbsence.TeamID_FK = absencePO.TeamID_FK;
 
-            return oAttendance;
+            return oAbsence;
         }
     }
 }

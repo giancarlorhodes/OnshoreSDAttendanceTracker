@@ -1,7 +1,7 @@
 ﻿USE [OnshoreSDAttendanceTracker]
 GO
 
-/****** Object:  Table [dbo].[Team]    Script Date: 5/7/2019 3:35:15 PM ******/
+/****** Object:  Table [dbo].[Team]    Script Date: 5/9/2019 10:13:55 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -50,5 +50,7 @@ GO
 
 ALTER TABLE [dbo].[Team] CHECK CONSTRAINT [FK_Team_ModifiedUser]
 GO
+
+
 
 

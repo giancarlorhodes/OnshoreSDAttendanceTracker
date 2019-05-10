@@ -1,7 +1,7 @@
 ﻿USE [OnshoreSDAttendanceTracker]
 GO
 
-/****** Object:  Table [dbo].[PointBank]    Script Date: 5/7/2019 3:31:40 PM ******/
+/****** Object:  Table [dbo].[PointBank]    Script Date: 5/9/2019 11:08:50 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -9,11 +9,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[PointBank](
-	[PointBankID] [int] NOT NULL,
-	[PointValue] [int] NOT NULL,
+	[PointBankID] [bigint] IDENTITY(1,1) NOT NULL,
 	[AbsenceTypeID_FK] [int] NOT NULL,
 	[TeamManagementID_FK] [int] NOT NULL,
 	[Active] [int] NOT NULL,
+	[Comment] [varchar](max) NULL,
 	[CreateDate] [date] NOT NULL,
 	[CreateUser] [int] NOT NULL,
 	[ModifiedDate] [date] NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE [dbo].[PointBank](
 (
 	[PointBankID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
 

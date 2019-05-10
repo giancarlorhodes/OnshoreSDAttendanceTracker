@@ -1,7 +1,7 @@
 ﻿USE [OnshoreSDAttendanceTracker]
 GO
 
-/****** Object:  Table [dbo].[UserCredentials]    Script Date: 5/7/2019 4:04:05 PM ******/
+/****** Object:  Table [dbo].[UserCredentials]    Script Date: 5/9/2019 10:19:30 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -45,5 +45,4 @@ GO
 
 ALTER TABLE [dbo].[UserCredentials] CHECK CONSTRAINT [FK_UserCredentials_User]
 GO
-
 

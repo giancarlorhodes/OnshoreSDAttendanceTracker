@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 
 namespace OnshoreSDAttendanceTrackerNet.Tests
-{
+{ 
     [TestClass]
     public class UserDALTest
     {
@@ -19,7 +19,7 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
 
         [TestMethod]
         public void testGetAllUsersEmpty()
-        {
+        { 
             List<IUserDO> users=uda.GetAllUsers();
             Assert.AreEqual(users.Count, 0);
         }

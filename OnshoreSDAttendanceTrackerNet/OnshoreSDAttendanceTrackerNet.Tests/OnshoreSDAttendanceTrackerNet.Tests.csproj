@@ -133,7 +133,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj">
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErroLogger.csproj">
       <Project>{6d4cb5c7-ea03-48dc-9585-d843237d7a0a}</Project>
       <Name>OnshoreSDAttendanceTrackerErrorLogger</Name>
     </ProjectReference>

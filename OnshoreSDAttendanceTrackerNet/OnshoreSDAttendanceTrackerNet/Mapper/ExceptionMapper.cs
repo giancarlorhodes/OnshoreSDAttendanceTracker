@@ -11,9 +11,9 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
-    public class ExceptionMapper : IExceptionMapper
+    public class ExceptionMapper
     {
-        public ExceptionPO MapExceptionBOtoPO(ExceptionBO exceptionBO)
+        public static ExceptionPO MapExceptionBOtoPO(ExceptionBO exceptionBO)
         {
             var oException = new ExceptionPO();
             oException.LogID = exceptionBO.LogID;
@@ -26,7 +26,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oException;
         }
 
-        public IExceptionBO MapExceptionDOtoBO(IExceptionDO exceptionBO)
+        public static IExceptionBO MapExceptionDOtoBO(IExceptionDO exceptionBO)
         {
             IExceptionBO oException = new ExceptionBO();
             oException.LogID = exceptionBO.LogID;
@@ -39,7 +39,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oException;
         }
 
-        public ExceptionPO MapExceptionDOtoPO(IExceptionDO exceptionDO)
+        public static ExceptionPO MapExceptionDOtoPO(IExceptionDO exceptionDO)
         {
             var oException = new ExceptionPO();
             oException.LogID = exceptionDO.LogID;
@@ -52,7 +52,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oException;
         }
 
-        public IExceptionDO MapExceptionPOtoDO(ExceptionPO exceptionPO)
+        public static IExceptionDO MapExceptionPOtoDO(ExceptionPO exceptionPO)
         {
             IExceptionDO oException = new ExceptionDO();
             oException.LogID = exceptionPO.LogID;
@@ -65,7 +65,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oException;
         }
 
-        public List<IExceptionBO> MapListOfDOsToListOfBOs(List<IExceptionDO> exceptionDOs)
+        public static List<IExceptionBO> MapListOfDOsToListOfBOs(List<IExceptionDO> exceptionDOs)
         {
             var listOfExcceptionPOs = new List<IExceptionBO>();
 
@@ -79,7 +79,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfExcceptionPOs;
         }
 
-        public List<ExceptionPO> MapListOfDOsToListOfPOs(List<IExceptionDO> exceptionDOs)
+        public static List<ExceptionPO> MapListOfDOsToListOfPOs(List<IExceptionDO> exceptionDOs)
         {
             var listOfExceptionPOs = new List<ExceptionPO>();
 

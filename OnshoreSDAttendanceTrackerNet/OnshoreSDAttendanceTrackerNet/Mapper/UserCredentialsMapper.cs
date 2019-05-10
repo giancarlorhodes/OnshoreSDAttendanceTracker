@@ -11,9 +11,9 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
-    public class UserCredentialsMapper : IUserCredentialsMapper
+    public class UserCredentialsMapper
     {
-        public List<IUserCredentialsBO> MapListOfDOsToListOfBOs(List<IUserCredentialsBO> userCredentialsDOs)
+        public static List<IUserCredentialsBO> MapListOfDOsToListOfBOs(List<IUserCredentialsBO> userCredentialsDOs)
         {
             var listOfUserCredentialsBO = new List<IUserCredentialsBO>();
 
@@ -27,7 +27,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfUserCredentialsBO;
         }
 
-        public List<UserCredentialPO> MapListOfDOsToListOfPOs(List<IUserCredentialsDO> userCredentialsDOs)
+        public static List<UserCredentialPO> MapListOfDOsToListOfPOs(List<IUserCredentialsDO> userCredentialsDOs)
         {
             var listOfUserCredentialsPOs = new List<UserCredentialPO>();
 
@@ -40,7 +40,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfUserCredentialsPOs;
         }
 
-        public UserCredentialPO MapUserCredentialsBOtoPO(UserCredentialsBO userCredentialsBO)
+        public static UserCredentialPO MapUserCredentialsBOtoPO(UserCredentialsBO userCredentialsBO)
         {
             var oUserCredentials = new UserCredentialPO();
             oUserCredentials.UserCredentailsID = userCredentialsBO.UserCredentailsID;
@@ -51,7 +51,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oUserCredentials;
         }
 
-        public IUserCredentialsBO MapUserCredentialsDOtoBO(IUserCredentialsDO userCredentialsDO)
+        public static IUserCredentialsBO MapUserCredentialsDOtoBO(IUserCredentialsDO userCredentialsDO)
         {
             IUserCredentialsBO oUserCredentials = new UserCredentialsBO();
             oUserCredentials.UserCredentailsID = userCredentialsDO.UserCredentailsID;
@@ -62,7 +62,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oUserCredentials;
         }
 
-        public UserCredentialPO MapUserCredentialsDOtoPO(IUserCredentialsDO userCredentialsDO)
+        public static UserCredentialPO MapUserCredentialsDOtoPO(IUserCredentialsDO userCredentialsDO)
         {
             var oUserCredentials = new UserCredentialPO();
             oUserCredentials.UserCredentailsID = userCredentialsDO.UserCredentailsID;
@@ -73,7 +73,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oUserCredentials;
         }
 
-        public IUserCredentialsDO MapUserCredentialsPOtoDO(UserCredentialPO userCredentialsPO)
+        public static IUserCredentialsDO MapUserCredentialsPOtoDO(UserCredentialPO userCredentialsPO)
         {
             IUserCredentialsDO oUserCredentials = new UserCredentialsDO();
             oUserCredentials.UserCredentailsID = userCredentialsPO.UserCredentailsID;

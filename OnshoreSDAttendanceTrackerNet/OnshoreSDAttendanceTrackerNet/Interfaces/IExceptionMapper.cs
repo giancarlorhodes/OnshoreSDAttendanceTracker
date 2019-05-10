@@ -1,7 +1,7 @@
 ﻿using OnshoreSDAttendanceTrackerNet.Models;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
-using OnshoreSDAttendanceTracketNetBLL.Interfaces;
-using OnshoreSDAttendanceTracketNetBLL.Models;
+using OnshoreSDAttendanceTrackerNetBLL.Interfaces;
+using OnshoreSDAttendanceTrackerNetBLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -42,15 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttendanceDataAccess.cs" />
+    <Compile Include="AbsenceDataAccess.cs" />
     <Compile Include="ExceptionDataAccess.cs" />
-    <Compile Include="Interfaces\IAttendanceDO.cs" />
+    <Compile Include="Interfaces\IAbsenceDO.cs" />
     <Compile Include="Interfaces\IExceptionDO.cs" />
     <Compile Include="Interfaces\INavigationDO.cs" />
     <Compile Include="Interfaces\ITeamDO.cs" />
     <Compile Include="Interfaces\IUserCredentialsDO.cs" />
     <Compile Include="Interfaces\IUserDO.cs" />
-    <Compile Include="Models\AttendanceDO.cs" />
+    <Compile Include="Models\AbsenceDO.cs" />
     <Compile Include="Models\ExceptionDO.cs" />
     <Compile Include="Models\NavigationDO.cs" />
     <Compile Include="Models\TeamDO.cs" />

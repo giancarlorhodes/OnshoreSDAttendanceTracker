@@ -1,21 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 
 namespace OnshoreSDAttendanceTrackerNetDAL.Tests
 {
 
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     [TestClass]
-    public class UnitTest1
+    public class UserDALTest
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
+        private static UserDataAccess _UserDataAccess;
 
+        public UserDALTest()
+        {
+            string connection = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
+            _UserDataAccess = new UserDataAccess(connection);
         }
 
-
-
+        [TestMethod]
+        public void testGetAllUsersEmpty()
+        {
+            List<IUserDO> users = _UserDataAccess.GetAllUsers();
+            Assert.AreEqual(users.Count, 0);
+        }
     }
+
 }

@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetDAL.Tests", "OnshoreSDAttendanceTrackerNetDAL.Tests\OnshoreSDAttendanceTrackerNetDAL.Tests.csproj", "{EB93F3E1-E730-47B4-A5BF-7D1C54698389}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetBLL.Tests", "OnshoreSDAttendanceTrackerNetBLL.Tests\OnshoreSDAttendanceTrackerNetBLL.Tests.csproj", "{6713A604-A09D-446A-BF98-4804E0D39265}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6713A604-A09D-446A-BF98-4804E0D39265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

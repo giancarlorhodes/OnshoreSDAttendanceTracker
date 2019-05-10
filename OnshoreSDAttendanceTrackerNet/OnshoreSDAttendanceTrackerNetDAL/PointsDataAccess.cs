@@ -21,7 +21,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             _ConnectionString = iConnectionString;
         }
 
-        public void AddPoints(IAttendanceDO iAttendance)
+        public void AddPoints(IAbsenceDO iAbsence)
         {
             try
             {
@@ -62,9 +62,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             }
         }
 
-        public IAttendanceDO ViewPointsByID(int iAttendanceID)
+        public IAbsenceDO ViewPointsByID(int iAbsenceID)
         {
-            var listOfAttendanceDOs = new AbsenceDO();
+            var listOfAbsenceDOs = new AbsenceDO();
 
             try
             {
@@ -80,13 +80,13 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             while (reader.Read())
                             {
-                                IAttendanceDO attendanceDO = new AbsenceDO();
+                                IAbsenceDO absenceDO = new AbsenceDO();
 
-                                attendanceDO.AbsenceTypeID = reader.GetInt32(0);
-                                attendanceDO.Name = reader.GetString(1);
-                                attendanceDO.Point = reader.GetDecimal(2);
-                                attendanceDO.Active = reader.GetBoolean(3);
-                                attendanceDO.TeamID_FK = reader.GetInt32(4);
+                                absenceDO.AbsenceTypeID = reader.GetInt32(0);
+                                absenceDO.Name = reader.GetString(1);
+                                absenceDO.Point = reader.GetDecimal(2);
+                                absenceDO.Active = reader.GetBoolean(3);
+                                absenceDO.TeamID_FK = reader.GetInt32(4);
                             }
                         }
                     }
@@ -96,12 +96,12 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
             }
 
-            return listOfAttendanceDOs;
+            return listOfAbsenceDOs;
         }
 
-        public void UdpateAttendanceInformation(IAttendanceDO iAttendance)
+        public void UdpateAbsenceInformation(IAbsenceDO iAbsence)
         {
-            var selectedAttendance = new AbsenceDO();
+            var selectedAbsence = new AbsenceDO();
 
             try
             {
@@ -121,13 +121,13 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             updateComm.Parameters.AddWithValue("@UpdateUserID", SqlDbType.Int);
                             updateComm.Parameters.AddWithValue("@Active", SqlDbType.Int);
 
-                            var attendanceID = selectedAttendance.AbsenceTypeID;
+                            var absenceID = selectedAbsence.AbsenceTypeID;
                             var id = 0;
 
                             // Ensures ID is valid before executing request: Whitelists the expected ID
-                            if (!int.TryParse(attendanceID.ToString(), out id))
+                            if (!int.TryParse(absenceID.ToString(), out id))
                             {
-                                throw new ApplicationException("Attendance ID was not an integer");
+                                throw new ApplicationException("Absence ID was not an integer");
                             }
 
                             conn.Open();
@@ -147,7 +147,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             }
             catch (Exception ex)
             {
-                ErrorLogger.LogError(ex, "UdpateAttendanceInformation", "");
+                ErrorLogger.LogError(ex, "UdpateAbsenceInformation", "");
             }
         }
     }

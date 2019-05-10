@@ -44,13 +44,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             ErrorLogger.LogError(ex, "CreateUser", "nothing");
                         }
-
-                        finally
-                        {
-                            conn.Close();
-                            conn.Dispose();
-                            createComm.Dispose();
-                        }
                     }
                 }
             }
@@ -127,13 +120,13 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         public List<IUserDO> GetAllUsers()
         {
             var listOfDBUsers = new List<IUserDO>();
-
+            SqlCommand getComm=null;
             try
             {
                 using (SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
 
-                    using (SqlCommand getComm = new SqlCommand("sp_GetUsers"))
+                    using (getComm = new SqlCommand("sp_GetUsers"))
                     {
                         getComm.CommandType = CommandType.StoredProcedure;
                         getComm.CommandTimeout = 35;

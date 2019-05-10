@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerErrorLogger", "OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj", "{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNetDAL.Tests", "OnshoreSDAttendanceTrackerNetDAL.Tests\OnshoreSDAttendanceTrackerNetDAL.Tests.csproj", "{EB93F3E1-E730-47B4-A5BF-7D1C54698389}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D4CB5C7-EA03-48DC-9585-D843237D7A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB93F3E1-E730-47B4-A5BF-7D1C54698389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

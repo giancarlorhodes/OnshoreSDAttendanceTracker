@@ -17,8 +17,8 @@ SELECT	u.UserID,
 		uc.UserPassword,
 		uc.Salt 
 FROM [dbo].[User] u 
-	LEFT JOIN [dbo].[UserCredentials] uc ON uc.UserID_FK = u.UserID
-
+	LEFT JOIN [dbo].[UserCredentials] uc 
+	ON uc.UserID_FK = u.UserID
 
 
 GO

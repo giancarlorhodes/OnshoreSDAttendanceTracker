@@ -135,8 +135,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IAttendanceMapper.cs" />
-    <Compile Include="Interfaces\IAttendancePO.cs" />
+    <Compile Include="Interfaces\IAbsenceMapper.cs" />
+    <Compile Include="Interfaces\IAbsencePO.cs" />
     <Compile Include="Interfaces\IExceptionMapper.cs" />
     <Compile Include="Interfaces\IExceptionPO.cs" />
     <Compile Include="Interfaces\ITeamMapper.cs" />
@@ -145,12 +145,12 @@
     <Compile Include="Interfaces\IUserCredentialsPO.cs" />
     <Compile Include="Interfaces\IUserMapper.cs" />
     <Compile Include="Interfaces\IUserPO.cs" />
-    <Compile Include="Mapper\AttendanceMapper.cs" />
+    <Compile Include="Mapper\AbsenceMapper.cs" />
     <Compile Include="Mapper\ExceptionMapper.cs" />
     <Compile Include="Mapper\TeamMapper.cs" />
     <Compile Include="Mapper\UserCredentialsMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
-    <Compile Include="Models\AttendancePO.cs" />
+    <Compile Include="Models\AbsencePO.cs" />
     <Compile Include="Models\ExceptionPO.cs" />
     <Compile Include="Models\TeamPO.cs" />
     <Compile Include="Models\UserCredentialPO.cs" />

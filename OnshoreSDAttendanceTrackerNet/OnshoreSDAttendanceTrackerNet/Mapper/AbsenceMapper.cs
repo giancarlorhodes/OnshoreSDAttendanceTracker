@@ -2,8 +2,8 @@
 using OnshoreSDAttendanceTrackerNet.Models;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
-using OnshoreSDAttendanceTracketNetBLL.Interfaces;
-using OnshoreSDAttendanceTracketNetBLL.Models;
+using OnshoreSDAttendanceTrackerNetBLL.Interfaces;
+using OnshoreSDAttendanceTrackerNetBLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
-    public class AttendanceMapper : IAttendanceMapper
+    public class AbsenceMapper : IAbsenceMapper
     {
         public List<IAttendanceBO> MapListOfDOsToListOfBOs(List<IAttendanceDO> attendanceDOs)
         {
@@ -27,9 +27,9 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfAttendanceBOs;
         }
 
-        public List<AttendancePO> MapListOfDOsToListOfPOs(List<IAttendanceDO> attendanceDOs)
+        public List<AbsencePO> MapListOfDOsToListOfPOs(List<IAttendanceDO> attendanceDOs)
         {
-            var listOfAttendancePOs = new List<AttendancePO>();
+            var listOfAttendancePOs = new List<AbsencePO>();
 
             // Map each object in the list
             foreach(IAttendanceDO entry in attendanceDOs)
@@ -41,9 +41,9 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfAttendancePOs;
         }
 
-        public AttendancePO MapAttendanceBOtoPO(AttendanceBO attendanceBO)
+        public AbsencePO MapAttendanceBOtoPO(AttendanceBO attendanceBO)
         {
-            var oAttendance = new AttendancePO();
+            var oAttendance = new AbsencePO();
             oAttendance.AbsenceTypeID = attendanceBO.AbsenceTypeID;
             oAttendance.Name = attendanceBO.Name;
             oAttendance.Point = attendanceBO.Point;
@@ -65,9 +65,9 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oAttendance;
         }
 
-        public AttendancePO MapAttendanceDOtoPO(IAttendanceDO attendanceDO)
+        public AbsencePO MapAttendanceDOtoPO(IAttendanceDO attendanceDO)
         {
-            var oAttendance = new AttendancePO();
+            var oAttendance = new AbsencePO();
             oAttendance.AbsenceTypeID = attendanceDO.AbsenceTypeID;
             oAttendance.Name = attendanceDO.Name;
             oAttendance.Point = attendanceDO.Point;
@@ -77,9 +77,9 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oAttendance;
         }
 
-        public IAttendanceDO MapAttendancePOtoDO(AttendancePO attendancePO)
+        public IAttendanceDO MapAttendancePOtoDO(AbsencePO attendancePO)
         {
-            IAttendanceDO oAttendance = new AttendanceDO();
+            IAttendanceDO oAttendance = new AbsenceDO();
             oAttendance.AbsenceTypeID = attendancePO.AbsenceTypeID;
             oAttendance.Name = attendancePO.Name;
             oAttendance.Point = attendancePO.Point;

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Models
 {
-    public class AttendancePO : IAttendancePO
+    public class AbsencePO : IAbsencePO
     {
         public int AbsenceTypeID { get; set; }
         public string Name { get; set; }

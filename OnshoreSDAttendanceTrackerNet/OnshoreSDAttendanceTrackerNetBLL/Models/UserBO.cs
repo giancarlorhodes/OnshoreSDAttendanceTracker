@@ -1,9 +1,9 @@
-﻿using OnshoreSDAttendanceTracketNetBLL.Interfaces;
+﻿using OnshoreSDAttendanceTrackerNetBLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OnshoreSDAttendanceTracketNetBLL.Models
+namespace OnshoreSDAttendanceTrackerNetBLL.Models
 {
     public class UserBO : IUserBO
     {

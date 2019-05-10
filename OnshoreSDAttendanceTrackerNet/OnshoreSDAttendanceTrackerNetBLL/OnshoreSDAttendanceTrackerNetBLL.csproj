@@ -42,14 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttendanceBusinessLogic.cs" />
+    <Compile Include="AbsenceBusinessLogic.cs" />
     <Compile Include="ExceptionBusinessLogic.cs" />
-    <Compile Include="Interfaces\IAttendanceBO.cs" />
+    <Compile Include="Interfaces\IAbsenceBO.cs" />
     <Compile Include="Interfaces\IExceptionBO.cs" />
     <Compile Include="Interfaces\ITeamBO.cs" />
     <Compile Include="Interfaces\IUserBO.cs" />
     <Compile Include="Interfaces\IUserCredentialsBO.cs" />
-    <Compile Include="Models\AttendanceBO.cs" />
+    <Compile Include="Models\AbsenceBO.cs" />
     <Compile Include="Models\ExceptionBO.cs" />
     <Compile Include="Models\TeamBO.cs" />
     <Compile Include="Models\UserBO.cs" />

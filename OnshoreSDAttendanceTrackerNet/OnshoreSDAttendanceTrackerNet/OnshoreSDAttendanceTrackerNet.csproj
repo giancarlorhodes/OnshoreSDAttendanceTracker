@@ -151,10 +151,14 @@
     <Compile Include="Mapper\UserCredentialsMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\AbsencePO.cs" />
+    <Compile Include="Models\AbsenceViewModel.cs" />
     <Compile Include="Models\ExceptionPO.cs" />
     <Compile Include="Models\TeamPO.cs" />
+    <Compile Include="Models\TeamViewModel.cs" />
     <Compile Include="Models\UserCredentialPO.cs" />
+    <Compile Include="Models\UserCredentialsViewModel.cs" />
     <Compile Include="Models\UserPO.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

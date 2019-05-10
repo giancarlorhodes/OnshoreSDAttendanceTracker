@@ -16,6 +16,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
     {
         private string _ConnectionString = (ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString);
 
+        public UserDataAccess(string iConnectionString)
+        {
+            _ConnectionString = iConnectionString;
+        }
         #region CreateUser
         public void CreateUser(IUserDO iUser)
         {

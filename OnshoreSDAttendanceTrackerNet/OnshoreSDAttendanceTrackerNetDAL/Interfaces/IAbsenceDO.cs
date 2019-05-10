@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OnshoreSDAttendanceTracketNetBLL.Interfaces
+namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
 {
-    public interface IAttendanceBO
+    public interface IAbsenceDO
     {
         int AbsenceTypeID { get; set; }
         string Name { get; set; }

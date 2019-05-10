@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OnshoreSDAttendanceTracketNetBLL.Interfaces
+namespace OnshoreSDAttendanceTrackerNetBLL.Interfaces
 {
     public interface IUserCredentialsBO
     {

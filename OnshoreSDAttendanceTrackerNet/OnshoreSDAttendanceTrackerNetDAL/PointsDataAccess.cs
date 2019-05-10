@@ -64,7 +64,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         public IAttendanceDO ViewPointsByID(int iAttendanceID)
         {
-            var listOfAttendanceDOs = new AttendanceDO();
+            var listOfAttendanceDOs = new AbsenceDO();
 
             try
             {
@@ -80,7 +80,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             while (reader.Read())
                             {
-                                IAttendanceDO attendanceDO = new AttendanceDO();
+                                IAttendanceDO attendanceDO = new AbsenceDO();
 
                                 attendanceDO.AbsenceTypeID = reader.GetInt32(0);
                                 attendanceDO.Name = reader.GetString(1);
@@ -101,7 +101,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         public void UdpateAttendanceInformation(IAttendanceDO iAttendance)
         {
-            var selectedAttendance = new AttendanceDO();
+            var selectedAttendance = new AbsenceDO();
 
             try
             {

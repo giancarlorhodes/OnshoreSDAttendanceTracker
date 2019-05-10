@@ -4,11 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace OnshoreSDAttendanceTrackerNetBLL.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestBLL
     {
         [TestMethod]
-        public void TestMethod1()
+        public void FirstMethod_IsTrueEqualToTrue_True()
         {
+            Assert.AreEqual(true, true);
         }
     }
 }

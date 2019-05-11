@@ -26,6 +26,9 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         #region Team
 
         [HttpGet]
+        ///<summary>
+        /// Gets form for creating a new team
+        /// </summary>
         public ActionResult AddTeam()
         {
             ActionResult oResponse = null;
@@ -47,10 +50,13 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
             return oResponse;
         }
-
-        // [Authorize]
-        // [ValidateAntiForgeryToken]
+        
         [HttpPost]
+        // TODO: Uncomment when ready to touch OWASP
+        // [Authorize][ValidateAntiForgeryToken]
+        ///<summary>
+        /// Sends request to database for creating a new team
+        /// </summary>
         public ActionResult AddTeam(TeamViewModel iViewModel)
         {
             ActionResult oResponse = null;
@@ -93,7 +99,9 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        // Retrieves all teams
+        ///<summary>
+        /// Views all teams for a service manager
+        /// </summary>
         public ActionResult ViewAllTeams()
         {
             ActionResult oResponse = null;
@@ -128,7 +136,9 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        // Retrieves all Teams by a given user(i.e. Service Manager with multiple teams)
+        ///<summary>
+        /// Retrieves all Teams by a given user(i.e. Service Manager with multiple teams) 
+        /// </summary>
         public ActionResult ViewTeamsByUserID(int userID)
         {
             ActionResult oResponse = null;
@@ -171,7 +181,9 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        // Retrieves all users for a given team
+        ///<summary>
+        /// Retrieves all users for a given team
+        /// </summary>
         public ActionResult ViewUserByTeamID(int teamID)
         {
             ActionResult oResponse = null;
@@ -216,7 +228,9 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        // Retrieves form for updating team information
+        ///<summary>
+        /// Retrieves form for updating team information
+        /// </summary>
         public ActionResult UpdateTeamInformation(int teamID)
         {
             ActionResult oResponse = null;
@@ -244,9 +258,11 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        // Updates information for a team
+        // TODO: Uncomment when ready to touch OWASP
+        //[Authorize][ValidateAntiForgeryToken]
+        ///<summary>
+        /// Updates information for a team
+        /// </summary>
         public ActionResult UpdateTeamInformation(TeamViewModel iTeam)
         {
             ActionResult oResponse = null;
@@ -285,7 +301,9 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        // Attempts to deactivate team
+        ///<summary>
+        /// Attempts to deactivate team
+        /// </summary>
         public ActionResult DeactivateTeam(int teamID)
         {
             ActionResult oResponse = null;
@@ -307,6 +325,302 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 {
                     // TODO: Always return to view all - not set in stone can be discussed
                     oResponse = RedirectToAction("ViewAllTeams", "Maint");
+                }
+            }
+            else
+            {
+                oResponse = RedirectToAction("Index", "Home");
+            }
+
+            return oResponse;
+        }
+
+        #endregion
+
+        #region AttendanceType
+
+        [HttpGet]
+        ///<summary>
+        /// Retrieves form for creating a new absence entry
+        /// </summary>
+        public ActionResult AddAbsenceEntry()
+        {
+            ActionResult oResponse = null;
+            var userPO = (UserPO)Session["UserModel"];
+
+            if (userPO.Email != null && userPO.RoleID_FK == 1)
+            {
+                var absenceVM = new AbsenceViewModel();
+
+                oResponse = View(absenceVM);
+            }
+            else
+            {
+                // User doesn't have access to create, redirect home
+                oResponse = RedirectToAction("Index", "Home");
+
+            }
+
+            return oResponse;
+        }
+
+        [HttpPost]
+        // TODO: Uncomment when ready to touch OWASP
+        //[Authorize][ValidateAntiForgeryToken]
+        ///<summary>
+        /// Sends the absence form to the database to be added
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddAbsenceEntry(AbsenceViewModel iViewModel)
+        {
+            ActionResult oResponse = null;
+            var userPO = (UserPO)Session["UserModel"];
+
+            // User is authenticated(Admin, Service Manager or Team Lead)
+            if(userPO.Email != null && userPO.RoleID_FK < 4 && userPO.RoleID_FK > 0)
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        // Maps absence PO to DO during creation
+                        IAbsenceDO lAbsenceForm = AbsenceMapper.MapAbsencePOtoDO(iViewModel.Absence);
+
+                        // Passes form to data access to add event to db
+                        _AbsenceDataAccess.CreateAbsence(lAbsenceForm, iViewModel.Absence.AbsenceTypeID);
+                        oResponse = RedirectToAction("ViewAllAbsence", "Maint");
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, "AddAbsenceEntry", "Maint");
+                        iViewModel.ErrorMessage = "Something went wrong when creating the absence to the system. Please try again.";
+                    }
+                }
+                else
+                {
+                    oResponse = View(iViewModel);
+                }
+            }
+            else
+            {
+                // User doesn't have privileges to create an absense entry, redirect to home.
+                oResponse = RedirectToAction("Index", "Home");
+            }
+
+            return oResponse;
+        }
+
+        [HttpGet]
+        ///<summary>
+        /// Admin view all absences by all employees
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ViewAllAbsenceEntries()
+        {
+            ActionResult oResponse = null;
+            var userPO = (UserPO)Session["UserModel"];
+            var ViewAllAbsenceEntries = new AbsenceViewModel();
+
+            // User can view all absences if Admin
+            if(userPO.Email != null && userPO.RoleID_FK == 1)
+            {
+                try
+                {
+                    // Calls to retrieve all absences from data access
+                    List<IAbsenceDO> allAbsences = _AbsenceDataAccess.GetAbsenceTypes();
+
+                    // Map absences from DO to PO for displaying to the user
+                    ViewAllAbsenceEntries.ListOfAbsencePO = AbsenceMapper.MapListOfDOsToListOfPOs(allAbsences);
+
+                    oResponse = View(ViewAllAbsenceEntries);
+                }
+                catch (Exception ex)
+                {
+                    ErrorLogger.LogError(ex, "ViewAllAbsenceEntries", "Maint");
+                    ViewAllAbsenceEntries.ErrorMessage = "Something went wrong retrieving the list of absences. Please try again.";
+
+                    oResponse = View(ViewAllAbsenceEntries);
+                }
+            }
+            else
+            {
+                // State was invalid redirect home
+                oResponse = RedirectToAction("Index", "Home");
+            }
+
+            return oResponse;
+        }
+
+        [HttpGet]
+        ///<summary>
+        /// Views all absences by for a given team(TL, SM, Admin)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ViewAbsencesByTeamID(int teamID)
+        {
+            ActionResult oResponse = null;
+            var selectedTeamAbsences = new AbsenceViewModel();
+            var userPO = (UserPO)Session["UserModel"];
+
+            if (userPO.Email != null && userPO.RoleID_FK <= 3 && userPO.RoleID_FK > 0)
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        // Stores list of absences by TeamID
+                        var absences = new List<IAbsenceDO>();
+                        absences = _AbsenceDataAccess.GetAbsenceTypesByTeamID(teamID);
+
+                        // Maps list of absences from DO to PO
+                        foreach(IAbsenceDO absence in absences)
+                        {
+                            selectedTeamAbsences.Absence = AbsenceMapper.MapAbsenceDOtoPO(absence);
+                        }
+
+                        oResponse = View(selectedTeamAbsences);
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, "ViewAbsencesByTeamID", "Maint");
+                        selectedTeamAbsences.ErrorMessage = "Something went wrong retrieving the list of absences. Please try again.";
+                        oResponse = View(selectedTeamAbsences);
+                    }
+                }
+                else
+                {
+                    oResponse = View(selectedTeamAbsences);
+                }
+            }
+
+            return oResponse;
+        }
+
+        [HttpGet]
+        ///<summary>
+        /// Views all absences for all teams under a Service Manager
+        /// </summary>
+        public ActionResult ViewAllAbsencesForSMTeam(int userID, int teamID)
+        {
+            ActionResult oResponse = null;
+            var selectedTeamAbsences = new AbsenceViewModel();
+            var userPO = (UserPO)Session["UserModel"];
+
+            if (userPO.Email != null && userPO.RoleID_FK <= 3 && userPO.RoleID_FK > 0)
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        // Stores list of absences by TeamID
+                        var absences = new List<IAbsenceDO>();
+                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userID, teamID);
+
+                        // Maps list of absences from DO to PO
+                        foreach (IAbsenceDO absence in absences)
+                        {
+                            selectedTeamAbsences.Absence = AbsenceMapper.MapAbsenceDOtoPO(absence);
+                        }
+
+                        oResponse = View(selectedTeamAbsences);
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, "ViewAbsenceByTeamID", "Maint");
+                        selectedTeamAbsences.ErrorMessage = "Something went wrong retrieving the list of absences. Please try again.";
+                        oResponse = View(selectedTeamAbsences);
+                    }
+                }
+                else
+                {
+                    oResponse = View(selectedTeamAbsences);
+                }
+            }
+
+            return oResponse;
+        }
+
+        [HttpGet]
+        ///<summary>
+        /// Retrieves form for the given absence selected
+        /// </summary>
+        public ActionResult UpdateAbsenceEntry(IAbsenceDO iAbsence,int absenceID)
+        {
+            ActionResult oResponse = null;
+            var userPO = (UserPO)Session["UserModel"];
+
+            if(userPO.Email != null && userPO.RoleID_FK > 0 && userPO.RoleID_FK <= 3)
+            {
+                var absenceVM = new AbsenceViewModel();
+
+                // Retrieve selected absence
+                IAbsenceDO absenceDO = _AbsenceDataAccess.UpdateAbsenceType(iAbsence, absenceID);
+
+                // Maps absence DO to PO
+                absenceVM.Absence = AbsenceMapper.MapAbsenceDOtoPO(absenceDO);
+
+                oResponse = View(absenceVM);
+            }
+            else
+            {
+                // User doesn't have priveleges redirect home
+                oResponse = RedirectToAction("Index","Home");
+            }
+
+            return oResponse;
+        }
+
+        [HttpPost]
+        // TODO: Uncomment when ready to touch OWASP
+        //[Authorize][ValidateAntiForgeryToken]
+        ///<summary>
+        /// Sends the form to the database to be modified for an absence
+        /// </summary>
+        public ActionResult UpdateAbsenceEntry(AbsenceViewModel iViewModel, int userID)
+        {
+            ActionResult oResponse = null;
+            var userPO = (UserPO)Session["UserModel"];
+
+            // Ensure user has priveleges
+            if (userPO.Email != null && userPO.RoleID_FK > 0 && userPO.RoleID_FK <= 3)
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        // Map absence from PO to DO
+                        IAbsenceDO lAbsenceForm = AbsenceMapper.MapAbsencePOtoDO(iViewModel.Absence);
+
+                        // Passes form to data access to update the database
+                        _AbsenceDataAccess.UpdateAbsenceType(lAbsenceForm, userID);
+
+                        // Determine redirect based off role
+                        switch (userPO.RoleID_FK)
+                        {
+                            case 1:
+                                oResponse = RedirectToAction("ViewAllAbsenceEntries", "Maint");
+                                break;
+                            case 2:
+                                oResponse = RedirectToAction("ViewAllAbsencesForSMTeam", "Maint");
+                                break;
+                            case 3:
+                                oResponse = RedirectToAction("ViewAbsencesByTeamID", "Maint");
+                                break;
+                            default:
+                                oResponse = RedirectToAction("Index", "Home");
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, "UpdateAbsenceEntry", "Maint");
+                        iViewModel.ErrorMessage = "Something went wrong updating the absence entry. Please try again.";
+                        oResponse = View(iViewModel);
+                    }
+                }
+                else
+                {
+                    oResponse = View(iViewModel);
                 }
             }
             else

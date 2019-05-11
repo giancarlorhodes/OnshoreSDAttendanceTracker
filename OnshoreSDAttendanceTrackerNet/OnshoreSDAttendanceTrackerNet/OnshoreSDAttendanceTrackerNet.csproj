@@ -1934,10 +1934,19 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\Vendor\jquery\jquery.min.map" />
     <Content Include="Scripts\Vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Views\Maint\AddTeam.cshtml" />
+    <Content Include="Views\Maint\ViewAllTeams.cshtml" />
+    <Content Include="Views\Maint\ViewTeamsByUserID.cshtml" />
+    <Content Include="Views\Maint\ViewUserByTeamID.cshtml" />
+    <Content Include="Views\Maint\UpdateTeamInformation.cshtml" />
+    <Content Include="Views\Maint\AddAbsenceEntry.cshtml" />
+    <Content Include="Views\Maint\ViewAllAbsenceEntries.cshtml" />
+    <Content Include="Views\Maint\ViewAbsencesByTeamID.cshtml" />
+    <Content Include="Views\Maint\ViewAllAbsencesForSMTeam.cshtml" />
+    <Content Include="Views\Maint\UpdateAbsenceEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Maint\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

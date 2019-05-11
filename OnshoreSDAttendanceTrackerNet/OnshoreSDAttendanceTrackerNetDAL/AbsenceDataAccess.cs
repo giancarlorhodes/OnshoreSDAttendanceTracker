@@ -170,7 +170,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         #region UpdateAbsenceType
 
-        public void UpdateAbsenceType(IAbsenceDO iAbsence, int ModifiedByUserID)
+        public IAbsenceDO UpdateAbsenceType(IAbsenceDO iAbsence, int ModifiedByUserID)
         {
             try
             {
@@ -185,7 +185,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             updateComm.Parameters.AddWithValue("@Name", iAbsence.Name);
                             updateComm.Parameters.AddWithValue("@Point", iAbsence.Point);
 
-
+                            return iAbsence;
                         }
                         catch (Exception ex)
                         {
@@ -198,6 +198,12 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 ErrorLogger.LogError(ex, "UpdateAbsenceType", "nothing");
             }
+            return iAbsence;
+        }
+
+        public List<IAbsenceDO> GetAbsenceTypesForSMByTeamID(int userID, int teamID)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion UpdateAbsenceType

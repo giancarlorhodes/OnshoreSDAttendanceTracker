@@ -11,9 +11,9 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
-    public class UserMapper : IUserMapper
+    public class UserMapper
     {
-        public List<IUserBO> MapListOfDOsToListOfBOs(List<IUserBO> userDOs)
+        public static List<IUserBO> MapListOfDOsToListOfBOs(List<IUserBO> userDOs)
         {
             var listOfUsers = new List<IUserBO>();
 
@@ -27,7 +27,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfUsers;
         }
 
-        public List<UserPO> MapListOfDOsToListOfPOs(List<IUserDO> userDOs)
+        public static List<UserPO> MapListOfDOsToListOfPOs(List<IUserDO> userDOs)
         {
             var listOfUsers = new List<UserPO>();
 
@@ -41,7 +41,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfUsers;
         }
 
-        public UserPO MapUserBOtoPO(UserBO userBO)
+        public static UserPO MapUserBOtoPO(UserBO userBO)
         {
             var oUser = new UserPO();
             oUser.UserID = userBO.UserID;
@@ -54,7 +54,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oUser;
         }
 
-        public IUserBO MapUserDOtoBO(IUserDO userDO)
+        public static IUserBO MapUserDOtoBO(IUserDO userDO)
         {
             IUserBO oUser = new UserBO();
             oUser.UserID = userDO.UserID;
@@ -67,7 +67,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oUser;
         }
 
-        public UserPO MapUserDOtoPO(IUserDO userDO)
+        public static UserPO MapUserDOtoPO(IUserDO userDO)
         {
             var oUser = new UserPO();
             oUser.UserID = userDO.UserID;
@@ -80,7 +80,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oUser;
         }
 
-        public IUserDO MapUserPOtoDO(UserPO userPO)
+        public static IUserDO MapUserPOtoDO(UserPO userPO)
         {
             IUserDO oUser = new UserDO();
             oUser.UserID = userPO.UserID;

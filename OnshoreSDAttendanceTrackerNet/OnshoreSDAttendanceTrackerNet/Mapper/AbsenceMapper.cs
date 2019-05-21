@@ -11,9 +11,9 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Mapper
 {
-    public class AbsenceMapper : IAbsenceMapper
+    public class AbsenceMapper
     {
-        public List<IAbsenceBO> MapListOfDOsToListOfBOs(List<IAbsenceDO> absenceDOs)
+        public static List<IAbsenceBO> MapListOfDOsToListOfBOs(List<IAbsenceDO> absenceDOs)
         {
             var listOfAbsenceBOs = new List<IAbsenceBO>();
 
@@ -27,7 +27,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfAbsenceBOs;
         }
 
-        public List<AbsencePO> MapListOfDOsToListOfPOs(List<IAbsenceDO> absenceDOs)
+        public static List<AbsencePO> MapListOfDOsToListOfPOs(List<IAbsenceDO> absenceDOs)
         {
             var listOfAbsencePOs = new List<AbsencePO>();
 
@@ -41,7 +41,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return listOfAbsencePOs;
         }
 
-        public AbsencePO MapAbsenceBOtoPO(AbsenceBO absenceBO)
+        public static AbsencePO MapAbsenceBOtoPO(AbsenceBO absenceBO)
         {
             var oAbsence = new AbsencePO();
             oAbsence.AbsenceTypeID = absenceBO.AbsenceTypeID;
@@ -53,7 +53,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oAbsence;
         }
 
-        public IAbsenceBO MapAbsenceDOtoBO(IAbsenceDO absenceDO)
+        public static IAbsenceBO MapAbsenceDOtoBO(IAbsenceDO absenceDO)
         {
             IAbsenceBO oAbsence = new AbsenceBO();
             oAbsence.AbsenceTypeID = absenceDO.AbsenceTypeID;
@@ -65,7 +65,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oAbsence;
         }
 
-        public AbsencePO MapAbsenceDOtoPO(IAbsenceDO absenceDO)
+        public static AbsencePO MapAbsenceDOtoPO(IAbsenceDO absenceDO)
         {
             var oAbsence = new AbsencePO();
             oAbsence.AbsenceTypeID = absenceDO.AbsenceTypeID;
@@ -77,7 +77,7 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             return oAbsence;
         }
 
-        public IAbsenceDO MapAbsencePOtoDO(AbsencePO absencePO)
+        public static IAbsenceDO MapAbsencePOtoDO(AbsencePO absencePO)
         {
             IAbsenceDO oAbsence = new AbsenceDO();
             oAbsence.AbsenceTypeID = absencePO.AbsenceTypeID;

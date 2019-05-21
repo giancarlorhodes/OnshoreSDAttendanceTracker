@@ -50,12 +50,14 @@
     <Compile Include="Interfaces\ITeamDO.cs" />
     <Compile Include="Interfaces\IUserCredentialsDO.cs" />
     <Compile Include="Interfaces\IUserDO.cs" />
+    <Compile Include="Interfaces\IUserLoginDO.cs" />
     <Compile Include="Models\AbsenceDO.cs" />
     <Compile Include="Models\ExceptionDO.cs" />
     <Compile Include="Models\NavigationDO.cs" />
     <Compile Include="Models\TeamDO.cs" />
     <Compile Include="Models\UserCredentialsDO.cs" />
     <Compile Include="Models\UserDO.cs" />
+    <Compile Include="Models\UserLoginDO.cs" />
     <Compile Include="NavigationDataAccess.cs" />
     <Compile Include="PointsDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

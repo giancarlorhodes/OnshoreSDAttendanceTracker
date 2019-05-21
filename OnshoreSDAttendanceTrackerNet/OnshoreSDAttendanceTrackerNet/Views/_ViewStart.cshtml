@@ -1,3 +1,53 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@using OnshoreSDAttendanceTrackerNet.Common
+@using OnshoreSDAttendanceTrackerNet.Models
+
+
+@{
+
+    UserLoginPO _ul = Session["UserModel"] as UserLoginPO;
+
+    if (_ul != null)
+    {
+        if (_ul.UserRole == RoleEnum.Administrator)
+        {
+            Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+        }
+        else if (_ul.UserRole == RoleEnum.Service_Manager)
+        {
+            Layout = "~/Views/Shared/_Layout_Service_Manager.cshtml";
+        }
+        else if (_ul.UserRole == RoleEnum.Team_Lead)
+        {
+            Layout = "~/Views/Shared/_Layout_Team_Lead.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+    }
+    else {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+
+    //if (this.User.IsInRole(RoleEnum.Admin.ToString()))
+    //{
+    //    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    //}
+    //else if (this.User.IsInRole(RoleEnum.Service_Manager.ToString()))
+    //{
+    //    Layout = "~/Views/Shared/_Layout_Service_Manager.cshtml";
+    //}
+    //else if (this.User.IsInRole(RoleEnum.Team_Lead.ToString()))
+    //{
+    //    Layout = "~/Views/Shared/_Layout_Team_Lead.cshtml";
+    //}
+    //else
+    //{
+    //    Layout = "~/Views/Shared/_Layout.cshtml";
+    //}
+
+
 }

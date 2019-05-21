@@ -1,11 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿
 
 namespace OnshoreSDAttendanceTrackerNet.Controllers
 {
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+
+
+    [Authorize]
     public class EmployeeController : Controller
     {
         // GET: Employee

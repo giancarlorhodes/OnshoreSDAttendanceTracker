@@ -1,6 +1,5 @@
 ﻿namespace OnshoreSDAttendanceTrackerNetDAL.Tests
 {
-
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -13,33 +12,34 @@
     [TestClass]
     public class UnitTestUserCredential
     {
-        private static UserDataAccess _UserDataAccess;
+        private static UserCredentialsDataAccess _UserCredentialsDataAccess;
 
         public UnitTestUserCredential()
         {
             string connection = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
-            _UserDataAccess = new UserDataAccess(connection);
+            _UserCredentialsDataAccess = new UserCredentialsDataAccess(connection);
         }
 
-        [TestMethod]
-        public void testGetAllUsersEmpty()
-        {
-            // arrange
+        //[TestMethod]
+        //public void GetAllUserCredentials_()
+        //{
+        //    // arrange
+        //    List<IUserCredentialsDO> _list = new List<IUserCredentialsDO>();
+        //    _list = _UserCredentialsDataAccess.GetAllUserCredentials();
 
 
-            // act
-
-
-            // assert
-
-
-
-            List<IUserDO> users = _UserDataAccess.GetAllUsers();
-            //Assert.AreEqual(users.Count, 0);
+        //    // act
 
 
 
-        }
+        //    // assert
+
+      
+        //    //Assert.AreEqual(users.Count, 0);
+
+
+
+        //}
     }
 
 }

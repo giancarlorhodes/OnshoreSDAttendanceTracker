@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using OnshoreSDAttendanceTrackerNet.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,16 +19,17 @@
                 </button>
                 @Html.ActionLink("Onshore SD Attendance Tracker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Login", "Login", "Base")</li>               
+                    <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                    <li>@Html.ActionLink("My Teams", "Team", "Home")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Base")</li>
+                    @{ UserLoginPO user = (UserLoginPO)Session["UserModel"];
+
+                    }
+                    <li><a>Welcome @user.FirstName, Your Role is Service Manager</a></li>
                 </ul>
             </div>
-            
         </div>
     </div>
     <div class="container body-content">

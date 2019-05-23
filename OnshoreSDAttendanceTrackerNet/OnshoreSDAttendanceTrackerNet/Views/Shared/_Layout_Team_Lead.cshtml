@@ -22,11 +22,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
                     <li>@Html.ActionLink("My Team", "Team", "Home")</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Base")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                     @{ UserLoginPO user = (UserLoginPO)Session["UserModel"];
 
                     }

@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 using System.Configuration;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
 using OnshoreSDAttendanceTrackerErrorLogger;
+using System.IO;
 
 namespace OnshoreSDAttendanceTrackerNetDAL
 {
     public class UserDataAccess
     {
-        private string _ConnectionString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
-      
+        private string _ConnectionString = (ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString);
+
+
+
         #region CreateUser
         public void CreateUser(IUserDO iUser)
         {
@@ -41,6 +44,13 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         catch (Exception ex)
                         {
                             ErrorLogger.LogError(ex, "CreateUser", "nothing");
+                        }
+
+                        finally
+                        {
+                            conn.Close();
+                            conn.Dispose();
+                            createComm.Dispose();
                         }
                     }
                 }
@@ -118,19 +128,16 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         public List<IUserDO> GetAllUsers()
         {
             var listOfDBUsers = new List<IUserDO>();
-            SqlCommand getComm=null;
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
 
-                    using (getComm = new SqlCommand("sp_GetUsers"))
+                    using (SqlCommand getComm = new SqlCommand("sp_GetUsers"))
                     {
                         getComm.CommandType = CommandType.StoredProcedure;
                         getComm.CommandTimeout = 35;
-
-                        getComm.Connection = conn;
-                        conn.ConnectionString = _ConnectionString;
                         conn.Open();
 
                         using (SqlDataReader reader = getComm.ExecuteReader())
@@ -239,6 +246,49 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         }
         #endregion
 
+        #region UserPassword Reset
+
+        public void UserPasswordReset(IUserDO currentUserDO, IUserCredentialsDO updatedCredDO)  //Takes in ResetPassword and sends into DB
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_ConnectionString))
+                {
+                    using (SqlCommand passwordResetComm = new SqlCommand("sp_UserCredentialsAddOrEdit", conn))
+                    {
+                        try
+                        {
+                            passwordResetComm.CommandType = CommandType.StoredProcedure;
+                            conn.Open();
+
+                            passwordResetComm.Parameters.AddWithValue("@parmUserID", currentUserDO.UserID);
+                            passwordResetComm.Parameters.AddWithValue("@parmUserPassword", updatedCredDO.UserPassword);
+                            passwordResetComm.Parameters.AddWithValue("@parmUserCredentailsID", updatedCredDO.UserCredentailsID);
+                            passwordResetComm.Parameters.AddWithValue("@parmSalt", updatedCredDO.Salt);
+
+                            passwordResetComm.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrorLogger.LogError(ex, "UserPasswordReset", "nothing");
+                        }
+                        finally
+                        {
+                            conn.Close();
+                            conn.Dispose();
+                            passwordResetComm.Dispose();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "UserPasswordReset", "nothing");
+            }
+        }
+
+        #endregion
 
     }
+
 }

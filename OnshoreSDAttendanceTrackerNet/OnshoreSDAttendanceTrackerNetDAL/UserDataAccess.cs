@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
 using OnshoreSDAttendanceTrackerErrorLogger;
@@ -14,14 +11,14 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 {
     public class UserDataAccess
     {
-        private string _ConnectionString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
+        public string ConnectionParms { get; private set; } = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
       
         #region CreateUser
         public void CreateUser(IUserDO iUser)
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(_ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionParms))
                 {
                     using (SqlCommand createComm = new SqlCommand("sp_MakeUser", conn))
                     {
@@ -66,7 +63,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
             try
             {
-                using (SqlConnection con = new SqlConnection(_ConnectionString))
+                using (SqlConnection con = new SqlConnection(ConnectionParms))
                 {
                     using (SqlCommand getUserComm = new SqlCommand("sp_GetUserById", con))
                     {
@@ -121,7 +118,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             SqlCommand getComm=null;
             try
             {
-                using (SqlConnection conn = new SqlConnection(_ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionParms))
                 {
 
                     using (getComm = new SqlCommand("sp_GetUsers"))
@@ -130,7 +127,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         getComm.CommandTimeout = 35;
 
                         getComm.Connection = conn;
-                        conn.ConnectionString = _ConnectionString;
+                        conn.ConnectionString = ConnectionParms;
                         conn.Open();
 
                         using (SqlDataReader reader = getComm.ExecuteReader())
@@ -168,7 +165,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(_ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionParms))
                 {
                     using (SqlCommand updateComm = new SqlCommand("sp_UpdateUser", conn))
                     {
@@ -205,7 +202,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(_ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionParms))
                 {
                     using (SqlCommand deleteComm = new SqlCommand("sp_RemoveUserById", conn))
                     {

@@ -140,17 +140,20 @@
     </Compile>
     <Compile Include="Interfaces\IAbsencePO.cs" />
     <Compile Include="Interfaces\IExceptionPO.cs" />
+    <Compile Include="Interfaces\INavigationPO.cs" />
     <Compile Include="Interfaces\ITeamPO.cs" />
     <Compile Include="Interfaces\IUserCredentialsPO.cs" />
     <Compile Include="Interfaces\IUserPO.cs" />
     <Compile Include="Mapper\AbsenceMapper.cs" />
     <Compile Include="Mapper\ExceptionMapper.cs" />
+    <Compile Include="Mapper\NavigationMapper.cs" />
     <Compile Include="Mapper\TeamMapper.cs" />
     <Compile Include="Mapper\UserCredentialsMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\AbsencePO.cs" />
     <Compile Include="Models\AbsenceViewModel.cs" />
     <Compile Include="Models\ExceptionPO.cs" />
+    <Compile Include="Models\NavigationPO.cs" />
     <Compile Include="Models\TeamPO.cs" />
     <Compile Include="Models\TeamViewModel.cs" />
     <Compile Include="Models\UserCredentialPO.cs" />

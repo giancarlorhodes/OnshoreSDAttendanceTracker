@@ -1,5 +1,5 @@
 ﻿using OnshoreSDAttendanceTrackerErrorLogger;
-using OnshoreSDAttendanceTrackerNet.Mapper;
+using OnshoreSDAttendanceTrackerNet.AutoMapper;
 using OnshoreSDAttendanceTrackerNet.Models;
 using OnshoreSDAttendanceTrackerNetDAL;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;

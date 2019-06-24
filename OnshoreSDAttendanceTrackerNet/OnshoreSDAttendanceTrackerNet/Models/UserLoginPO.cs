@@ -6,19 +6,25 @@
     using System.Linq;
     using System.Web;
     using OnshoreSDAttendanceTrackerNet.Common;
+    using OnshoreSDAttendanceTrackerNet.Interfaces;
 
-    public class UserLoginPO
+    public class UserLoginPO : IUserLoginPO
     {
         public RoleEnum UserRole;
 
+        
+        public int UserID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         [DisplayName("User")]
-        public string UserEmail { get; set; }
+        public string Email { get; set; }
+        public string Salt { get; set; }
 
         [DisplayName("Password")]
-        public string UserPassword { get; set; }
-
-        public string FirstName { get; set;}
-
-        public string LastName { get; set; }
+        public string Password { get; set; }
+        public int RoleID_FK { get; set; }
+        public string RoleNameShort { get; set; }
+        public string RoleNameLong { get; set; }
     }
 }

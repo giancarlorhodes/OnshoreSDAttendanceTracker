@@ -73,7 +73,7 @@
             if ((_userBO = _userBLL.CheckUserLogin(_userBO)) != null)
             {
                 
-                _iUserPO = Mapper.Instance.Map<IUserLoginBO, IUserLoginPO>(_userBO);
+                _iUserPO = Mapper.Map<IUserLoginBO, IUserLoginPO>(_userBO);
                
                 FormsAuthentication.SetAuthCookie(_userBO.Email, false);
 
@@ -95,6 +95,87 @@
 
             return oResponse;
         }
+
+
+
+        //[HttpGet]
+        /////<summary>
+        ///// Gets form for creating a new team
+        //first, last, email, team, role (Admin, SM, TL)
+        ///// </summary>
+        //public ActionResult AddTeam()
+        //{
+        //    ActionResult oResponse = null;
+        //    var userPO = (UserPO)Session["UserModel"];
+
+        //    // Ensure user is authenticated
+        //    // TODO: Implement session checks after session has been handled
+        //    if (userPO != null && userPO.RoleID_FK == 1)
+        //    {
+        //        var teamVM = new TeamViewModel();
+
+        //        oResponse = View(teamVM);
+        //    }
+        //    else
+        //    {
+        //        // User doesn't have access, redirect
+        //        oResponse = RedirectToAction("Index", "Home");
+        //    }
+
+        //    return oResponse;
+        //}
+
+        //[HttpPost]
+        //// TODO: Uncomment when ready to touch OWASP
+        //// [Authorize][ValidateAntiForgeryToken]
+        /////<summary>
+        ///// Sends request to database for creating a new team
+        ///// </summary>
+        //public ActionResult AddTeam(TeamViewModel iViewModel)
+        //{
+        //    ActionResult oResponse = null;
+        //    var userPO = (UserPO)Session["UserModel"];
+
+        //    // Ensure user is authenticated
+        //    if (userPO.Email != null && userPO.RoleID_FK == 1)
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            try
+        //            {
+        //                // Map Team properties from presentation to data objects
+        //                ITeamDO lTeamForm = TeamMapper.MapTeamPOtoDO(iViewModel.Team);
+
+        //                // Passes form to AddTeam method
+        //                _TeamDataAccess.CreateNewTeam(lTeamForm, lTeamForm.TeamID);
+        //                oResponse = RedirectToAction("ViewAllTeams", "Maint");
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                ErrorLogger.LogError(ex, "AddTeam", "Maint");
+        //                iViewModel.ErrorMessage = ""; // TODO: Add meaningful message
+
+        //                oResponse = View(iViewModel);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            oResponse = View(iViewModel);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // User doesn't have access
+        //        oResponse = RedirectToAction("Index", "Home");
+        //    }
+
+        //    return oResponse;
+        //}
+
+
+
+
+
 
         [HttpGet]
         ///<summary>
@@ -149,6 +230,7 @@
         //[Authorize][ValidateAntiForgeryToken]
         ///<summary>
         /// Updates information for a User
+        /// first,last, email, team, role  (Admin, SM,TL)
         /// </summary>
         public ActionResult UpdateUserInfo(UserViewModel userToUpdateVM)
         {
@@ -168,7 +250,7 @@
                         // Passes form to be updated
                         _uda.UpdateUser(userUpdateDO);
 
-                        oResponse = RedirectToAction("ViewUserByUserID", "Account");
+                        oResponse = View("ViewUserByUserID", userToUpdateVM.User.UserID);
                     }
                     catch (Exception ex)
                     {

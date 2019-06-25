@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -126,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -142,6 +146,7 @@
     <Compile Include="Interfaces\IExceptionPO.cs" />
     <Compile Include="Interfaces\ITeamPO.cs" />
     <Compile Include="Interfaces\IUserCredentialsPO.cs" />
+    <Compile Include="Interfaces\IUserLoginPO.cs" />
     <Compile Include="Interfaces\IUserPO.cs" />
     <Compile Include="Mapper\AbsenceMapper.cs" />
     <Compile Include="Mapper\ExceptionMapper.cs" />
@@ -1921,7 +1926,9 @@
     <Content Include="Scripts\Vendor\jquery\jquery.min.js" />
     <Content Include="Scripts\Vendor\jquery\jquery.slim.js" />
     <Content Include="Scripts\Vendor\jquery\jquery.slim.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1952,6 +1959,8 @@
     <Content Include="Views\Shared\_Layout_Team_Lead.cshtml" />
     <Content Include="Views\Shared\_Layout_Service_Manager.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ViewUserByUserID.cshtml" />
+    <Content Include="Views\Account\UpdateUserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1965,7 +1974,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>

@@ -14,8 +14,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         public string ConnectionParms { get; private set; } = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
       
         #region CreateUser
-        public void CreateUser(IUserDO iUser)
+        public bool CreateUser(IUserDO iUser)
         {
+            bool successful = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionParms))
@@ -33,7 +34,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             createComm.Parameters.AddWithValue("@Email", SqlDbType.VarChar).Value = iUser.Email;
                             createComm.Parameters.AddWithValue("@FName", SqlDbType.VarChar).Value = iUser.FirstName;
                             createComm.Parameters.AddWithValue("@LName", SqlDbType.VarChar).Value = iUser.LastName;
-
+                            successful = true;
                         }
                         catch (Exception ex)
                         {
@@ -47,10 +48,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                 ErrorLogger.LogError(ex, "CreateUser", "nothing");
             }
 
-            finally
-            {
-
-            }
+            return successful;
         }
 
         #endregion
@@ -161,8 +159,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         #region Updates
         //updates User info and takes in OldTeamID to update in SP where UserID & OldTeamID equal in TeamManagement table
-        public void UpdateUser(IUserDO iUser, int OldTeamID)
+        public bool UpdateUser(IUserDO iUser, int OldTeamID)
         {
+            bool successful = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionParms))
@@ -179,7 +178,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             updateComm.Parameters.AddWithValue("@Email", iUser.Email);
                             updateComm.Parameters.AddWithValue("@FName", iUser.FirstName);
                             updateComm.Parameters.AddWithValue("@LName", iUser.LastName);
-
+                            successful = true;
                         }
                         catch (Exception ex)
                         {
@@ -192,14 +191,15 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 ErrorLogger.LogError(ex, "UpdateUser", "nothing");
             }
+            return successful;
         }
 
         #endregion
 
         #region Deletes
-        public void RemoveUser(int userToDelID, int modifiedByUserID)
+        public bool RemoveUser(int userToDelID, int modifiedByUserID)
         {
-
+            bool successful = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionParms))
@@ -219,20 +219,15 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             ErrorLogger.LogError(ex, "UpdateUser", "nothing");
                         }
-                        finally
-                        {
-                            conn.Close();
-                            conn.Dispose();
-                            deleteComm.Dispose();
-                        }
                     }
                 }
-
+                successful = true;
             }
             catch (Exception ex)
             {
                 ErrorLogger.LogError(ex, "UpdateUser", "nothing");
             }
+            return successful;
         }
         #endregion
 

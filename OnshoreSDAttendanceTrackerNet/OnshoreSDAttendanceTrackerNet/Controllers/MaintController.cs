@@ -100,7 +100,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
         [HttpGet]
         ///<summary>
-        /// Views all teams for a service manager
+        /// Views all teams(admin)
         /// </summary>
         public ActionResult ViewAllTeams()
         {
@@ -152,10 +152,10 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     try
                     {
                         // Stores teams of user using their id
-                        ITeamDO iTeam = _TeamDataAccess.GetAllTeamsByID(userID);
+                        List<ITeamDO> iTeams = _TeamDataAccess.GetAllTeamsByID(userID);
 
                         // Maps Team from data objects to presentation objects
-                        selectedUserTeams.Team = TeamMapper.MapTeamDOtoPO(iTeam);
+                        selectedUserTeams.ListOfTeamPO = TeamMapper.MapListOfDOsToListOfPOs(iTeams);
 
                         oResponse = View(selectedUserTeams);
                     }
@@ -184,32 +184,30 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         ///<summary>
         /// Retrieves all users for a given team
         /// </summary>
-        public ActionResult ViewUserByTeamID(int teamID)
+        public ActionResult ViewUsersByTeamID(int teamID)
         {
             ActionResult oResponse = null;
-            var selectedUsers = new TeamViewModel();
+            var selectedUsers = new UserViewModel();
             var userPO = (UserPO)Session["UserModel"];
 
             if (ModelState.IsValid)
             {
                 if (userPO.Email != null && userPO.RoleID_FK < 0 && userPO.RoleID_FK <= 2)
                 {
-
-
                     try
                     {
                         // Stores users for a team
-                        ITeamDO iTeam = _TeamDataAccess.ViewUsersByTeamID(teamID);
+                        List<IUserDO> iUsers = _TeamDataAccess.ViewUsersByTeamID(teamID);
 
-                        // Map iTeam from data objects to presentation objects
-                        selectedUsers.Team = TeamMapper.MapTeamDOtoPO(iTeam);
+                        // Map iUsers from data objects to presentation objects
+                        selectedUsers.ListOfUserPO = UserMapper.MapListOfDOsToListOfPOs(iUsers);
 
                         oResponse = View(selectedUsers);
                     }
                     catch (Exception ex)
                     {
                         ErrorLogger.LogError(ex, "ViewUserByTeamID", "Maint");
-                        selectedUsers.ErrorMessage = ""; // TODO: Add meaningful message to the user
+                        selectedUsers.ErrorMessage = "Failed to load users. Please try again. If the issue persists reach out to IT."; 
 
                         oResponse = View(selectedUsers);
                     }

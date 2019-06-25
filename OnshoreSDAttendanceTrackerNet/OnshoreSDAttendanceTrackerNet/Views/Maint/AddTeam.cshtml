@@ -1,7 +1,29 @@
-﻿
+﻿@model OnshoreSDAttendanceTrackerNet.Models.TeamViewModel
 @{
-    ViewBag.Title = "AddTeam";
+    ViewBag.Title = "Create New Team";
 }
 
-<h2>AddTeam</h2>
+<h2>Create New Team</h2>
 
+@using (Html.BeginForm("AddTeam", "Maint", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => Model.Team.Name, "Team Name")
+        @Html.TextBoxFor(model => Model.Team.Name, new { @class = "form-control", @placeholder = "Team Name" })
+        @Html.ValidationMessageFor(model => Model.Team.Name, "", new { @class = "text-danger" })
+    </div>
+    <div>
+        @Html.LabelFor(model => Model.Team.Comment, "Comments")
+        @Html.TextBoxFor(model => Model.Team.Comment, new { @class = "form-control", @placeholder = "Client Comments" })
+        @Html.ValidationMessageFor(model => Model.Team.Comment, "", new { @class = "text-danger" })
+    </div>
+    <div>
+        @Html.LabelFor(model => Model.Team.Active, "Active")
+        @Html.CheckBoxFor(model => Model.Team.Active)
+        @Html.ValidationMessageFor(model => model.Team.Comment, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <input class="btn btn-success" type="submit" value="Submit" />
+        <input class="btn btn-danger" type="submit" value="Cancel" />
+    </div>
+}

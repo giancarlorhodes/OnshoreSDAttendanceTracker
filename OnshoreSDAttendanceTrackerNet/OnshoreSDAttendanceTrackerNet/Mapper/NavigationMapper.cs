@@ -10,7 +10,7 @@ using OnshoreSDAttendanceTrackerNetBLL.Interfaces;
 using OnshoreSDAttendanceTrackerNetBLL.Models;
 
 
-namespace OnshoreSDAttendanceTrackerNet.Mapper
+namespace OnshoreSDAttendanceTrackerNet.AutoMapper
 {
     public static class NavigationMapper
     {

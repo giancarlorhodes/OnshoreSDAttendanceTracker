@@ -12,7 +12,7 @@ namespace OnshoreSDAttendanceTrackerErrorLogger
     public static class ErrorLogger
     {
         //TODO:  Match DBContext to correct Web.config name for DB
-        private static string conString= ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString;
+        private static string conString= ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
 
         public static void LogError(Exception error, string location,string url)
         {

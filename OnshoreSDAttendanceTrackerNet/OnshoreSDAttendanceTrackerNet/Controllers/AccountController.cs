@@ -73,7 +73,7 @@
             if ((_userBO = _userBLL.CheckUserLogin(_userBO)) != null)
             {
                 
-                _iUserPO = Mapper.Instance.Map<IUserLoginBO, IUserLoginPO>(_userBO);
+                _iUserPO = Mapper.Map<IUserLoginBO, IUserLoginPO>(_userBO);
                
                 FormsAuthentication.SetAuthCookie(_userBO.Email, false);
 
@@ -144,105 +144,50 @@
 
 
 
-        [HttpPost]
+        //[HttpPost]
 
-        //[Authorize][ValidateAntiForgeryToken]
-        ///<summary>
-        /// Updates information for a User
-        /// </summary>
-        public ActionResult UpdateUserInfo(UserViewModel userToUpdateVM)
-        {
-            ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
-
-            // Ensure user is authenticated
-            if (userPO.Email != null && userPO.RoleID_FK == 1)
-            {
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        // Map user from presentation to data objects
-                        UserDO userUpdateDO = Mapper.Map<UserPO, UserDO>(userToUpdateVM.User);
-
-                        // Passes form to be updated
-                        _uda.UpdateUser(userUpdateDO);
-
-                        oResponse = RedirectToAction("ViewUserByUserID", "Account");
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorLogger.LogError(ex, "UpdateUserInfo", "Account");
-                        userToUpdateVM.ErrorMessage = "Cannot update user info"; // TODO Add meaningful message for user
-
-                        oResponse = View(userToUpdateVM);
-                    }
-                }
-                else
-                {
-                    oResponse = View(userToUpdateVM);
-                }
-            }
-
-            return oResponse;
-        }
-
-
-
-
-
-
-        //[HttpGet]
+        ////[Authorize][ValidateAntiForgeryToken]
         /////<summary>
-        ///// Views all users by team
+        ///// Updates information for a User
         ///// </summary>
-        //public ActionResult ViewAllUsersByTeam()
+        //public ActionResult UpdateUserInfo(UserViewModel userToUpdateVM)
         //{
         //    ActionResult oResponse = null;
-        //    var ViewAllUsersVM = new UserViewModel();
         //    var userPO = (UserPO)Session["UserModel"];
 
-        //    // Ensures authenticated
+        //    // Ensure user is authenticated
         //    if (userPO.Email != null && userPO.RoleID_FK == 1)
         //    {
-        //        try
+        //        if (ModelState.IsValid)
         //        {
-        //            // Calls GetAllTeams from DAL and stores in allTeams
-        //            List<ITeamDO> allTeams = _tda.GetAllTeams();
+        //            try
+        //            {
+        //                // Map user from presentation to data objects
+        //                UserDO userUpdateDO = Mapper.Map<UserPO, UserDO>(userToUpdateVM.User);
 
-        //            // Maps from data objects to presentation objects.
-        //            ViewAllTeamsVM.ListOfTeamPO = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
+        //                // Passes form to be updated
+        //                _uda.UpdateUser(userUpdateDO);
 
-        //            oResponse = View(ViewAllTeamsVM);
+        //                oResponse = View("ViewUserByUserID", userToUpdateVM.User.UserID);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                ErrorLogger.LogError(ex, "UpdateUserInfo", "Account");
+        //                userToUpdateVM.ErrorMessage = "Cannot update user info"; // TODO Add meaningful message for user
+
+        //                oResponse = View(userToUpdateVM);
+        //            }
         //        }
-        //        catch (Exception ex)
+        //        else
         //        {
-        //            ErrorLogger.LogError(ex, "ViewAllTeams", "Maint");
-        //            ViewAllTeamsVM.ErrorMessage = ""; // TODO: Add meaningful front end message
+        //            oResponse = View(userToUpdateVM);
         //        }
-        //    }
-        //    else
-        //    {
-        //        oResponse = RedirectToAction("Index", "Home");
         //    }
 
         //    return oResponse;
         //}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      
         [HttpGet]
         public void LogOut()
         {

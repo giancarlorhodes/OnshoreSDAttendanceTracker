@@ -185,21 +185,7 @@
         public IUserLoginDO GetUserLoginInformation(string username, string userpassword)
         {
 
-            //// hard coding right now for testing only 
-            //// remove this soon
-            //IUserLoginDO _userLoginDO = new UserLoginDO();
-            //_userLoginDO.UserID = 0;
-            //_userLoginDO.FirstName = "system";
-            //_userLoginDO.LastName ="system";
-            //_userLoginDO.Password = "unhashedunsaltedsuperadminpassword";
-            //_userLoginDO.Salt = "";
-            //_userLoginDO.Email = "giancarlo.rhodes@onshoreoutsourcing.com";
-            //_userLoginDO.RoleID_FK = 1;
-            //_userLoginDO.RoleNameShort = "ADMIN";
-            //_userLoginDO.RoleNameLong = "Administrator";
-
             //TODO GSR - make this a db call
-
 
             IUserLoginDO _userLoginDO =  new UserLoginDO();
             try
@@ -234,30 +220,13 @@
             }
             catch (Exception ex)
             {
+                ErrorLogger.LogError(ex, "GetUserLoginInformation", "nothing");
             }
 
             return _userLoginDO;
         }
 
-
-        public  bool IsAutheticatedAgainstDatabase(string username, string userpassword)
-        {
-            var _user = this.GetUserLoginInformation(username, userpassword);
-
-            if (_user.RoleID_FK != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
         #endregion
-
-
 
     }
 }

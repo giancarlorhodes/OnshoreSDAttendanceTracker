@@ -8,14 +8,28 @@
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
-
+    using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
+    using OnshoreSDAttendanceTrackerNetDAL.Models;
+    using OnshoreSDAttendanceTrackerNetDAL;
+    using OnshoreSDAttendanceTrackerNetBLL;
+    using OnshoreSDAttendanceTrackerErrorLogger;
+    using OnshoreSDAttendanceTrackerNet.Interfaces;
+    using OnshoreSDAttendanceTrackerNet.Models;
+    using OnshoreSDAttendanceTrackerNet.Mapper;
 
     [Authorize]
     public class HomeController : Controller
     {
-
+        private NavigationDataAccess _menuDAO = new NavigationDataAccess();
         public ActionResult Index()
-        {
+        { //Get Menu Items
+          // if ((UserPO)Session["UserModel"] != null)
+          // {
+          //var loggedUSer =  (UserPO)Session["UserModel"];
+
+            List<NavigationPO> menutItems = NavigationMapper.MapListOfDOsToListOfPOs(_menuDAO.GetNavigationItemsByRoleID(1));//loggedUSer.RoleID_FK
+
+            //  }
             return View();
         }
 

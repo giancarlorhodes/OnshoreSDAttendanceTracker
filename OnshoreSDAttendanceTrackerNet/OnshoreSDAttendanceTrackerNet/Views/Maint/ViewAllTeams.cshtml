@@ -1,7 +1,29 @@
-﻿
+﻿@using OnshoreSDAttendanceTrackerNet.Models
+@model OnshoreSDAttendanceTrackerNet.Models.TeamViewModel
 @{
-    ViewBag.Title = "ViewAllTeams";
+    ViewBag.Title = "View All Teams";
 }
 
-<h2>ViewAllTeams</h2>
+<h2>@ViewBag.Title</h2>
 
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Comments</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(TeamPO team in Model.ListOfTeamPO)
+            {
+            <tr>
+                <td>@team.Name</td>
+                <td>@team.Comment</td>
+                <td>@team.Active</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

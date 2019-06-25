@@ -28,7 +28,7 @@
           //var loggedUSer =  (UserPO)Session["UserModel"];
 
             List<NavigationPO> menutItems = NavigationMapper.MapListOfDOsToListOfPOs(_menuDAO.GetNavigationItemsByRoleID(1));//loggedUSer.RoleID_FK
-
+            Session["MenuItems"] = menutItems;
             //  }
             return View();
         }

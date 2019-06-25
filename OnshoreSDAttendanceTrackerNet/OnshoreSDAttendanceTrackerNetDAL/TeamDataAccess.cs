@@ -146,9 +146,44 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             return newTeam;
         }
 
-        public ITeamDO GetAllTeamsByID(int id)
+        public List<ITeamDO> GetAllTeamsByID(int userID)
         {
-            throw new NotImplementedException();
+            var listOfTeams = new List<ITeamDO>();
+            var newTeam = new TeamDO();
+            try
+            {
+                using(SqlConnection connection = new SqlConnection(conString))
+                {
+                    using(SqlCommand command = new SqlCommand("sp_GetAllTeamsByID", connection))
+                    {
+                        try
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.CommandTimeout = 35;
+
+                            command.Parameters.Add(new SqlParameter("UserID", userID));
+                            connection.Open();
+                            using(SqlDataReader reader = command.ExecuteReader())
+                            {
+                                newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                newTeam.Name = reader["Name"].ToString();
+                                newTeam.Comment = reader["Comments"].ToString();
+                                newTeam.Active = (bool)reader["Active"];
+                                listOfTeams.Add(newTeam);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrorLogger.LogError(ex, "GetAllTeamsByID", "nothing");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "GetAllTeamsByID", "nothing");
+            }
+            return listOfTeams;
         }
 
         //UPDATE
@@ -197,9 +232,44 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             return result;
         }
 
-        public ITeamDO ViewUsersByTeamID(int id)
+        public List<IUserDO> ViewUsersByTeamID(int teamId)
         {
-            throw new NotImplementedException();
+            var listOfUsers = new List<IUserDO>();
+            var newUser = new UserDO();
+            try
+            {
+                using(SqlConnection connection = new SqlConnection(conString))
+                {
+                    using(SqlCommand command = new SqlCommand("sp_ViewUsersByTeamID", connection))
+                    {
+                        try
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.CommandTimeout = 35;
+
+                            command.Parameters.Add(new SqlParameter("TeamId", teamId));
+                            connection.Open();
+                            using(SqlDataReader reader = command.ExecuteReader())
+                            {
+                                newUser.FirstName = reader["FirstName"].ToString();
+                                newUser.LastName = reader["LastName"].ToString();
+                                newUser.Email = reader["Email"].ToString();
+                                newUser.Active = (bool)reader["Active"];
+                                listOfUsers.Add(newUser);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrorLogger.LogError(ex, "ViewUsersByTeamID", "nothing");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "ViewUsersByTeamID", "nothing");
+            }
+            return listOfUsers;
         }
 
         //DELETe

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnshoreSDAttendanceTrackerNet", "OnshoreSDAttendanceTrackerNet\OnshoreSDAttendanceTrackerNet.csproj", "{6C91CC3D-3C2E-4560-91F4-A5A429C366B8}"
 EndProject
@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE3
 		OnshoreSDAttendanceTrackerDataAndSchemaV1_OLD_DO_NOT_USE.sql = OnshoreSDAttendanceTrackerDataAndSchemaV1_OLD_DO_NOT_USE.sql
 		PointBank.sql = PointBank.sql
 		Role.sql = Role.sql
+		sp_GetAllTeamsByID.sql = sp_GetAllTeamsByID.sql
 		sp_GetAttendances.sql = sp_GetAttendances.sql
 		sp_GetLoggedErrors.sql = sp_GetLoggedErrors.sql
 		sp_GetNavigationItemsByRoleID.sql = sp_GetNavigationItemsByRoleID.sql
@@ -48,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{5E0F964B-FE3
 		sp_UpdateUsers.sql = sp_UpdateUsers.sql
 		sp_UserCredentialsAddOrEdit.sql = sp_UserCredentialsAddOrEdit.sql
 		sp_UserCredentialsDelete.sql = sp_UserCredentialsDelete.sql
+		sp_ViewUserByTeamID.sql = sp_ViewUserByTeamID.sql
 		Team.sql = Team.sql
 		TeamManagement.sql = TeamManagement.sql
 		UpdateUsers.sql = UpdateUsers.sql

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnshoreSDAttendanceTrackerNet.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,7 @@ namespace OnshoreSDAttendanceTrackerNet
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutoMapperConfig.Configure();
         }
 
         protected void Application_PostAuthenticateRequest()

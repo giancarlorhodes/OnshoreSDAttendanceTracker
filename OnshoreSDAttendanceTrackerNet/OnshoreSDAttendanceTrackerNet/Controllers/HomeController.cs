@@ -15,7 +15,7 @@
     using OnshoreSDAttendanceTrackerErrorLogger;
     using OnshoreSDAttendanceTrackerNet.Interfaces;
     using OnshoreSDAttendanceTrackerNet.Models;
-    using OnshoreSDAttendanceTrackerNet.Mapper;
+    using OnshoreSDAttendanceTrackerNet.AutoMapper;
 
     [Authorize]
     public class HomeController : Controller

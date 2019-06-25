@@ -32,8 +32,9 @@ namespace OnshoreSDAttendanceTrackerErrorLogger
                 {
                     con.Open();
                     com.CommandType = CommandType.StoredProcedure;
-                    com.Parameters.Add(new SqlParameter("@ErrorMsg", innerEx));
-                    com.Parameters.Add(new SqlParameter("@SPName", location));
+
+                    com.Parameters.Add(new SqlParameter("@ErrorMsg", error.InnerException==null?error.Message:error.InnerException.Message));
+                    com.Parameters.Add(new SqlParameter("@SPName",location));
                     com.Parameters.Add(new SqlParameter("@ExceptionType", error.GetType().ToString()));
                     com.Parameters.Add(new SqlParameter("@ExceptionSource", "Application"));
                     com.Parameters.Add(new SqlParameter("@ExceptionURL", url));

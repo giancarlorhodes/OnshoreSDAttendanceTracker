@@ -1,0 +1,72 @@
+﻿@model OnshoreSDAttendanceTrackerNet.Models.UserViewModel
+@*@model OnshoreSDAttendanceTrackerNet.Models*@
+@{
+                /**/
+
+                ViewBag.Title = "ViewUserByUserID";
+}
+
+<h2>ViewUserByUserID</h2>
+
+
+@using (Html.BeginForm("UpdateUserInfo", "Account", FormMethod.Post))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+
+    <div class="UserInfoBox">
+        <div class="LabelDisplayTextBoxPos">
+            <div class="LabelSpacing">
+                @Html.HiddenFor(m => m.User.UserID)
+            </div>
+        </div>
+
+        <div class="LabelTextBoxSet">
+            <div class="LabelSpacing">
+                @Html.LabelFor(m => m.User.FirstName)
+                @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", placeholder = "m.User.FirstName" })
+            </div>
+       
+
+      
+            <div class="LabelSpacing">
+                @Html.LabelFor(m => m.User.LastName)
+                @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", placeholder = "m.User.LastName" })
+            </div>
+
+            
+                <div class="LabelSpacing">
+                    @Html.LabelFor(m => m.User.Email)
+                    @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control", placeholder = "m.User.Email" })
+                </div>
+
+               
+                    <div class="LabelSpacing">
+                        @Html.LabelFor(m => m.User.RoleName)
+                        @Html.TextBoxFor(m => m.User.RoleName, new { @class = "form-control", placeholder = "m.User.RoleName" })
+                    </div>
+
+                    @*<div class="">
+                @Html.DropDownListFor(m => m.SingleUser.RoleID, new List<SelectListItem>
+                    {
+                    new SelectListItem {Text=" -- ", },
+                    new SelectListItem {Text="1" },
+                    new SelectListItem {Text="2" },
+                    new SelectListItem {Text="3" } })
+
+            </div>*@
+                </div>
+            </div>
+            
+    <div class="UserSubmitBox">
+        <input type="submit" value="Submit" />
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

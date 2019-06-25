@@ -73,6 +73,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             getUserComm.CommandTimeout = 35;
 
                             getUserComm.Parameters.AddWithValue("@UserId", iUserID);
+
                             con.Open();
 
                             using (SqlDataReader reader = getUserComm.ExecuteReader())
@@ -83,6 +84,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 user.RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID"));
                                 user.Email = (string)reader["Email"];
                                 user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                //user.TeamManagementID = reader.GetInt32(reader.GetOrdinal("TeamManagementID"));
+
                             }
                         }
                         catch (Exception ex)
@@ -141,6 +144,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 user.RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID_FK"));
                                 user.Email = (string)reader["Email"];
                                 user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                               // user.NewTeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
 
                                 listOfDBUsers.Add(user);
                             }
@@ -161,7 +165,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         #region Updates
         //updates User info and takes in OldTeamID to update in SP where UserID & OldTeamID equal in TeamManagement table
-        public void UpdateUser(IUserDO iUser, int OldTeamID)
+        public void UpdateUser(IUserDO iUser)
         {
             try
             {
@@ -174,11 +178,12 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             updateComm.Parameters.AddWithValue("@UserID", iUser.UserID);
                             updateComm.Parameters.AddWithValue("@ModifiedByUserId", iUser.UserID);
                             updateComm.Parameters.AddWithValue("@RoleId", iUser.RoleID_FK);
-                            updateComm.Parameters.AddWithValue("@OldTeamId", OldTeamID);
-                            updateComm.Parameters.AddWithValue("@NewTeamId", iUser.TeamID);
+                            updateComm.Parameters.AddWithValue("@TeamId", iUser.TeamID);
+                            updateComm.Parameters.AddWithValue("@TeamManagementId", iUser.TeamManagementID);
                             updateComm.Parameters.AddWithValue("@Email", iUser.Email);
                             updateComm.Parameters.AddWithValue("@FName", iUser.FirstName);
                             updateComm.Parameters.AddWithValue("@LName", iUser.LastName);
+
 
                         }
                         catch (Exception ex)

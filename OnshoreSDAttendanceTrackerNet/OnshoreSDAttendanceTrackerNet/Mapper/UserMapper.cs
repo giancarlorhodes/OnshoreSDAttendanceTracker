@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace OnshoreSDAttendanceTrackerNet.Mapper
+
+
+namespace OnshoreSDAttendanceTrackerNet.AutoMapper
 {
     public class UserMapper
     {
@@ -63,6 +65,9 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             oUser.RoleID_FK = userDO.RoleID_FK;
             oUser.Email = userDO.Email;
             oUser.Active = userDO.Active;
+            oUser.TeamID = userDO.TeamID;
+            oUser.TeamManagementID = userDO.TeamManagementID;
+            oUser.TeamName = userDO.TeamName;
 
             return oUser;
         }
@@ -89,6 +94,8 @@ namespace OnshoreSDAttendanceTrackerNet.Mapper
             oUser.RoleID_FK = userPO.RoleID_FK;
             oUser.Email = userPO.Email;
             oUser.Active = userPO.Active;
+            oUser.TeamID = userPO.TeamID;
+            oUser.TeamManagementID = userPO.TeamManagementID;
 
             return oUser;
         }

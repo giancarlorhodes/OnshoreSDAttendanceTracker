@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace OnshoreSDAttendanceTrackerNet.Mapper
+namespace OnshoreSDAttendanceTrackerNet.AutoMapper
 {
     public class TeamMapper
     {

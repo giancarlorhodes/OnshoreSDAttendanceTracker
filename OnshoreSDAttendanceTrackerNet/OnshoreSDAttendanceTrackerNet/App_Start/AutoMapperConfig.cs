@@ -59,29 +59,26 @@ namespace OnshoreSDAttendanceTrackerNet.App_Start
                 cfg.CreateMap<List<IExceptionDO>,List<IExceptionBO>>();
                 cfg.CreateMap<List<IExceptionDO>, List<IExceptionPO>>();
 
-                //cfg.AddProfile(new UserProfile());
-                //cfg.AddProfile(new PostProfile());
+              
             });
         }
+        //For Mapping additional properties
         // AutoMapper.Mapper.CreateMap<SourceClass, DestinationClass>();
         //AutoMapper.Mapper.CreateMap<Book, BookViewModel>()
         //    .ForMember(dest => dest.Author,
         //               opts => opts.MapFrom(src => src.Author.Name));
 
     
-
+        //For Mapping using profiles (alternative)
         //public class UserProfile : Profile
         //{
         //    protected override void Configure()
         //    {
         //        Mapper.CreateMap<User, UserViewModel>();
+        //cfg.AddProfile(new UserProfile());
+                //cfg.AddProfile(new PostProfile());
         //    }
         //}
-
-
-        //AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap< UserBO, UserPO >());
-        //    AutoMapper.Mapper.Instance
-        // AutoMapper.Mapper.Configuration.
 
     }
 }

@@ -100,7 +100,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
         [HttpGet]
         ///<summary>
-        /// Views all teams for a service manager
+        /// Views all teams(admin)
         /// </summary>
         public ActionResult ViewAllTeams()
         {

@@ -51,19 +51,19 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
                 Assert.AreEqual(users.Count, 0);   
         }
 
-        [TestMethod]
-        public void testCreateUser()
-        {
-            Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA1));
-            Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA2));         
-        }
+        //[TestMethod]
+        //public void testCreateUser()
+        //{
+        //    Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA1));
+        //    Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA2));         
+        //}
 
-        [TestMethod]
-        public void testUpdateUser()
-        {
-            Assert.IsTrue(_UserDataAccess.UpdateUser(TESTUPDATEUSERDATA, TESTCREATEUSERDATA1.TeamID));
-            Assert.AreEqual(TESTCREATEUSERDATA1.TeamID, TESTUPDATEUSERDATA.TeamID);
-        }
+        //[TestMethod]
+        //public void testUpdateUser()
+        //{
+        //    Assert.IsTrue(_UserDataAccess.UpdateUser(TESTUPDATEUSERDATA, TESTCREATEUSERDATA1.TeamID));
+        //    Assert.AreEqual(TESTCREATEUSERDATA1.TeamID, TESTUPDATEUSERDATA.TeamID);
+        //}
 
         [TestMethod]
         public void testGetUserById()
@@ -71,15 +71,15 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
             Assert.AreSame(_UserDataAccess.GetUserByID(TESTCREATEUSERDATA1.UserID), TESTCREATEUSERDATA1);
         }
 
-        [TestMethod]
-        public void testRemoveUser()
-        {
-            foreach (IUserDO user in _UserDataAccess.GetAllUsers())
-            {
-                Assert.IsTrue(_UserDataAccess.RemoveUser(user.UserID, user.UserID));
-            }
-            testGetAllUsers();
-        }
+        //[TestMethod]
+        //public void testRemoveUser()
+        //{
+        //    foreach (IUserDO user in _UserDataAccess.GetAllUsers())
+        //    {
+        //        Assert.IsTrue(_UserDataAccess.RemoveUser(user.UserID, user.UserID));
+        //    }
+        //    testGetAllUsers();
+        //}
 
         [ClassCleanup]
         public static void TestFixtureTearDown()

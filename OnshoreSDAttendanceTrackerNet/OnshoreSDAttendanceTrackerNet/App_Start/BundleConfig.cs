@@ -24,7 +24,8 @@ namespace OnshoreSDAttendanceTrackerNet
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/Theme/sb-admin-2.min.css"));
         }
     }
 }

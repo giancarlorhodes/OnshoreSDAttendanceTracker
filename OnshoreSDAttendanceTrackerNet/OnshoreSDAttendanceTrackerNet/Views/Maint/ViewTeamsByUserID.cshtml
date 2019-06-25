@@ -1,7 +1,30 @@
-﻿
+﻿@using OnshoreSDAttendanceTrackerNet.Models
+@model OnshoreSDAttendanceTrackerNet.Models.TeamViewModel
 @{
-    ViewBag.Title = "ViewTeamsByUserID";
+    ViewBag.Title = "My Teams";
 }
 
-<h2>ViewTeamsByUserID</h2>
+<h2>@ViewBag.Title</h2>
 
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                @Html.HiddenFor(model => Model.Team.TeamID)
+                <th>Team Name</th>
+                <th>Comments</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (TeamPO team in Model.ListOfTeamPO)
+            {
+                <tr>
+                    <td>@team.Name</td>
+                    <td>@team.Comment</td>
+                    <td>@team.Active</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

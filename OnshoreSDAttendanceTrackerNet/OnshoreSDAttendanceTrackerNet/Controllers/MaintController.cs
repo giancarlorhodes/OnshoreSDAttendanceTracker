@@ -184,7 +184,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         ///<summary>
         /// Retrieves all users for a given team
         /// </summary>
-        public ActionResult ViewUserByTeamID(int teamID)
+        public ActionResult ViewUsersByTeamID(int teamID)
         {
             ActionResult oResponse = null;
             var selectedUsers = new UserViewModel();

@@ -1964,6 +1964,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewUserByUserID.cshtml" />
     <Content Include="Views\Account\UpdateUserInfo.cshtml" />
+    <Content Include="Views\Maint\ViewUsersByTeamID.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

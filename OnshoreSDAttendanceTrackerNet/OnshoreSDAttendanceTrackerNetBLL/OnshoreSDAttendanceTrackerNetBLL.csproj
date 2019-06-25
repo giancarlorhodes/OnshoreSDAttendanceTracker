@@ -31,9 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,21 +53,30 @@
     <Compile Include="Interfaces\ITeamBO.cs" />
     <Compile Include="Interfaces\IUserBO.cs" />
     <Compile Include="Interfaces\IUserCredentialsBO.cs" />
+    <Compile Include="Interfaces\IUserLoginBO.cs" />
     <Compile Include="Models\AbsenceBO.cs" />
     <Compile Include="Models\ExceptionBO.cs" />
     <Compile Include="Models\TeamBO.cs" />
     <Compile Include="Models\UserBO.cs" />
     <Compile Include="Models\UserCredentialsBO.cs" />
+    <Compile Include="Models\UserLoginBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamBusinessLogic.cs" />
     <Compile Include="UserBusinessLogic.cs" />
     <Compile Include="UserCredentialsBusinessLogic.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OnshoreSDAttendanceTrackerErroLogger\OnshoreSDAttendanceTrackerErrorLogger.csproj">
+      <Project>{6d4cb5c7-ea03-48dc-9585-d843237d7a0a}</Project>
+      <Name>OnshoreSDAttendanceTrackerErrorLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnshoreSDAttendanceTrackerNetDAL\OnshoreSDAttendanceTrackerNetDAL.csproj">
       <Project>{34652338-b889-45ee-9653-9d251e6d9ae4}</Project>
       <Name>OnshoreSDAttendanceTrackerNetDAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

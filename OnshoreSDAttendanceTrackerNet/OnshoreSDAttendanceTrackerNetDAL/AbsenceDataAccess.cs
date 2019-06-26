@@ -27,6 +27,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 using (SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
+                    // TODO: Need to fix issues with stored procedure decimal values
                     using (SqlCommand createComm = new SqlCommand("sp_MakeAttendanceTypeByUserId", conn))
                     {
                         try
@@ -34,10 +35,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             createComm.CommandType = CommandType.StoredProcedure;
                             createComm.CommandTimeout = 35;
 
-                            createComm.Parameters.AddWithValue("@TeamId", SqlDbType.Int).Value = iAbsence.TeamID_FK;
-                            createComm.Parameters.AddWithValue("@CreatedByUserId", SqlDbType.Int).Value = createdByUserID;
+                            createComm.Parameters.AddWithValue("@TeamMgtId", SqlDbType.Int);                            
                             createComm.Parameters.AddWithValue("@Name", SqlDbType.Int).Value = iAbsence.Name;
                             createComm.Parameters.AddWithValue("@Point", SqlDbType.VarChar).Value = iAbsence.Point;
+                            createComm.Parameters.AddWithValue("@CreatedByUserId", SqlDbType.Int).Value = createdByUserID;
 
                         }
                         catch (Exception ex)

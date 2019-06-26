@@ -38,12 +38,17 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             con.Open();
                             using (SqlDataReader reader = com.ExecuteReader())
                             {
-                                INavigationDO newMenuItem = new NavigationDO();
-                                newMenuItem.NavigationID = reader.GetInt32(reader.GetOrdinal("NavigationMenuID"));
-                                newMenuItem.MenuItem = reader["MenuItem"].ToString();
-                                newMenuItem.URL = reader["Url"].ToString();
-                                newMenuItem.RoleID = reader.GetInt32(reader.GetOrdinal("RoleID"));
-                                menu.Add(newMenuItem);
+                                while (reader.Read())
+                                {
+                                    INavigationDO newMenuItem = new NavigationDO();
+                                    newMenuItem.NavigationID = reader.GetInt32(reader.GetOrdinal("NavigationMenuID"));
+                                    newMenuItem.MenuItem = reader["MenuItem"].ToString();
+                                    newMenuItem.URL = reader["Url"].ToString();
+                                    newMenuItem.RoleID = reader.GetInt32(reader.GetOrdinal("RoleID"));
+                                    newMenuItem.ParentNavigationID = reader.GetInt32(reader.GetOrdinal("ParentNavigationID"));
+                                    newMenuItem.Order = reader.GetInt32(reader.GetOrdinal("Order"));
+                                    menu.Add(newMenuItem);
+                                }
                             }
                         }
                         catch (Exception ex)

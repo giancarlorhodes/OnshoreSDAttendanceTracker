@@ -12,5 +12,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
           string MenuItem { get; set; }
           string URL { get; set; }
           int RoleID { get; set; }
+          int ParentNavigationID { get; set; }
+          int Order { get; set; }
     }
 }

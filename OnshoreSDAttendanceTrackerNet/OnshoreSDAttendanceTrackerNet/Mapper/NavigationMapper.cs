@@ -42,13 +42,31 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             return listOfMenuPOs;
         }
 
-        public static NavigationPO MapMenuBOtoPO(NavigationBO menuBO)
+        public static List<INavigationPO> MapListOfBOsToListOfPOs(List<INavigationBO> menuDOs)
+        {
+            var listOfMenuPOs = new List<INavigationPO>();
+
+            // Map each object in the list
+            foreach (INavigationBO entry in menuDOs)
+            {
+                var MenuPO = MapMenuBOtoPO(entry);
+                listOfMenuPOs.Add(MenuPO);
+            }
+
+            return listOfMenuPOs;
+        }
+
+        public static NavigationPO MapMenuBOtoPO(INavigationBO menuBO)
         {
             var oMenu = new NavigationPO();
             oMenu.NavigationID = menuBO.NavigationID;
             oMenu.MenuItem = menuBO.MenuItem;
             oMenu.URL = menuBO.URL;
             oMenu.RoleID = menuBO.RoleID;
+            oMenu.ParentNavigationID = menuBO.ParentNavigationID;
+            oMenu.Order = menuBO.Order;
+            oMenu.HasChild = menuBO.HasChild;
+            oMenu.Children = MapListOfBOsToListOfPOs(menuBO.Children);
 
             return oMenu;
         }
@@ -60,6 +78,8 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oMenu.MenuItem = menuDO.MenuItem;
             oMenu.URL = menuDO.URL;
             oMenu.RoleID = menuDO.RoleID;
+            oMenu.ParentNavigationID = menuDO.ParentNavigationID;
+            oMenu.Order = menuDO.Order;
 
             return oMenu;
         }
@@ -71,6 +91,8 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oMenu.MenuItem = menuDO.MenuItem;
             oMenu.URL = menuDO.URL;
             oMenu.RoleID = menuDO.RoleID;
+            oMenu.ParentNavigationID = menuDO.ParentNavigationID;
+            oMenu.Order = menuDO.Order;
 
             return oMenu;
         }
@@ -82,6 +104,8 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oMenu.MenuItem = menuPO.MenuItem;
             oMenu.URL = menuPO.URL;
             oMenu.RoleID = menuPO.RoleID;
+            oMenu.ParentNavigationID = menuPO.ParentNavigationID;
+            oMenu.Order = menuPO.Order;
 
             return oMenu;
         }

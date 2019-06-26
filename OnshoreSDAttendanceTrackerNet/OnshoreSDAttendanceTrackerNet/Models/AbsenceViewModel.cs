@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace OnshoreSDAttendanceTrackerNet.Models
 {
@@ -13,11 +14,13 @@ namespace OnshoreSDAttendanceTrackerNet.Models
             Absence = new AbsencePO();
             ListOfAbsencePO = new List<AbsencePO>();
             ListOfAbsenceDO = new List<AbsenceDO>();
+            AbsenceTypes = new List<SelectListItem>();
         }
 
         public AbsencePO Absence { get; set; }
         public List<AbsencePO> ListOfAbsencePO { get; set; }
         public List<AbsenceDO> ListOfAbsenceDO { get; set; }
+        public List<SelectListItem> AbsenceTypes { get; set; }
         public string ErrorMessage { get; set; }
     }
 }

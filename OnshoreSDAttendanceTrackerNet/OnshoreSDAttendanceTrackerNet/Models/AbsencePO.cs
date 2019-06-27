@@ -14,5 +14,9 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public bool Active { get; set; }
         public int TeamID_FK { get; set; }
         public decimal RunningTotal { get; set; }
+        public string Comments { get; set; }
+        public int AbsentUserID { get; set; }
+        public DateTime AbsenceDate { get; set; }
+        public int TeamMgtID { get; set; }
     }
 }

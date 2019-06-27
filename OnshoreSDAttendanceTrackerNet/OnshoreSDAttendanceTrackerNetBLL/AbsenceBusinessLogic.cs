@@ -7,17 +7,14 @@ using System.Linq;
 
 namespace OnshoreSDAttendanceTrackerNetBLL
 {
-    public class AbsenceBusinessLogic
+    public static class AbsenceBusinessLogic
     {
-        private PointsDataAccess _PointsDA;
 
-        public AbsenceBusinessLogic()
+        static AbsenceBusinessLogic()
         {
-            string connection = ConfigurationManager.ConnectionStrings[""].ConnectionString;
-            _PointsDA = new PointsDataAccess(connection);
         }
 
-        public List<IAbsenceDO> CalculateUserPoints(List<IAbsenceDO> iAbsence)
+        public static List<IAbsenceDO> CalculateUserPoints(List<IAbsenceDO> iAbsence)
         {
             // TODO: Need to add a way to pass the ID to this method based off of session
             var userPoints = new List<IAbsenceDO>();

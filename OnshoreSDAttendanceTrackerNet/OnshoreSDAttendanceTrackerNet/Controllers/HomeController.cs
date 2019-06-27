@@ -36,10 +36,10 @@
             // if ((UserPO)Session["UserModel"] != null)
             // {
             //var loggedUSer =  (UserPO)Session["UserModel"];
-
+            List<DashboardViewModel> emps = AbsenceMapper.MapListOfPOsToListOfVMs(AbsenceMapper.MapListOfBOsToListOfPOs(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(AbsenceMapper.MapListOfDOsToListOfBOs( PointsDataAccess.ViewAllAbsences()))));
 
             //  }
-            return View();
+            return View(emps);
         }
 
         public ActionResult About()

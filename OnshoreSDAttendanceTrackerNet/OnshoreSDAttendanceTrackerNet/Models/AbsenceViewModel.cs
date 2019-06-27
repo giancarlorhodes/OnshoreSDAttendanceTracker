@@ -12,6 +12,7 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public AbsenceViewModel()
         {
             Absence = new AbsencePO();
+            Team = new TeamPO();
             ListOfAbsencePO = new List<AbsencePO>();
             ListOfAbsenceDO = new List<AbsenceDO>();
             AbsenceTypes = new List<SelectListItem>();
@@ -20,6 +21,7 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public AbsencePO Absence { get; set; }
         public List<AbsencePO> ListOfAbsencePO { get; set; }
         public List<AbsenceDO> ListOfAbsenceDO { get; set; }
+        public TeamPO Team { get; set; }
         public List<SelectListItem> AbsenceTypes { get; set; }
         public string ErrorMessage { get; set; }
     }

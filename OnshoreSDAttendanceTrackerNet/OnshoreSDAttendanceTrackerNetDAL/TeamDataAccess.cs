@@ -31,16 +31,16 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                     using (SqlCommand com = new SqlCommand("sp_TeamAddNew", con))
                     {
                         try
-                        { 
-                        com.CommandType = CommandType.StoredProcedure;
-                        com.CommandTimeout = 35;
+                        {
+                            com.CommandType = CommandType.StoredProcedure;
+                            com.CommandTimeout = 35;
 
-                        com.Parameters.Add(new SqlParameter("@TeamName", newTeam.Name));
-                        com.Parameters.Add(new SqlParameter("@Comment", newTeam.Comment));
-                        com.Parameters.Add(new SqlParameter("@CreatedUser", userID));
-                        com.ExecuteNonQuery();
+                            com.Parameters.Add(new SqlParameter("@TeamName", newTeam.Name));
+                            com.Parameters.Add(new SqlParameter("@Comment", newTeam.Comment));
+                            com.Parameters.Add(new SqlParameter("@CreatedUser", userID));
+                            com.ExecuteNonQuery();
 
-                        result = "Success";
+                            result = "Success";
                         }
                         catch (Exception ex)
                         {
@@ -70,31 +70,34 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             var teams = new List<ITeamDO>();
 
             try
-            { 
-            using (SqlConnection con = new SqlConnection(conString))
             {
-                using (SqlCommand com = new SqlCommand("sp_GetTeams", con))
+                using (SqlConnection con = new SqlConnection(conString))
                 {
+                    using (SqlCommand com = new SqlCommand("sp_GetTeams", con))
+                    {
                         com.CommandType = CommandType.StoredProcedure;
                         com.CommandTimeout = 35;
 
                         con.Open();
                         using (SqlDataReader reader = com.ExecuteReader())
                         {
-                            ITeamDO newTeam = new TeamDO();
-                            newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
-                            newTeam.Name = reader["Name"].ToString();
-                            newTeam.Comment = reader["Comment"].ToString();
-                            newTeam.Active = (bool)reader["Active"];
-                            teams.Add(newTeam);
+                            while (reader.Read())
+                            {
+                                ITeamDO newTeam = new TeamDO();
+                                newTeam.TeamID = reader.GetInt32(0);
+                                newTeam.Name = reader.GetString(1);
+                                newTeam.Comment = reader["Comment"].ToString();
+                                newTeam.Active = reader.GetInt32(3);
+                                teams.Add(newTeam);
+                            }
                         }
                     }
-            }
+                }
             }
             catch (Exception e)
             {
                 ErrorLogger.LogError(e, "GetAllTeams", "nothing");
-                
+
             }
             return teams;
         }
@@ -121,7 +124,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
                                 newTeam.Name = reader["Name"].ToString();
                                 newTeam.Comment = reader["Comment"].ToString();
-                                newTeam.Active = (bool)reader["Active"];
+                                newTeam.Active = (int)reader["Active"];
                             }
 
                         }
@@ -152,9 +155,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             var newTeam = new TeamDO();
             try
             {
-                using(SqlConnection connection = new SqlConnection(conString))
+                using (SqlConnection connection = new SqlConnection(conString))
                 {
-                    using(SqlCommand command = new SqlCommand("sp_GetAllTeamsByID", connection))
+                    using (SqlCommand command = new SqlCommand("sp_GetAllTeamsByID", connection))
                     {
                         try
                         {
@@ -163,12 +166,12 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
                             command.Parameters.Add(new SqlParameter("UserID", userID));
                             connection.Open();
-                            using(SqlDataReader reader = command.ExecuteReader())
+                            using (SqlDataReader reader = command.ExecuteReader())
                             {
                                 newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
                                 newTeam.Name = reader["Name"].ToString();
                                 newTeam.Comment = reader["Comments"].ToString();
-                                newTeam.Active = (bool)reader["Active"];
+                                newTeam.Active = (int)reader["Active"];
                                 listOfTeams.Add(newTeam);
                             }
                         }
@@ -238,9 +241,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             var newUser = new UserDO();
             try
             {
-                using(SqlConnection connection = new SqlConnection(conString))
+                using (SqlConnection connection = new SqlConnection(conString))
                 {
-                    using(SqlCommand command = new SqlCommand("sp_ViewUsersByTeamID", connection))
+                    using (SqlCommand command = new SqlCommand("sp_ViewUsersByTeamID", connection))
                     {
                         try
                         {
@@ -249,7 +252,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
                             command.Parameters.Add(new SqlParameter("TeamId", teamId));
                             connection.Open();
-                            using(SqlDataReader reader = command.ExecuteReader())
+                            using (SqlDataReader reader = command.ExecuteReader())
                             {
                                 newUser.FirstName = reader["FirstName"].ToString();
                                 newUser.LastName = reader["LastName"].ToString();
@@ -273,7 +276,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         }
 
         //DELETe
-        public string DeactivateTeam( int teamID)
+        public string DeactivateTeam(int teamID)
         {
             string result;
             try
@@ -287,7 +290,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             com.CommandType = CommandType.StoredProcedure;
                             com.CommandTimeout = 35;
 
-                            com.Parameters.Add(new SqlParameter("@TeamID", teamID)); 
+                            com.Parameters.Add(new SqlParameter("@TeamID", teamID));
                             com.ExecuteNonQuery();
 
                             result = "Success";

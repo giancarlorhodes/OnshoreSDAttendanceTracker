@@ -564,6 +564,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
                 // Retrieve selected absence
                 IAbsenceDO absenceDO = _AbsenceDataAccess.UpdateAbsenceType(iAbsence, absenceID);
+                ViewBag.Name = "Modify Employee Absence";
 
                 // Maps absence DO to PO
                 absenceVM.Absence = AbsenceMapper.MapAbsenceDOtoPO(absenceDO);

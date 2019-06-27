@@ -8,16 +8,13 @@
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
-    using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
-    using OnshoreSDAttendanceTrackerNetDAL.Models;
     using OnshoreSDAttendanceTrackerNetDAL;
     using OnshoreSDAttendanceTrackerNetBLL;
     using OnshoreSDAttendanceTrackerErrorLogger;
     using OnshoreSDAttendanceTrackerNet.Interfaces;
     using OnshoreSDAttendanceTrackerNet.Models;
     using OnshoreSDAttendanceTrackerNet.AutoMapper;
-    using System.Web.Services;
-    using System.Web.SessionState;
+    using global::AutoMapper;
 
     [Authorize]
     public   class HomeController : Controller
@@ -51,7 +48,7 @@
             // {
             //var loggedUSer =  (UserPO)Session["UserModel"];
             List<DashboardViewModel> emps = AbsenceMapper.MapListOfPOsToListOfVMs(AbsenceMapper.MapListOfBOsToListOfPOs(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(AbsenceMapper.MapListOfDOsToListOfBOs( PointsDataAccess.ViewAllAbsences()))));
-
+            //TODO: Implement AutoMapper Mapper.Map<List<IAbsenceBO>, List<DashboardViewModel>>(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(Mapper.Map<List<IAbsenceDO>,List<IAbsenceBO>>( PointsDataAccess.ViewAllAbsences())));
             //  }
             return View(emps);
         }
@@ -62,7 +59,7 @@
             // {
             var loggedUSer =  (UserPO)Session["UserModel"];
             List<DashboardViewModel> emps = AbsenceMapper.MapListOfPOsToListOfVMs(AbsenceMapper.MapListOfBOsToListOfPOs(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(AbsenceMapper.MapListOfDOsToListOfBOs(PointsDataAccess.ViewAbsencesByUserID(loggedUSer.UserID)))));
-
+            //TODO: Implement AutoMapper Mapper.Map<List<IAbsenceBO>, List<DashboardViewModel>>(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(Mapper.Map<List<IAbsenceDO>, List<IAbsenceBO>>(PointsDataAccess.ViewAbsencesByUserID(loggedUSer.UserID))));
             //  }
             return View(emps);
         }
@@ -86,6 +83,7 @@
             UserPO curUser = new UserPO();
             curUser = GetCurrentUserID(session, curUser);
             List<INavigationPO> menutItems = NavigationMapper.MapListOfBOsToListOfPOs(NavigationBusinessLogic.NavReOrder(NavigationMapper.MapListOfDOsToListOfBOs(NavigationDataAccess.GetNavigationItemsByRoleID(curUser.RoleID_FK)),curUser.UserID));//loggedUSer.RoleID_FK
+            //TODO: Implement AutoMapper List<INavigationPO> menutItems = Mapper.Map<List<INavigationBO>, List<INavigationPO>>(NavigationBusinessLogic.NavReOrder(menus,curUser.UserID));//loggedUSer.RoleID_FK
             return menutItems;
         }
         

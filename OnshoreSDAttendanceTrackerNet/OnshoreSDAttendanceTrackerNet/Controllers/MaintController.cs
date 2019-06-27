@@ -6,6 +6,7 @@ using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Text;
 using System.Web.Mvc;
 
 namespace OnshoreSDAttendanceTrackerNet.Controllers
@@ -513,9 +514,10 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 {
                     try
                     {
-                        // Stores list of absences by TeamID
                         var absences = new List<IAbsenceDO>();
-                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userID, teamID);
+                        // Stores list of absences by TeamID
+                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userPO.UserID, userPO.TeamID);
+                        InitializeViewData(selectedTeamAbsences, userPO);
 
                         // Maps list of absences from DO to PO
                         foreach (IAbsenceDO absence in absences)
@@ -539,6 +541,12 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             }
 
             return oResponse;
+        }
+
+        private void InitializeViewData(AbsenceViewModel selectedTeamAbsences, UserPO userPO)
+        {               
+            var smName = new StringBuilder(selectedTeamAbsences.User.FirstName, 25);
+            ViewBag.Name = smName.Append(" " + selectedTeamAbsences.User.LastName);
         }
 
         [HttpGet]

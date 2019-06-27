@@ -88,7 +88,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 absence.AbsenceTypeID = reader.GetInt32(reader.GetOrdinal("AbsenceTypeID"));
                                 absence.Comments = reader["Comment"].ToString();
                                 absence.Point = Convert.ToDecimal( reader["Point"]);
-                                absence.Active = reader.GetBoolean(reader.GetOrdinal("Active"));
+                                absence.Active = Convert.ToBoolean((int)reader["Active"]);
                                 absence.TeamID_FK = reader.GetInt32(reader.GetOrdinal("TeamID"));
                                 absence.AbsenceDate= Convert.ToDateTime(reader["AbsenceDate"]);
                                 absence.AbsentUserID= reader.GetInt32(reader.GetOrdinal("UserID"));
@@ -132,7 +132,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 absence.AbsenceTypeID = reader.GetInt32(reader.GetOrdinal("AbsenceTypeID"));
                                 absence.Comments = reader["Comment"].ToString();
                                 absence.Point = Convert.ToDecimal(reader["Point"]);
-                                absence.Active = reader.GetBoolean(reader.GetOrdinal("Active"));
+                                absence.Active = Convert.ToBoolean((int) reader["Active"]);
                                 absence.TeamID_FK = reader.GetInt32(reader.GetOrdinal("TeamID"));
                                 absence.AbsenceDate = Convert.ToDateTime(reader["AbsenceDate"]);
                                 absence.AbsentUserID = reader.GetInt32(reader.GetOrdinal("UserID"));

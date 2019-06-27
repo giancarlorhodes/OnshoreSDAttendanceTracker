@@ -16,5 +16,6 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Interfaces
         int AbsentUserID { get; set; }
         DateTime AbsenceDate { get; set; }
         decimal RunningTotal { get; set; }
+        string Status { get; set; }
     }
 }

@@ -23,14 +23,23 @@
         private NavigationDataAccess _menuDAO = new NavigationDataAccess();
         public ActionResult Index()
         { //Get Menu Items
-          // if ((UserPO)Session["UserModel"] != null)
-          // {
-          //var loggedUSer =  (UserPO)Session["UserModel"];
-
+         
             List<INavigationPO> menutItems = NavigationMapper.MapListOfBOsToListOfPOs(NavigationBusinessLogic.NavReOrder( NavigationMapper.MapListOfDOsToListOfBOs(_menuDAO.GetNavigationItemsByRoleID(1))));//loggedUSer.RoleID_FK
              Session["MenuItems"] = menutItems;
-            //  }
+            
             return View();
+        }
+
+        public ActionResult AdminDashboard()
+        {
+            // Emp Name-> Points-> Status
+            // if ((UserPO)Session["UserModel"] != null)
+            // {
+            //var loggedUSer =  (UserPO)Session["UserModel"];
+            List<DashboardViewModel> emps = AbsenceMapper.MapListOfPOsToListOfVMs(AbsenceMapper.MapListOfBOsToListOfPOs(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(AbsenceMapper.MapListOfDOsToListOfBOs( PointsDataAccess.ViewAllAbsences()))));
+
+            //  }
+            return View(emps);
         }
 
         public ActionResult About()

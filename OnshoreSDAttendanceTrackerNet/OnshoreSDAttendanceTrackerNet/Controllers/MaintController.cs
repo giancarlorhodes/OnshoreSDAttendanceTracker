@@ -385,7 +385,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         IAbsenceDO lAbsenceForm = AbsenceMapper.MapAbsencePOtoDO(iViewModel.Absence);
 
                         // Passes form to data access to add event to db
-                        _AbsenceDataAccess.CreateAbsence(lAbsenceForm, iViewModel.Absence.AbsenceTypeID);
+                        _AbsenceDataAccess.CreateAbsence(lAbsenceForm, userPO.UserID);
                         oResponse = RedirectToAction("ViewAllAbsence", "Maint");
                     }
                     catch (Exception ex)

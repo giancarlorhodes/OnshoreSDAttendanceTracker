@@ -1,7 +1,31 @@
-﻿
+﻿@using OnshoreSDAttendanceTrackerNet.Models
+@model OnshoreSDAttendanceTrackerNet.Models.AbsenceViewModel
 @{
-    ViewBag.Title = "ViewAbsencesByTeamID";
+    ViewBag.Title = @Model.Team.Name + "Absence Dashboard";
 }
 
-<h2>ViewAbsencesByTeamID</h2>
+<h2>@Model.Team.Name Absences</h2>
 
+@Html.HiddenFor(model => Model.Absence.AbsenceTypeID)
+@Html.HiddenFor(model => Model.Absence.TeamID_FK)
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Point</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AbsencePO absence in Model.ListOfAbsencePO)
+            {
+                <tr>
+                    <td>@absence.Name</td>
+                    <td>@absence.Point</td>
+                    <td>@absence.Active</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

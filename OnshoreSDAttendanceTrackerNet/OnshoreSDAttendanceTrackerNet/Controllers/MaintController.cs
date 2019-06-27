@@ -459,6 +459,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
             var userPO = (UserPO)Session["UserModel"];
+            // TODO: Query name of team based off teamID parameter.
 
             if (userPO.Email != null && userPO.RoleID_FK <= 3 && userPO.RoleID_FK > 0)
             {
@@ -469,6 +470,8 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         // Stores list of absences by TeamID
                         var absences = new List<IAbsenceDO>();
                         absences = _AbsenceDataAccess.GetAbsenceTypesByTeamID(teamID);
+                        var teamName = _TeamDataAccess.GetTeamByID(teamID);
+                        selectedTeamAbsences.Team.Name = teamName.Name;
 
                         // Maps list of absences from DO to PO
                         foreach(IAbsenceDO absence in absences)

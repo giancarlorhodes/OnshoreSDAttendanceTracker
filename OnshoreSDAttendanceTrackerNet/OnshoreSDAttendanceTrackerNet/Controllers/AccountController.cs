@@ -46,6 +46,8 @@
         [HttpGet]
         public ActionResult Login()
         {
+            //Init Menus
+            Session["MenuItems"]= HomeController.GetMenuItem(HttpContext.Session);
             return View();
         }
 
@@ -86,7 +88,10 @@
                 userVM.User.LastName = _iUserPO.LastName;
                 Session["UserModel"] = userVM.User;
 
-                oResponse = View("ViewUserByUserID", userVM);
+                //refresh Menu for User
+                Session["MenuItems"] = HomeController.GetMenuItem(HttpContext.Session);
+
+                oResponse = RedirectToAction("Dashboards","Home");
             }
             else
             {

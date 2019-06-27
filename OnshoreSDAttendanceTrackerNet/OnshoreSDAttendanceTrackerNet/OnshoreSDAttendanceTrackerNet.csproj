@@ -1968,6 +1968,7 @@
     <Content Include="Views\Account\UpdateUserInfo.cshtml" />
     <Content Include="Views\Maint\ViewUsersByTeamID.cshtml" />
     <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="Views\Home\LeadDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -97,7 +97,7 @@
             // Ensure user is authenticated
             if (ModelState.IsValid)
             {
-                List<TeamDO> doTeamsList = _tda.GetAllTeams();
+                List<ITeamDO> doTeamsList = _tda.GetAllTeams();
                 List<TeamPO> teamsList = new List<TeamPO>();
                 foreach(TeamDO teamDO in doTeamsList)
                 {

@@ -116,10 +116,10 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 try
                 {
                     // Calls GetAllTeams from DAL and stores in allTeams
-                    List<TeamDO> allTeams = _TeamDataAccess.GetAllTeams();
+                    List<ITeamDO> allTeams = _TeamDataAccess.GetAllTeams();
 
                     // Maps from data objects to presentation objects.
-                    //ViewAllTeamsVM.ListOfTeamPO = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
+                    ViewAllTeamsVM.ListOfTeamPO = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
 
                     oResponse = View(ViewAllTeamsVM);
                 }
@@ -503,7 +503,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         ///<summary>
         /// Views all absences for all teams under a Service Manager
         /// </summary>
-        public ActionResult ViewAllAbsencesForSMTeam(int userID, int teamID)
+        public ActionResult ViewAllAbsencesForSMTeam(int teamID)
         {
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
@@ -517,7 +517,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     {
                         var absences = new List<IAbsenceDO>();
                         // Stores list of absences by TeamID
-                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userPO.UserID, userPO.TeamID);
+                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userPO.UserID, teamID);
                         InitializeViewData(selectedTeamAbsences, userPO);
 
                         // Maps list of absences from DO to PO

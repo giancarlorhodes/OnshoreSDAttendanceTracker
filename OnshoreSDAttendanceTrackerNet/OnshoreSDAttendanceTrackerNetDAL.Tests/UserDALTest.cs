@@ -16,7 +16,6 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
             UserID = 1,
             FirstName = "TestUser",
             LastName = "Test",
-            TeamID = 1,
             RoleID_FK = 1,
             Email = "Test@outsourcing.com"
         };
@@ -25,7 +24,6 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
             UserID = 2,
             FirstName = "TestUser2",
             LastName = "Test2",
-            TeamID = 1,
             RoleID_FK = 2,
             Email = "Test@outsourcing.com"
         };
@@ -34,7 +32,6 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
             UserID = 1,
             FirstName = "UpdateUser",
             LastName = "Test2",
-            TeamID = 2,
             RoleID_FK = 1,
             Email = "Test@outsourcing.com"
         };

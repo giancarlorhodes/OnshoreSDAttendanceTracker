@@ -19,5 +19,6 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public DateTime AbsenceDate { get; set; }
         public int TeamMgtID { get; set; }
         public string Status { get; set; }
+        public string EmployeeName { get; set; }
     }
 }

@@ -1,76 +1,51 @@
 ﻿@model OnshoreSDAttendanceTrackerNet.Models.UserViewModel
 
 @{
-    ViewBag.Title = "UpdateUserInfo";
+    /**/
+
+    ViewBag.Title = "ViewUserByUserID";
 }
 
-<h2>UpdateUserInfo</h2>
+<h2>ViewUserByUserID</h2>
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>UserViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ErrorMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ErrorMessage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ErrorMessage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-@*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-@using BasketballScoreBook.Models
-@model BasketballScoreBook.Models.UserViewModel
-
-@{
-    ViewBag.Title = "UpdateUser";
-}
-
-<h2 class="UserHeader">Update User</h2>
-
-@using (Html.BeginForm("UpdateUser", "User", FormMethod.Post))
+@using (Html.BeginForm("UpdateUserInfo", "Account", FormMethod.Post))
 {
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
 
     <div class="UserInfoBox">
         <div class="LabelDisplayTextBoxPos">
             <div class="LabelSpacing">
-                @Html.HiddenFor(m => m.SingleUser.UserID)
+                @Html.HiddenFor(m => m.User.UserID)
             </div>
         </div>
 
         <div class="LabelTextBoxSet">
             <div class="LabelSpacing">
-                @Html.LabelFor(m => m.SingleUser.UserName)
-                @Html.TextBoxFor(m => m.SingleUser.UserName, new { @class = "form-control", placeholder = "m.SingleUser.UserName", @readonly = "readonly" })
+                @Html.LabelFor(m => m.User.FirstName)
+                @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", placeholder = "m.User.FirstName" })
             </div>
-        </div>
 
-        <div class="LabelTextBoxSet">
+
+
             <div class="LabelSpacing">
-                @Html.LabelFor(m => m.SingleUser.RoleID)
-                @Html.TextBoxFor(m => m.SingleUser.RoleID, new { @class = "form-control", placeholder = "m.SingleUser.RoleID", @type = "number" })
+                @Html.LabelFor(m => m.User.LastName)
+                @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", placeholder = "m.User.LastName" })
             </div>
+
+
+            <div class="LabelSpacing">
+                @Html.LabelFor(m => m.User.Email)
+                @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control", placeholder = "m.User.Email" })
+            </div>
+
+
+            <div class="LabelSpacing">
+                @Html.LabelFor(m => m.User.RoleName)
+                @Html.TextBoxFor(m => m.User.RoleName, new { @class = "form-control", placeholder = "m.User.RoleName" })
+            </div>
+
             @*<div class="">
                     @Html.DropDownListFor(m => m.SingleUser.RoleID, new List<SelectListItem>
                         {
@@ -81,10 +56,17 @@
 
                 </div>*@
         </div>
-
     </div>
+
     <div class="UserSubmitBox">
         <input type="submit" value="Submit" />
     </div>
-}*@
+}
 
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

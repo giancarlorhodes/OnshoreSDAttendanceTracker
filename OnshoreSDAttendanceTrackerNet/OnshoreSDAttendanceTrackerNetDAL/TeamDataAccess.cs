@@ -87,7 +87,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 newTeam.TeamID = reader.GetInt32(0);
                                 newTeam.Name = reader.GetString(1);
                                 newTeam.Comment = reader["Comment"].ToString();
-                                newTeam.Active = reader.GetInt32(3);
+                                var active = reader.GetInt32(3);
+                                newTeam.Active = active != 0;
                                 teams.Add(newTeam);
                             }
                         }
@@ -124,7 +125,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
                                 newTeam.Name = reader["Name"].ToString();
                                 newTeam.Comment = reader["Comment"].ToString();
-                                newTeam.Active = (int)reader["Active"];
+                                var active = reader.GetInt32(3);
+                                newTeam.Active = active != 0;
                             }
 
                         }
@@ -171,7 +173,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
                                 newTeam.Name = reader["Name"].ToString();
                                 newTeam.Comment = reader["Comments"].ToString();
-                                newTeam.Active = (int)reader["Active"];
+                                var active = reader.GetInt32(3);
+                                newTeam.Active = active != 0;
                                 listOfTeams.Add(newTeam);
                             }
                         }

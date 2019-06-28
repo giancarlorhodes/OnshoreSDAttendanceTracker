@@ -18,6 +18,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
         int AbsentUserID { get; set; }
         DateTime AbsenceDate { get; set; }
         decimal RunningTotal { get; set; }
+        string EmployeeName { get; set; }
     }
 
 

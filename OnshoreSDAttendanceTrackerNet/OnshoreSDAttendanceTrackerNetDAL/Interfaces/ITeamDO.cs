@@ -9,6 +9,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
         int TeamID { get; set; }
         string Name { get; set; }
         string Comment { get; set; }
-        int Active { get; set; }
+        bool Active { get; set; }
     }
 }

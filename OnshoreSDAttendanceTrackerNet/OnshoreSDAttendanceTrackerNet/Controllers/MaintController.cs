@@ -1,6 +1,7 @@
 ﻿using OnshoreSDAttendanceTrackerErrorLogger;
 using OnshoreSDAttendanceTrackerNet.AutoMapper;
 using OnshoreSDAttendanceTrackerNet.Models;
+using OnshoreSDAttendanceTrackerNet.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
@@ -145,7 +146,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var selectedUserTeams = new TeamViewModel();
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             if (ModelState.IsValid)
             {
@@ -418,7 +419,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult ViewAllAbsenceEntries()
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
             var ViewAllAbsenceEntries = new AbsenceViewModel();
 
             // User can view all absences if Admin

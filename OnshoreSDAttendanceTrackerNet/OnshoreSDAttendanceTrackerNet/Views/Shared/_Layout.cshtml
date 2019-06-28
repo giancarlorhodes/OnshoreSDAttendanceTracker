@@ -1,6 +1,9 @@
 ﻿@using OnshoreSDAttendanceTrackerNet.Interfaces;
 @using OnshoreSDAttendanceTrackerNet.Models;
 
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,15 +16,13 @@
     <link href="~/fonts/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-
-    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="~/Scripts/sb-admin-2.min.js"></script>*@
+   
 </head>
 <body id="page-top">
 
+    
     <div id="wrapper" style="margin-top:-50px;">
+        <!--Side Bar-->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -43,8 +44,7 @@
                 {
                     <li class="nav-item">
                         @if (menu.ParentNavigationID == 0)
-                        {
-
+                        { 
                             if (menu.HasChild == true)
                             {
                                 <a class="nav-link" data-toggle="collapse" data-target="#collapse_@menu.NavigationID" aria-expanded="true" aria-controls="collapse_@menu.NavigationID" href="#">
@@ -208,13 +208,10 @@
             </footer>
             <!-- End of Footer -->
 
-
         </div>
              
     </div>
-    
-
-
+     
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

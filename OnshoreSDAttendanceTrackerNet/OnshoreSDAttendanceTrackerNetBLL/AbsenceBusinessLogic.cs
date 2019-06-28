@@ -57,7 +57,31 @@ namespace OnshoreSDAttendanceTrackerNetBLL
 
             foreach (IAbsenceBO item in absences)
             {
-                if (item.RunningTotal>=10)
+                if (item.Point >= 10)
+                {
+                    item.Status = "Pip+";
+                }
+                else if (item.Point >= 8)
+                {
+                    item.Status = "Pip";
+                }
+                else if (item.Point >= 5)
+                {
+                    item.Status = "At-Risk";
+                }
+                else if (item.Point <5)
+                {
+                    item.Status = "Good Standing";
+                }
+            }
+
+            return absences;
+
+        }
+        /*
+         TODO: Change once RunningTotal is functional
+
+        if (item.RunningTotal>=10)
                 {
                     item.Status = "Pip+";
                 }
@@ -73,11 +97,7 @@ namespace OnshoreSDAttendanceTrackerNetBLL
                 {
                     item.Status = "Good Standing";
                 }
-            }
-
-            return absences;
-
-        }
+         */
     }
 
 

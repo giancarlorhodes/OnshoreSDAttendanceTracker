@@ -109,5 +109,17 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
 
             return oMenu;
         }
+        public static INavigationBO MapMenuPOtoBO(NavigationPO menuPO)
+        {
+            INavigationBO oMenu = new NavigationBO();
+            oMenu.NavigationID = menuPO.NavigationID;
+            oMenu.MenuItem = menuPO.MenuItem;
+            oMenu.URL = menuPO.URL;
+            oMenu.RoleID = menuPO.RoleID;
+            oMenu.ParentNavigationID = menuPO.ParentNavigationID;
+            oMenu.Order = menuPO.Order;
+
+            return oMenu;
+        }
     }
 }

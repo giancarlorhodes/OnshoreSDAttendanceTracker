@@ -12,13 +12,17 @@ using System.Data.SqlClient;
 
 namespace OnshoreSDAttendanceTrackerNetDAL
 {
-    public class NavigationDataAccess
+    public static class NavigationDataAccess
     {
-        private string _conString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
+        private static string _conString;
 
+        static NavigationDataAccess()
+        {
+            _conString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
 
+        }
         //READ
-        public List<INavigationDO> GetNavigationItemsByRoleID(int roleID)
+        public static List<INavigationDO> GetNavigationItemsByRoleID(int roleID)
         {
             var menu = new List<INavigationDO>();
 

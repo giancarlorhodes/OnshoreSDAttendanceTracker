@@ -14,7 +14,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         public string ConnectionParms { get; private set; } = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
       
         #region CreateUser
-        public void CreateUser(IUserDO iUser)
+        public void CreateUser(IUserDO iUser, int TeamID)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             createComm.CommandTimeout = 35;
 
                             createComm.Parameters.AddWithValue("@CreatedByUserId", SqlDbType.Int).Value = iUser.UserID;
-                            createComm.Parameters.AddWithValue("@TeamId", SqlDbType.Int).Value = iUser.TeamID;
+                            createComm.Parameters.AddWithValue("@TeamId", SqlDbType.Int).Value = TeamID;
                             createComm.Parameters.AddWithValue("@RoldeId", SqlDbType.Int).Value = iUser.RoleID_FK;
                             createComm.Parameters.AddWithValue("@Email", SqlDbType.VarChar).Value = iUser.Email;
                             createComm.Parameters.AddWithValue("@FName", SqlDbType.VarChar).Value = iUser.FirstName;
@@ -78,14 +78,16 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
                             using (SqlDataReader reader = getUserComm.ExecuteReader())
                             {
-                                user.UserID = reader.GetInt32(reader.GetOrdinal("UserID"));
-                                user.FirstName = (string)reader["FirstName"];
-                                user.LastName = (string)reader["LastName"];
-                                user.RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID"));
-                                user.Email = (string)reader["Email"];
-                                user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
-                                //user.TeamManagementID = reader.GetInt32(reader.GetOrdinal("TeamManagementID"));
-
+                                while (reader.Read())
+                                {
+                                    user.UserID = reader.GetInt32(reader.GetOrdinal("UserID"));
+                                    user.FirstName = (string)reader["FirstName"];
+                                    user.LastName = (string)reader["LastName"];
+                                    user.RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID"));
+                                    user.Email = (string)reader["Email"];
+                                    // user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                    //user.TeamManagementID = reader.GetInt32(reader.GetOrdinal("TeamManagementID"));
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -143,8 +145,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 user.LastName = (string)reader["LastName"];
                                 user.RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID_FK"));
                                 user.Email = (string)reader["Email"];
-                                user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
-                               // user.NewTeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                user.Active = Convert.ToBoolean(reader.GetOrdinal("Active"));
+                                // user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                // user.NewTeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
 
                                 listOfDBUsers.Add(user);
                             }
@@ -178,11 +181,11 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             updateComm.Parameters.AddWithValue("@UserID", iUser.UserID);
                             updateComm.Parameters.AddWithValue("@ModifiedByUserId", iUser.UserID);
                             updateComm.Parameters.AddWithValue("@RoleId", iUser.RoleID_FK);
-                            updateComm.Parameters.AddWithValue("@TeamId", iUser.TeamID);
-                            updateComm.Parameters.AddWithValue("@TeamManagementId", iUser.TeamManagementID);
                             updateComm.Parameters.AddWithValue("@Email", iUser.Email);
                             updateComm.Parameters.AddWithValue("@FName", iUser.FirstName);
-                            updateComm.Parameters.AddWithValue("@LName", iUser.LastName);
+                            updateComm.Parameters.AddWithValue("@LName", iUser.LastName);  
+                            // updateComm.Parameters.AddWithValue("@TeamId", iUser.TeamID);
+                           // updateComm.Parameters.AddWithValue("@TeamManagementId", iUser.TeamManagementID);
 
 
                         }
@@ -241,6 +244,47 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         }
         #endregion
 
+        public List<RoleDO> GetAllRoles()
+        {
+            List<RoleDO> listOfRoles = new List<RoleDO>();
+            SqlCommand getComm = null;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionParms))
+                {
+
+                    using (getComm = new SqlCommand("sp_GetRoles"))
+                    {
+                        getComm.CommandType = CommandType.StoredProcedure;
+                        getComm.CommandTimeout = 35;
+
+                        getComm.Connection = conn;
+                        conn.ConnectionString = ConnectionParms;
+                        conn.Open();
+
+                        using (SqlDataReader reader = getComm.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                RoleDO role = new RoleDO();
+                               role.RoleID = reader.GetInt32(reader.GetOrdinal("RoleID"));
+                               role.RoleNameShort = (string)reader["RoleNameShort"];
+                               role.RoleNameLong = (string)reader["RoleNameLong"];
+                               role.Comment = (string)reader["Comment"];
+
+                                listOfRoles.Add(role);
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "GetAllUsers", "nothing");
+            }
+            return listOfRoles;
+        }
 
     }
 }

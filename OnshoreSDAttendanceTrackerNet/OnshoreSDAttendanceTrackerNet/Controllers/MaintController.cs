@@ -1,8 +1,10 @@
 ﻿using OnshoreSDAttendanceTrackerErrorLogger;
 using OnshoreSDAttendanceTrackerNet.AutoMapper;
 using OnshoreSDAttendanceTrackerNet.Models;
+using OnshoreSDAttendanceTrackerNet.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
+using OnshoreSDAttendanceTrackerNetDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -144,7 +146,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var selectedUserTeams = new TeamViewModel();
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             if (ModelState.IsValid)
             {
@@ -417,7 +419,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult ViewAllAbsenceEntries()
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
             var ViewAllAbsenceEntries = new AbsenceViewModel();
 
             // User can view all absences if Admin
@@ -502,7 +504,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         ///<summary>
         /// Views all absences for all teams under a Service Manager
         /// </summary>
-        public ActionResult ViewAllAbsencesForSMTeam(int userID, int teamID)
+        public ActionResult ViewAllAbsencesForSMTeam(int teamID)
         {
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
@@ -516,7 +518,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     {
                         var absences = new List<IAbsenceDO>();
                         // Stores list of absences by TeamID
-                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userPO.UserID, userPO.TeamID);
+                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userPO.UserID, teamID);
                         InitializeViewData(selectedTeamAbsences, userPO);
 
                         // Maps list of absences from DO to PO

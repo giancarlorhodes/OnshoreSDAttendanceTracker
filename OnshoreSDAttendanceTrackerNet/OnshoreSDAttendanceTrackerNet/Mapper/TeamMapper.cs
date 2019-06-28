@@ -17,7 +17,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             var listOfTeamBOs = new List<ITeamBO>();
 
             // Iterate through DOs
-            foreach(ITeamDO team in teamDOs)
+            foreach (ITeamDO team in teamDOs)
             {
                 var teamPO = MapTeamDOtoBO(team);
                 listOfTeamBOs.Add(teamPO);
@@ -31,7 +31,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             var listOfTeamPOs = new List<TeamPO>();
 
             // Iterate through DOs
-            foreach(ITeamDO team in teamDOs)
+            foreach (ITeamDO team in teamDOs)
             {
                 var teamPO = MapTeamDOtoPO(team);
                 listOfTeamPOs.Add(teamPO);

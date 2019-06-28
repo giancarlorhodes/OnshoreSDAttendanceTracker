@@ -57,7 +57,6 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public int TeamID { get => ((ITeamPO)TeamPO).TeamID; set => ((ITeamPO)TeamPO).TeamID = value; }
         public string Name { get => ((ITeamPO)TeamPO).Name; set => ((ITeamPO)TeamPO).Name = value; }
         public string Comment { get => ((ITeamPO)TeamPO).Comment; set => ((ITeamPO)TeamPO).Comment = value; }
-        int ITeamPO.Active { get => ((ITeamPO)TeamPO).Active; set => ((ITeamPO)TeamPO).Active = value; }
 
         public int RoleID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string RoleNameShort { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

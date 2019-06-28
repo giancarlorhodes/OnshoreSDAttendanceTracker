@@ -81,7 +81,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                 using (SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
 
-                    using (SqlCommand getComm = new SqlCommand("sp_GetAttendances"))
+                    using (SqlCommand getComm = new SqlCommand("sp_GetAllAbsencesAdmin", conn))
                     {
                         getComm.CommandType = CommandType.StoredProcedure;
                         getComm.CommandTimeout = 35;
@@ -92,11 +92,15 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             while (reader.Read())
                             {
                                 IAbsenceDO absenceType = new AbsenceDO();
-                                absenceType.AbsenceTypeID = reader.GetInt32(reader.GetOrdinal("AbsenceTypeID"));
-                                absenceType.Name = (string)reader["Name"];
-                                absenceType.Point = reader.GetInt32(reader.GetOrdinal("Point"));
-                                absenceType.Active = (bool)reader["Active"];
-                                absenceType.TeamID_FK = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                absenceType.AbsenceTypeID = reader.GetInt32(0);
+                                absenceType.EmployeeName = reader.GetValue(reader.GetOrdinal("EmployeeName")).ToString();
+                                absenceType.Name = reader.GetString(2);
+                                absenceType.Point = reader.GetDecimal(3);
+                                absenceType.Comments = reader.GetString(4);
+                                absenceType.AbsenceDate = reader.GetDateTime(5);
+                                absenceType.AbsentUserID = reader.GetInt32(7);
+                                absenceType.TeamID_FK = reader.GetInt32(8);
+                                absenceType.TeamMgtID = (int)reader["TeamMgtID"];
 
                                 listOfAbsenceTypes.Add(absenceType);
                             }

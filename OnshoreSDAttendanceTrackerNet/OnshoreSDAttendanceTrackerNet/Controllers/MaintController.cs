@@ -3,9 +3,11 @@ using OnshoreSDAttendanceTrackerNet.AutoMapper;
 using OnshoreSDAttendanceTrackerNet.Models;
 using OnshoreSDAttendanceTrackerNetDAL;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
+using OnshoreSDAttendanceTrackerNetDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Text;
 using System.Web.Mvc;
 
 namespace OnshoreSDAttendanceTrackerNet.Controllers
@@ -459,6 +461,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
             var userPO = (UserPO)Session["UserModel"];
+            // TODO: Query name of team based off teamID parameter.
 
             if (userPO.Email != null && userPO.RoleID_FK <= 3 && userPO.RoleID_FK > 0)
             {
@@ -469,6 +472,8 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         // Stores list of absences by TeamID
                         var absences = new List<IAbsenceDO>();
                         absences = _AbsenceDataAccess.GetAbsenceTypesByTeamID(teamID);
+                        var teamName = _TeamDataAccess.GetTeamByID(teamID);
+                        selectedTeamAbsences.Team.Name = teamName.Name;
 
                         // Maps list of absences from DO to PO
                         foreach(IAbsenceDO absence in absences)
@@ -498,7 +503,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         ///<summary>
         /// Views all absences for all teams under a Service Manager
         /// </summary>
-        public ActionResult ViewAllAbsencesForSMTeam(int userID, int teamID)
+        public ActionResult ViewAllAbsencesForSMTeam(int teamID)
         {
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
@@ -510,9 +515,10 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 {
                     try
                     {
-                        // Stores list of absences by TeamID
                         var absences = new List<IAbsenceDO>();
-                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userID, teamID);
+                        // Stores list of absences by TeamID
+                        absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userPO.UserID, teamID);
+                        InitializeViewData(selectedTeamAbsences, userPO);
 
                         // Maps list of absences from DO to PO
                         foreach (IAbsenceDO absence in absences)
@@ -538,6 +544,12 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             return oResponse;
         }
 
+        private void InitializeViewData(AbsenceViewModel selectedTeamAbsences, UserPO userPO)
+        {               
+            var smName = new StringBuilder(selectedTeamAbsences.User.FirstName, 25);
+            ViewBag.Name = smName.Append(" " + selectedTeamAbsences.User.LastName);
+        }
+
         [HttpGet]
         ///<summary>
         /// Retrieves form for the given absence selected
@@ -553,6 +565,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
                 // Retrieve selected absence
                 IAbsenceDO absenceDO = _AbsenceDataAccess.UpdateAbsenceType(iAbsence, absenceID);
+                ViewBag.Name = "Modify Employee Absence";
 
                 // Maps absence DO to PO
                 absenceVM.Absence = AbsenceMapper.MapAbsenceDOtoPO(absenceDO);

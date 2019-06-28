@@ -29,7 +29,7 @@
 
         public ActionResult Dashboards()
         {
-            var curUser = (UserPO)Session["UserModel"];
+            var curUser = (IUserPO)Session["UserModel"];
             if (curUser.RoleID_FK== (int)RoleEnum.Administrator || curUser.RoleID_FK == (int)RoleEnum.Service_Manager)
             {
                 return RedirectToAction("AdminDashboard");
@@ -80,18 +80,18 @@
 
         public static List<INavigationPO> GetMenuItem(HttpSessionStateBase session)
         {
-            UserPO curUser = new UserPO();
+            IUserPO curUser = new UserPO();
             curUser = GetCurrentUserID(session, curUser);
             List<INavigationPO> menutItems = NavigationMapper.MapListOfBOsToListOfPOs(NavigationBusinessLogic.NavReOrder(NavigationMapper.MapListOfDOsToListOfBOs(NavigationDataAccess.GetNavigationItemsByRoleID(curUser.RoleID_FK)),curUser.UserID));//loggedUSer.RoleID_FK
             //TODO: Implement AutoMapper List<INavigationPO> menutItems = Mapper.Map<List<INavigationBO>, List<INavigationPO>>(NavigationBusinessLogic.NavReOrder(menus,curUser.UserID));//loggedUSer.RoleID_FK
             return menutItems;
         }
         
-        private static UserPO GetCurrentUserID(HttpSessionStateBase session, UserPO curUser)
+        private static IUserPO GetCurrentUserID(HttpSessionStateBase session, IUserPO curUser)
         {
             if (session["UserModel"] != null)
             {
-                curUser = (UserPO)session["UserModel"];
+                curUser = (IUserPO)session["UserModel"];
             }
             else
             {

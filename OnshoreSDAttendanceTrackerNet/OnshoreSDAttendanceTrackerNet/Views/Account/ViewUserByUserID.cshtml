@@ -1,52 +1,52 @@
 ﻿@model OnshoreSDAttendanceTrackerNet.Models.UserViewModel
 @*@model OnshoreSDAttendanceTrackerNet.Models*@
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "ViewUserByUserID";
+    ViewBag.Title = "ViewUserByUserID";
 }
 
 <h2>ViewUserByUserID</h2>
 
 
-@using (Html.BeginForm("UpdateUserInfo", "Account", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     @Html.AntiForgeryToken()
 
-    <div class="UserInfoBox">
-        <div class="LabelDisplayTextBoxPos">
-            <div class="LabelSpacing">
-                @Html.HiddenFor(m => m.User.UserID)
-            </div>
+    < div class="UserInfoBox">
+    <div class="LabelDisplayTextBoxPos">
+        <div class="LabelSpacing">
+            @Html.HiddenFor(m => m.User.UserID)
+        </div>
+    </div>
+
+    <div class="LabelTextBoxSet">
+        <div class="LabelSpacing">
+            @Html.LabelFor(m => m.User.FirstName)
+            @Html.DisplayFor(m => m.User.FirstName, new { @class = "form-control", placeholder = "m.User.FirstName" })
         </div>
 
-        <div class="LabelTextBoxSet">
-            <div class="LabelSpacing">
-                @Html.LabelFor(m => m.User.FirstName)
-                @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", placeholder = "m.User.FirstName" })
-            </div>
-       
 
-      
-            <div class="LabelSpacing">
-                @Html.LabelFor(m => m.User.LastName)
-                @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", placeholder = "m.User.LastName" })
-            </div>
 
-            
-                <div class="LabelSpacing">
-                    @Html.LabelFor(m => m.User.Email)
-                    @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control", placeholder = "m.User.Email" })
-                </div>
+        <div class="LabelSpacing">
+            @Html.LabelFor(m => m.User.LastName)
+            @Html.DisplayFor(m => m.User.LastName, new { @class = "form-control", placeholder = "m.User.LastName" })
+        </div>
 
-               
-                    <div class="LabelSpacing">
-                        @Html.LabelFor(m => m.User.RoleName)
-                        @Html.TextBoxFor(m => m.User.RoleName, new { @class = "form-control", placeholder = "m.User.RoleName" })
-                    </div>
 
-                    @*<div class="">
+        <div class="LabelSpacing">
+            @Html.LabelFor(m => m.User.Email)
+            @Html.DisplayFor(m => m.User.Email, new { @class = "form-control", placeholder = "m.User.Email" })
+        </div>
+
+
+        <div class="LabelSpacing">
+            @Html.LabelFor(m => m.User.RoleName)
+            @Html.DisplayFor(m => m.User.RoleName, new { @class = "form-control", placeholder = "m.User.RoleName" })
+        </div>
+
+        @*<div class="">
                 @Html.DropDownListFor(m => m.SingleUser.RoleID, new List<SelectListItem>
                     {
                     new SelectListItem {Text=" -- ", },
@@ -55,18 +55,16 @@
                     new SelectListItem {Text="3" } })
 
             </div>*@
-                </div>
-            </div>
-            
-    <div class="UserSubmitBox">
-        <input type="submit" value="Submit" />
     </div>
-}
+    <td>@Html.ActionLink("Update User", "UpdateUserInfo", "Account", routeValues: new { UserID = Model.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })</td>
+    <td>@Html.ActionLink("Password Reset", "PasswordReset", "Account", routeValues: new { UserID = Model.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })</td>
+    <td>@Html.ActionLink("Delete User", "DeleteUser", "Account", routeValues: new { UserID = Model.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm", onclick = "return confirm('Are you sure you want to delete this user?')" })</td>
+ }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

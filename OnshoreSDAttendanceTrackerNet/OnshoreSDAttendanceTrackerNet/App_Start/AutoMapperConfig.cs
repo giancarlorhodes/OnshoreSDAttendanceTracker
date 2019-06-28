@@ -1,14 +1,14 @@
 ﻿using OnshoreSDAttendanceTrackerNet.Models;
 using OnshoreSDAttendanceTrackerNetBLL.Models;
-using OnshoreSDAttendanceTrackerNetDAL.Models;
-using System;
-using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using OnshoreSDAttendanceTrackerNetBLL.Interfaces;
 using OnshoreSDAttendanceTrackerNet.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
+using OnshoreSDAttendanceTrackerNetDAL.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using AutoMapper;
 
 namespace OnshoreSDAttendanceTrackerNet.App_Start
 {
@@ -19,14 +19,17 @@ namespace OnshoreSDAttendanceTrackerNet.App_Start
             Mapper.Initialize(cfg =>
             {
                 //user mappings
-                cfg.CreateMap<IUserLoginBO, IUserLoginPO>();
-                cfg.CreateMap<IUserLoginDO,IUserLoginBO > ();
+                cfg.CreateMap<IUserDO, IUserBO>();
                 cfg.CreateMap<UserBO, UserPO>();
+                cfg.CreateMap<UserDO, UserPO>();
+                cfg.CreateMap<UserPO, UserDO>();
                 cfg.CreateMap<IUserBO, IUserPO>();
                 cfg.CreateMap<IUserDO, IUserPO>();
                 cfg.CreateMap<UserPO, IUserDO>();
                 cfg.CreateMap<List<IUserDO>,List<IUserBO>>();
                 cfg.CreateMap<List<IUserDO>, List<IUserPO>>();
+                cfg.CreateMap<List<IUserDO>, List<UserPO>>();
+
 
                 //userCred mappings
                 cfg.CreateMap<UserCredentialsBO,UserCredentialPO>();
@@ -38,11 +41,14 @@ namespace OnshoreSDAttendanceTrackerNet.App_Start
 
                 //team mappings
                 cfg.CreateMap<TeamBO,TeamPO>();
+                cfg.CreateMap<TeamDO, TeamPO>();
                 cfg.CreateMap<ITeamDO, ITeamBO>();
+                cfg.CreateMap<ITeamDO, ITeamPO>();
                 cfg.CreateMap<ITeamDO, TeamPO>();
                 cfg.CreateMap<TeamPO, ITeamDO>();
                 cfg.CreateMap<List<ITeamDO>,List<ITeamBO>>();
                 cfg.CreateMap<List<ITeamDO>,List<TeamPO>>();
+                cfg.CreateMap<List<TeamDO>, List<TeamPO>>();
 
                 //absence mappings
                 cfg.CreateMap<AbsenceBO, AbsencePO>();

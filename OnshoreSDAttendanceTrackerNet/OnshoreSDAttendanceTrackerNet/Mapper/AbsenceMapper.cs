@@ -88,6 +88,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Comments = absenceBO.Comments;
             oAbsence.RunningTotal = absenceBO.RunningTotal;
             oAbsence.TeamMgtID = absenceBO.TeamMgtID;
+            oAbsence.EmployeeName = absenceBO.EmployeeName;
 
             return oAbsence;
         }
@@ -105,6 +106,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Comments = absenceDO.Comments;
             oAbsence.RunningTotal = absenceDO.RunningTotal;
             oAbsence.TeamMgtID = absenceDO.TeamMgtID;
+            oAbsence.EmployeeName = absenceDO.EmployeeName;
             return oAbsence;
         }
 
@@ -121,6 +123,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Comments = absenceDO.Comments;
             oAbsence.RunningTotal = absenceDO.RunningTotal;
             oAbsence.TeamMgtID = absenceDO.TeamMgtID;
+            oAbsence.EmployeeName = absenceDO.EmployeeName;
 
             return oAbsence;
         }
@@ -138,6 +141,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Comments = absencePO.Comments;
             oAbsence.RunningTotal = absencePO.RunningTotal;
             oAbsence.TeamMgtID = absencePO.TeamMgtID;
+            oAbsence.EmployeeName = absencePO.EmployeeName;
             return oAbsence;
         }
     }

@@ -33,6 +33,7 @@
     /// Need use form authetication
     /// https://www.youtube.com/watch?v=OOk-HF0bB_g
     /// </summary>
+    [Authorize]
     public class AccountController : Controller
     {
         UserCredentialsDataAccess _ucda = new UserCredentialsDataAccess();
@@ -43,6 +44,7 @@
         /// 
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Login()
         {
@@ -56,42 +58,24 @@
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(UserLoginPO userPO)
+        public ActionResult Login(UserViewModel loginVM)
         {
             ActionResult oResponse = null;
-            // db call
 
-            IUserLoginDO _dbUser = new UserLoginDO();
-            IUserLoginBO _userBO = new UserLoginBO();
-            IUserLoginPO _iUserPO = new UserLoginPO();
-            UserViewModel userVM = new UserViewModel();
-
-            _userBO.Email = userPO.Email;
-            _userBO.Password = userPO.Password;
-
-
-
-            if ((_userBO = _userBLL.CheckUserLogin(_userBO)) != null)
+            IUserBO returnUserBO = new UserBO();
+            if ((returnUserBO = _userBLL.CheckUserLogin(loginVM.User.Email, loginVM.UserCred.UserPassword)) != null)
             {
-                
-                _iUserPO = Mapper.Map<IUserLoginBO, IUserLoginPO>(_userBO);
+                IUserPO _iUserPO = new UserPO();
+                _iUserPO = Mapper.Map<IUserBO, IUserPO>(returnUserBO);
                
-                FormsAuthentication.SetAuthCookie(_userBO.Email, false);
+                FormsAuthentication.SetAuthCookie(_iUserPO.Email, false);
+                Session["UserModel"] = _iUserPO;
 
-
-                userVM.User.UserID = _iUserPO.UserID;
-                userVM.User.Email = _iUserPO.Email;
-                userVM.User.RoleID_FK = _iUserPO.RoleID_FK;
-                userVM.User.RoleName = _iUserPO.RoleNameLong;
-                userVM.User.FirstName = _iUserPO.FirstName;
-                userVM.User.LastName = _iUserPO.LastName;
-                Session["UserModel"] = userVM.User;
-
-                //refresh Menu for User
+                //Refresh Menus
                 Session["MenuItems"] = HomeController.GetMenuItem(HttpContext.Session);
-
-                oResponse = RedirectToAction("Dashboards","Home");
+                oResponse = RedirectToAction("Dashboards", "Home");
             }
             else
             {
@@ -100,6 +84,85 @@
 
             return oResponse;
         }
+
+
+
+        [HttpGet]
+        ///<summary>
+        /// Gets form for creating a new User
+        ///first, last, email, team, role(Admin, SM, TL)
+        /// </summary>
+        public ActionResult CreateUser()
+        {
+            ActionResult oResponse = null;
+
+            // Ensure user is authenticated
+            if (ModelState.IsValid)
+            {
+                List<ITeamDO> doTeamsList = _tda.GetAllTeams();
+                List<TeamPO> teamsList = new List<TeamPO>();
+                foreach(TeamDO teamDO in doTeamsList)
+                {
+                    TeamPO teamPO = Mapper.Map<TeamDO,TeamPO>(teamDO);
+                    teamsList.Add(teamPO);
+                }
+                ViewBag.TeamsList = teamsList;
+
+                //TODO: pull all roles names and Ids for dropDown List
+
+                //refresh Menu for User
+                Session["MenuItems"] = HomeController.GetMenuItem(HttpContext.Session);
+
+                oResponse = RedirectToAction("Dashboards","Home");
+            }
+            else
+            {
+                // User doesn't have access, redirect
+                oResponse = RedirectToAction("Index", "Home");
+            }
+            return oResponse;
+        }
+
+        [HttpPost]
+        // TODO: Uncomment when ready to touch OWASP
+        // [Authorize][ValidateAntiForgeryToken]
+        ///<summary>
+        /// Sends request to database for creating a new team
+        /// </summary>
+        public ActionResult CreateUser(UserViewModel newUser)
+        {
+            ActionResult oResponse = null;
+
+            // Ensure user is authenticated
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        // Map UserLogin properties from presentation to data objects
+                        IUserDO newUserDO = Mapper.Map<IUserPO, IUserDO>(newUser.User);
+
+                        // new User sent to UserCredDAL to add
+                        _uda.CreateUser(newUserDO, newUser.TeamPO.TeamID);
+
+                        oResponse = View("ViewUserByUserID", newUser);
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, "CreateUser", "Account");
+                        newUser.ErrorMessage = ""; // TODO: Add meaningful message
+
+                        oResponse = View(newUser);
+                    }
+                }
+            else
+            {
+                // User doesn't have access
+                oResponse = RedirectToAction("Index", "Home");
+            }
+            return oResponse;
+        }
+
+        
 
         [HttpGet]
         ///<summary>
@@ -113,10 +176,10 @@
 
             if (ModelState.IsValid)
             {
-                if (userPO.Email != null && userPO.RoleID_FK < 0 && userPO.RoleID_FK <= 2)
-                {
                     try
                     {
+                    //TODO: pull userCred and Team for update
+
                         //stores data access user
                         IUserDO userDO = _uda.GetUserByID(userPO.UserID);
 
@@ -132,12 +195,7 @@
 
                         oResponse = View(selectedUser);
                     }
-                }
-                else
-                {
-                    oResponse = View(selectedUser);
-                }
-            }
+                }                         
             else
             {
                 oResponse = View(selectedUser);
@@ -149,50 +207,119 @@
 
 
 
-        //[HttpPost]
+        [HttpPost]
+        ///<summary>
+        /// Updates information for a User
+        /// first,last, email, team, role  (Admin, SM,TL)
+        /// </summary>
+        public ActionResult UpdateUserInfo(UserViewModel userToUpdateVM)
+        {
+            ActionResult oResponse = null;
 
-        ////[Authorize][ValidateAntiForgeryToken]
-        /////<summary>
-        ///// Updates information for a User
-        ///// </summary>
-        //public ActionResult UpdateUserInfo(UserViewModel userToUpdateVM)
-        //{
-        //    ActionResult oResponse = null;
-        //    var userPO = (UserPO)Session["UserModel"];
+            // Ensure user is authenticated
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                    //TODO: Map userCred and Team for update
 
-        //    // Ensure user is authenticated
-        //    if (userPO.Email != null && userPO.RoleID_FK == 1)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            try
-        //            {
-        //                // Map user from presentation to data objects
-        //                UserDO userUpdateDO = Mapper.Map<UserPO, UserDO>(userToUpdateVM.User);
+                        // Map user from presentation to data objects
+                        UserDO userUpdateDO = Mapper.Map<UserPO, UserDO>(userToUpdateVM.User);
 
-        //                // Passes form to be updated
-        //                _uda.UpdateUser(userUpdateDO);
+                        // Passes form to be updated
+                        _uda.UpdateUser(userUpdateDO);
 
-        //                oResponse = View("ViewUserByUserID", userToUpdateVM.User.UserID);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                ErrorLogger.LogError(ex, "UpdateUserInfo", "Account");
-        //                userToUpdateVM.ErrorMessage = "Cannot update user info"; // TODO Add meaningful message for user
+                        oResponse = View("ViewUserByUserID", userToUpdateVM.User.UserID);
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, "UpdateUserInfo", "Account");
+                        userToUpdateVM.ErrorMessage = "Cannot update user info"; // TODO Add meaningful message for user
 
-        //                oResponse = View(userToUpdateVM);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            oResponse = View(userToUpdateVM);
-        //        }
-        //    }
+                        oResponse = View(userToUpdateVM);
+                    }
+                }
+                else
+                {
+                    oResponse = View(userToUpdateVM);
+                }
+            return oResponse;
+        }
 
-        //    return oResponse;
-        //}
 
-      
+        [HttpGet]
+        public ActionResult DeleteUser(int userToDelId, int modifiedByUserId, int teamID)
+        {
+            _uda.RemoveUser(userToDelId, modifiedByUserId);
+
+            return RedirectToAction("ViewUsersByTeamID", "Maint", teamID);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult PasswordReset(int UserID)
+        {
+            UserViewModel userToUpdate = new UserViewModel();
+            userToUpdate.User.UserID = UserID;
+
+            return View("PasswordReset", userToUpdate);
+        }
+
+        [HttpPost]
+        public ActionResult PasswordReset(UserViewModel userNewPasswordVM)
+        {
+            UserViewModel updatedUserPassword = new UserViewModel();
+            updatedUserPassword.User.UserID = userNewPasswordVM.User.UserID;
+            updatedUserPassword.UserCred.UserPassword = userNewPasswordVM.UserCred.UserPassword;
+
+           
+
+            return RedirectToAction("ViewUsers", "User");
+        }
+
+
+
+        [HttpGet]
+        ///<summary>
+        /// Views all users by team
+        /// </summary>
+        public ActionResult ViewAllUsers()
+        {
+            ActionResult oResponse = null;
+            UserViewModel ViewAllUsersVM = new UserViewModel();
+
+            // Ensures authenticated
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Calls GetAllUsers from DAL and stores in allUsersDO
+                    List<IUserDO> allUsersDO = _uda.GetAllUsers();
+
+                    foreach(IUserDO userDO in allUsersDO)
+                    {
+                        UserPO userPO = Mapper.Map<IUserDO, UserPO>(userDO);
+                        ViewAllUsersVM.ListOfUserPO.Add(userPO);
+                    }
+
+                    oResponse = View(ViewAllUsersVM);
+                }
+                catch (Exception ex)
+                {
+                    ErrorLogger.LogError(ex, "ViewAllUsers", "Account");
+                    ViewAllUsersVM.ErrorMessage = ""; // TODO: Add meaningful front end message
+                }
+            }
+            else
+            {
+                oResponse = RedirectToAction("Index", "Home");
+            }
+
+            return oResponse;
+        }
+
+
         [HttpGet]
         public void LogOut()
         {

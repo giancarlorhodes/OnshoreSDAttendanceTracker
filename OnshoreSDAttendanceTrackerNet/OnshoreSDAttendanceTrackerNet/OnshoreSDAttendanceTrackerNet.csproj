@@ -145,9 +145,9 @@
     <Compile Include="Interfaces\IAbsencePO.cs" />
     <Compile Include="Interfaces\IExceptionPO.cs" />
     <Compile Include="Interfaces\INavigationPO.cs" />
+    <Compile Include="Interfaces\IRolePO.cs" />
     <Compile Include="Interfaces\ITeamPO.cs" />
     <Compile Include="Interfaces\IUserCredentialsPO.cs" />
-    <Compile Include="Interfaces\IUserLoginPO.cs" />
     <Compile Include="Interfaces\IUserPO.cs" />
     <Compile Include="Mapper\AbsenceMapper.cs" />
     <Compile Include="Mapper\ExceptionMapper.cs" />
@@ -160,11 +160,11 @@
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\ExceptionPO.cs" />
     <Compile Include="Models\NavigationPO.cs" />
+    <Compile Include="Models\RolePO.cs" />
     <Compile Include="Models\TeamPO.cs" />
     <Compile Include="Models\TeamViewModel.cs" />
     <Compile Include="Models\UserCredentialPO.cs" />
     <Compile Include="Models\UserCredentialsViewModel.cs" />
-    <Compile Include="Models\UserLoginPO.cs" />
     <Compile Include="Models\UserPO.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1969,6 +1969,9 @@
     <Content Include="Views\Maint\ViewUsersByTeamID.cshtml" />
     <Content Include="Views\Home\AdminDashboard.cshtml" />
     <Content Include="Views\Home\LeadDashboard.cshtml" />
+    <Content Include="Views\Account\CreateUser.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ViewAllUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

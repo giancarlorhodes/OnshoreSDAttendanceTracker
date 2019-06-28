@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace OnshoreSDAttendanceTrackerNet.Interfaces
 {
-    public interface ITeamPO
+    public interface IRolePO
     {
-        int TeamID { get; set; }
-        string Name { get; set; }
-        string Comment { get; set; }
-        int Active { get; set; }
+       int RoleID { get; set; }
+       string RoleNameShort { get; set; }
+       string RoleNameLong { get; set; }
+       string Comment { get; set; }
     }
 }

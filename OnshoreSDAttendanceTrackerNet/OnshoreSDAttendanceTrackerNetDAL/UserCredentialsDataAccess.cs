@@ -117,62 +117,62 @@
 
         #region Get or check credentials
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public List<IUserLoginDO> GetAllUsersLogin()
-        {
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //public List<IUserLoginDO> GetAllUsersLogin()
+        //{
 
-            List<IUserLoginDO> _list = new List<IUserLoginDO>();
+        //    List<IUserLoginDO> _list = new List<IUserLoginDO>();
 
-            // TODO - implement database call here
-            using (SqlConnection conn = new SqlConnection(_ConnectionString))
-            {
+        //    // TODO - implement database call here
+        //    using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        //    {
 
-                // create a sqlcommand 
-                using (SqlCommand command = new SqlCommand("sp_GetAllUserLogin", conn))
-                {
+        //        // create a sqlcommand 
+        //        using (SqlCommand command = new SqlCommand("sp_GetAllUserLogin", conn))
+        //        {
 
-                    // details to the select command
-                    command.CommandType = CommandType.StoredProcedure;
-                    conn.Open();
+        //            // details to the select command
+        //            command.CommandType = CommandType.StoredProcedure;
+        //            conn.Open();
 
-                    // need a loop to get users from the database
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
+        //            // need a loop to get users from the database
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
 
-                        while (reader.Read())
-                        {
+        //                while (reader.Read())
+        //                {
 
-                            UserLoginDO _userLoginDO = new UserLoginDO();
-                            _userLoginDO.UserID = (int)reader["UserID"];
-                            _userLoginDO.FirstName = (string)reader["FirstName"];
-                            _userLoginDO.LastName = (string)reader["LastName"];
-                            _userLoginDO.Password = (string)reader["Password"];
-                            _userLoginDO.Salt = (string)reader["Salt"];
-                            _userLoginDO.Email = (string)reader["Email"];
-                            _userLoginDO.RoleID_FK = (int)reader["RoleID"];
-                            _userLoginDO.RoleNameShort = (string)reader["RoleNameShort"];
-                            _userLoginDO.RoleNameLong = (string)reader["RoleNameLong"];
+        //                    UserLoginDO _userLoginDO = new UserLoginDO();
+        //                    _userLoginDO.UserID = (int)reader["UserID"];
+        //                    _userLoginDO.FirstName = (string)reader["FirstName"];
+        //                    _userLoginDO.LastName = (string)reader["LastName"];
+        //                    _userLoginDO.Password = (string)reader["Password"];
+        //                    _userLoginDO.Salt = (string)reader["Salt"];
+        //                    _userLoginDO.Email = (string)reader["Email"];
+        //                    _userLoginDO.RoleID_FK = (int)reader["RoleID"];
+        //                    _userLoginDO.RoleNameShort = (string)reader["RoleNameShort"];
+        //                    _userLoginDO.RoleNameLong = (string)reader["RoleNameLong"];
 
-                            //if ((string)reader["Role"] == RoleType.ADMINISTRATOR.ToString())
-                            //{
-                            //    _userDO.Role = RoleType.ADMINISTRATOR;
-                            //}
-                            //else
-                            //{
-                            //    _userDO.Role = RoleType.CUSTOMER;
-                            //}
-                            _list.Add(_userLoginDO);
-                        }
-                    }
-                }
-            }
+        //                    //if ((string)reader["Role"] == RoleType.ADMINISTRATOR.ToString())
+        //                    //{
+        //                    //    _userDO.Role = RoleType.ADMINISTRATOR;
+        //                    //}
+        //                    //else
+        //                    //{
+        //                    //    _userDO.Role = RoleType.CUSTOMER;
+        //                    //}
+        //                    _list.Add(_userLoginDO);
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return _list;
+        //    return _list;
 
-        }
+        //}
 
 
         // <summary>
@@ -182,12 +182,12 @@
         /// <param name="username"></param>
         /// <param name="userpassword"></param>
         /// <returns></returns>
-        public IUserLoginDO GetUserLoginInformation(string username, string userpassword)
+        public IUserDO GetUserLoginInformation(string username, string userpassword)
         {
 
             //TODO GSR - make this a db call
 
-            IUserLoginDO _userLoginDO =  new UserLoginDO();
+            IUserDO _userLoginDO = null;
             try
             {
                 using (SqlConnection conn = new SqlConnection(_ConnectionString))
@@ -204,15 +204,13 @@
                         {
                             while (reader.Read())
                             {
+                                _userLoginDO = new UserDO();
                                 _userLoginDO.UserID = (int)reader["UserID"];
                                 _userLoginDO.FirstName = (string)reader["FirstName"];
                                 _userLoginDO.LastName = (string)reader["LastName"];
-                                _userLoginDO.Password = (string)reader["UserPassword"];
-                                _userLoginDO.Salt = (string)reader["Salt"];
                                 _userLoginDO.Email = (string)reader["Email"];
                                 _userLoginDO.RoleID_FK = (int)reader["RoleID"];
-                                _userLoginDO.RoleNameShort = (string)reader["RoleNameShort"];
-                                _userLoginDO.RoleNameLong = (string)reader["RoleNameLong"];
+                                _userLoginDO.RoleName = (string)reader["RoleNameShort"];
                             }
                         }
                     }

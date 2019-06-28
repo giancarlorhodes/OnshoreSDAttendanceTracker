@@ -4,19 +4,19 @@
 
 @{
 
-    UserLoginPO _ul = Session["UserModel"] as UserLoginPO;
+    UserPO _ul = Session["UserModel"] as UserPO;
 
     if (_ul != null)
     {
-        if (_ul.UserRole == RoleEnum.Administrator)
+        if (_ul.RoleName == "Administrator")
         {
             Layout = "~/Views/Shared/_Layout_Admin.cshtml";
         }
-        else if (_ul.UserRole == RoleEnum.Service_Manager)
+        else if (_ul.RoleName == "Service Manager")
         {
             Layout = "~/Views/Shared/_Layout_Service_Manager.cshtml";
         }
-        else if (_ul.UserRole == RoleEnum.Team_Lead)
+        else if (_ul.RoleName == "Team Lead")
         {
             Layout = "~/Views/Shared/_Layout_Team_Lead.cshtml";
         }

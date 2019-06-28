@@ -3,6 +3,7 @@ using OnshoreSDAttendanceTrackerNet.AutoMapper;
 using OnshoreSDAttendanceTrackerNet.Models;
 using OnshoreSDAttendanceTrackerNetDAL;
 using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
+using OnshoreSDAttendanceTrackerNetDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -114,10 +115,10 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 try
                 {
                     // Calls GetAllTeams from DAL and stores in allTeams
-                    List<ITeamDO> allTeams = _TeamDataAccess.GetAllTeams();
+                    List<TeamDO> allTeams = _TeamDataAccess.GetAllTeams();
 
                     // Maps from data objects to presentation objects.
-                    ViewAllTeamsVM.ListOfTeamPO = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
+                    //ViewAllTeamsVM.ListOfTeamPO = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
 
                     oResponse = View(ViewAllTeamsVM);
                 }

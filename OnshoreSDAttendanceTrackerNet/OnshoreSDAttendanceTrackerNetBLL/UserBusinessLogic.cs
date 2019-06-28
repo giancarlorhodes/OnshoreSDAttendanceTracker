@@ -19,42 +19,42 @@ namespace OnshoreSDAttendanceTrackerNetBLL
     {
 
         static UserCredentialsDataAccess _ucda = new UserCredentialsDataAccess();
-        IUserLoginDO _dbUser = new UserLoginDO();
-        IUserLoginBO _loginUser = new UserLoginBO();
+        IUserDO _dbUser = new UserDO();
+        IUserBO _loginUser = new UserBO();
         IExceptionBO iEx = new ExceptionBO();
 
-        public IUserLoginBO CheckUserLogin(IUserLoginBO userLoginBO)
+        public IUserBO CheckUserLogin(string email, string password)
         {
-            userLoginBO.Password = HashPassword(userLoginBO.Password);
-          if((_dbUser = _ucda.GetUserLoginInformation(userLoginBO.Email, userLoginBO.Password)) != null)
+            password = HashPassword(password);
+            if ((_dbUser = _ucda.GetUserLoginInformation(email, password)) != null)
             {
-                _loginUser = Mapper.Map<IUserLoginDO,IUserLoginBO>(_dbUser);
+                _loginUser = Mapper.Map<IUserDO, IUserBO>(_dbUser);
 
                 return _loginUser;
-            } 
+            }
             else
             {
                 return _loginUser;
             }
         }
 
-    
-    //Hash password
 
-    public string HashPassword(string _passwordToHash)
-    {
-        StringBuilder _passwordReturn = new StringBuilder();
-      
-        SHA256 hash = SHA256.Create();
-        byte[] inputBytes = Encoding.ASCII.GetBytes(_passwordToHash);
-        byte[] hashedBytes = hash.ComputeHash(inputBytes);
-        for (int i = 0; i < hashedBytes.Length; i++)
+        //Hash password
+
+        public string HashPassword(string _passwordToHash)
         {
-            _passwordReturn.Append(hashedBytes[i].ToString("X2"));
+            StringBuilder _passwordReturn = new StringBuilder();
+
+            SHA256 hash = SHA256.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(_passwordToHash);
+            byte[] hashedBytes = hash.ComputeHash(inputBytes);
+            for (int i = 0; i < hashedBytes.Length; i++)
+            {
+                _passwordReturn.Append(hashedBytes[i].ToString("X2"));
+            }
+
+            return _passwordReturn.ToString();
         }
 
-        return _passwordReturn.ToString();
     }
-
-   }
 }

@@ -35,7 +35,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult AddTeam()
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             // Ensure user is authenticated
             // TODO: Implement session checks after session has been handled
@@ -63,7 +63,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult AddTeam(TeamViewModel iViewModel)
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             // Ensure user is authenticated
             if (userPO.Email != null && userPO.RoleID_FK == 1)
@@ -109,7 +109,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var ViewAllTeamsVM = new TeamViewModel();
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             // Ensures authenticated
             if (userPO.Email != null && userPO.RoleID_FK == 1)
@@ -191,7 +191,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var selectedUsers = new UserViewModel();
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             if (ModelState.IsValid)
             {
@@ -235,7 +235,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult UpdateTeamInformation(int teamID)
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             // User is authenticated
             if (userPO.Email != null && userPO.RoleID_FK == 1)
@@ -267,7 +267,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult UpdateTeamInformation(TeamViewModel iTeam)
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             // Ensure user is authenticated
             if (userPO.Email != null && userPO.RoleID_FK == 1)
@@ -308,7 +308,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult DeactivateTeam(int teamID)
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             if (userPO.Email != null && userPO.RoleID_FK == 1)
             {
@@ -347,7 +347,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult AddAbsenceEntry()
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             if (userPO.Email != null && userPO.RoleID_FK == 1)
             {
@@ -375,7 +375,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult AddAbsenceEntry(AbsenceViewModel iViewModel)
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             // User is authenticated(Admin, Service Manager or Team Lead)
             if(userPO.Email != null && userPO.RoleID_FK < 4 && userPO.RoleID_FK > 0)
@@ -461,7 +461,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
             // TODO: Query name of team based off teamID parameter.
 
             if (userPO.Email != null && userPO.RoleID_FK <= 3 && userPO.RoleID_FK > 0)
@@ -508,7 +508,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             if (userPO.Email != null && userPO.RoleID_FK <= 3 && userPO.RoleID_FK > 0)
             {
@@ -519,7 +519,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         var absences = new List<IAbsenceDO>();
                         // Stores list of absences by TeamID
                         absences = _AbsenceDataAccess.GetAbsenceTypesForSMByTeamID(userPO.UserID, teamID);
-                        InitializeViewData(selectedTeamAbsences, userPO);
+                        InitializeViewData(selectedTeamAbsences, (UserPO)userPO);
 
                         // Maps list of absences from DO to PO
                         foreach (IAbsenceDO absence in absences)
@@ -558,7 +558,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult UpdateAbsenceEntry(IAbsenceDO iAbsence,int absenceID)
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             if(userPO.Email != null && userPO.RoleID_FK > 0 && userPO.RoleID_FK <= 3)
             {
@@ -591,7 +591,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         public ActionResult UpdateAbsenceEntry(AbsenceViewModel iViewModel, int userID)
         {
             ActionResult oResponse = null;
-            var userPO = (UserPO)Session["UserModel"];
+            var userPO = (IUserPO)Session["UserModel"];
 
             // Ensure user has priveleges
             if (userPO.Email != null && userPO.RoleID_FK > 0 && userPO.RoleID_FK <= 3)

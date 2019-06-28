@@ -179,6 +179,8 @@
     <Content Include="Content\Theme\sb-admin-2.min.css" />
     <Content Include="Content\Theme\vendor\datatables\dataTables.bootstrap4.css" />
     <Content Include="Content\Theme\vendor\datatables\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\Theme\vendor\datatables\datatables.css" />
+    <Content Include="Content\Theme\vendor\datatables\datatables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-free\css\all.css" />
     <Content Include="fonts\fontawesome-free\css\all.min.css" />
@@ -1922,8 +1924,8 @@
     <Content Include="Scripts\Vendor\chart.js\Chart.min.js" />
     <Content Include="Scripts\Vendor\datatables\dataTables.bootstrap4.js" />
     <Content Include="Scripts\Vendor\datatables\dataTables.bootstrap4.min.js" />
-    <Content Include="Scripts\Vendor\datatables\jquery.dataTables.js" />
-    <Content Include="Scripts\Vendor\datatables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\Vendor\datatables\datatables.js" />
+    <Content Include="Scripts\Vendor\datatables\datatables.min.js" />
     <Content Include="Scripts\Vendor\jquery-easing\jquery.easing.compatibility.js" />
     <Content Include="Scripts\Vendor\jquery-easing\jquery.easing.js" />
     <Content Include="Scripts\Vendor\jquery-easing\jquery.easing.min.js" />
@@ -1968,6 +1970,7 @@
     <Content Include="Views\Account\UpdateUserInfo.cshtml" />
     <Content Include="Views\Maint\ViewUsersByTeamID.cshtml" />
     <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="Views\Shared\NavigationMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

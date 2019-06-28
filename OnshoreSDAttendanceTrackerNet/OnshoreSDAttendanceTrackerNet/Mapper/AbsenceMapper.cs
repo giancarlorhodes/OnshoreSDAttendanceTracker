@@ -50,7 +50,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             {
                 var absenceVM = new DashboardViewModel();
                 absenceVM.EmployeeName = entry.Name;
-                absenceVM.Points = entry.RunningTotal;
+                absenceVM.Points = entry.Point; //Need to change RunningTotal once Calc is finished
                 absenceVM.Status = entry.Status;
                 listOfAbsenceVMs.Add(absenceVM);
             }
@@ -65,10 +65,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             // Map each object in the list
             foreach (IAbsenceBO entry in absenceBOs)
             {
-                var absenceVM = new AbsencePO();
-                absenceVM.Name = entry.Name;
-                absenceVM.RunningTotal = entry.RunningTotal;
-                absenceVM.Status = entry.Status;
+                var absenceVM = MapAbsenceBOtoPO(entry);
                 listOfAbsencePOs.Add(absenceVM);
             }
 
@@ -88,6 +85,24 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Comments = absenceBO.Comments;
             oAbsence.RunningTotal = absenceBO.RunningTotal;
             oAbsence.TeamMgtID = absenceBO.TeamMgtID;
+            oAbsence.Status = absenceBO.Status;
+
+            return oAbsence;
+        }
+        public static AbsencePO MapAbsenceBOtoPO(IAbsenceBO absenceBO)
+        {
+            var oAbsence = new AbsencePO();
+            oAbsence.AbsenceTypeID = absenceBO.AbsenceTypeID;
+            oAbsence.Name = absenceBO.Name;
+            oAbsence.Point = absenceBO.Point;
+            oAbsence.Active = absenceBO.Active;
+            oAbsence.TeamID_FK = absenceBO.TeamID_FK;
+            oAbsence.AbsenceDate = absenceBO.AbsenceDate;
+            oAbsence.AbsentUserID = absenceBO.AbsentUserID;
+            oAbsence.Comments = absenceBO.Comments;
+            oAbsence.RunningTotal = absenceBO.RunningTotal;
+            oAbsence.TeamMgtID = absenceBO.TeamMgtID;
+            oAbsence.Status = absenceBO.Status;
 
             return oAbsence;
         }

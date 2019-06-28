@@ -10646,8 +10646,8 @@ a:focus {
 .animated--grow-in, .sidebar .nav-item .collapse {
   -webkit-animation-name: growIn;
   animation-name: growIn;
-  -webkit-animation-duration: 200ms;
-  animation-duration: 200ms;
+  -webkit-animation-duration: 300ms;
+  animation-duration: 300ms;
   -webkit-animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
   animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
 }
@@ -10814,19 +10814,19 @@ a:focus {
 }
 
 .border-left-primary {
-  border-left: 0.25rem solid #4e73df !important;
+    border-left: 0.25rem solid #1cc88a !important;
 }
 
 .border-left-success {
-  border-left: 0.25rem solid #1cc88a !important;
+    border-left: 0.25rem solid #1cc88a !important;
 }
-
+ 
 .border-left-info {
-  border-left: 0.25rem solid #36b9cc !important;
+    border-left: 0.25rem solid #f37e5a !important;
 }
 
 .border-left-warning {
-  border-left: 0.25rem solid #f6c23e !important;
+    border-left: 0.25rem solid #f6c23e !important;
 }
 
 .border-left-danger {
@@ -11560,19 +11560,26 @@ a:focus {
 .card .card-header[data-toggle="collapse"].collapsed::after {
   content: '\f105';
 }
-
+.chart {
+    
+    height: 25rem;
+    width: 65rem;
+}
 .chart-area {
   position: relative;
   height: 10rem;
-  width: 100%;
+  width: 60rem;
 }
 
 @media (min-width: 768px) {
   .chart-area {
-    height: 20rem;
+    height: 15rem;
   }
 }
-
+.chartBar {
+    height: 25rem;
+    width: 30rem;
+}
 .chart-bar {
   position: relative;
   height: 10rem;

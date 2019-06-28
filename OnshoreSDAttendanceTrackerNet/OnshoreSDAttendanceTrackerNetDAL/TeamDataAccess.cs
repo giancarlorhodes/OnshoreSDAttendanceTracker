@@ -166,16 +166,19 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             command.CommandType = CommandType.StoredProcedure;
                             command.CommandTimeout = 35;
 
-                            command.Parameters.Add(new SqlParameter("UserID", userID));
+                            command.Parameters.Add(new SqlParameter("@UserId", userID));
                             connection.Open();
                             using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
-                                newTeam.Name = reader["Name"].ToString();
-                                newTeam.Comment = reader["Comments"].ToString();
-                                var active = reader.GetInt32(3);
-                                newTeam.Active = active != 0;
-                                listOfTeams.Add(newTeam);
+                                while (reader.Read())
+                                {
+                                    newTeam.TeamID = reader.GetInt32(0);
+                                    newTeam.Name = reader.GetString(1);
+                                    newTeam.Comment = reader.GetString(2);
+                                    var active = reader.GetInt32(3);
+                                    newTeam.Active = active != 0;
+                                    listOfTeams.Add(newTeam);
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -257,11 +260,15 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             connection.Open();
                             using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                newUser.FirstName = reader["FirstName"].ToString();
-                                newUser.LastName = reader["LastName"].ToString();
-                                newUser.Email = reader["Email"].ToString();
-                                newUser.Active = (bool)reader["Active"];
-                                listOfUsers.Add(newUser);
+                                while (reader.Read())
+                                {
+                                    newUser.FirstName = reader.GetString(0);
+                                    newUser.LastName = reader.GetString(1);
+                                    newUser.Email = reader.GetString(2);
+                                    var active = reader.GetInt32(3);
+                                    newUser.Active = active != 0;
+                                    listOfUsers.Add(newUser);
+                                }
                             }
                         }
                         catch (Exception ex)

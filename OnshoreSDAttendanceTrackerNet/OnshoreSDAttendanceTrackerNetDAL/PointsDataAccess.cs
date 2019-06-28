@@ -12,40 +12,42 @@ using OnshoreSDAttendanceTrackerNetDAL.Models;
 
 namespace OnshoreSDAttendanceTrackerNetDAL
 {
-    public class PointsDataAccess
+    public static class PointsDataAccess
     {
-        private string _ConnectionString;
+        private static string _ConnectionString;
 
-        public PointsDataAccess(string iConnectionString)
+        static PointsDataAccess()
         {
-            _ConnectionString = iConnectionString;
+            _ConnectionString = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
         }
 
-        public void AddPoints(IAbsenceDO iAbsence)
+        public static void AddAbsence(IAbsenceDO iAbsence,int createdBy )
         {
             try
             {
-                // TODO: Pass connection string when all layers are built
-                using(SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString))
+                using(SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
-                    using (SqlCommand command = new SqlCommand("sp_PointsUpdate", conn))
+                    using (SqlCommand command = new SqlCommand("sp_PointsAddNew", conn))
                     {
                         try
                         {
+                            
                             command.CommandType = CommandType.StoredProcedure;
                             command.CommandTimeout = 15;
 
-                            // SqlDbType followed by datatype whitelisting tells mvc what to expect for the parameter
-                            command.Parameters.AddWithValue("@PointValue", SqlDbType.Int);
-                            command.Parameters.AddWithValue("@AbsenceTypeID", SqlDbType.Int);
-                            command.Parameters.AddWithValue("@TeamManagementID", SqlDbType.Int);
-                            command.Parameters.AddWithValue("@CreateUserID", SqlDbType.Int);
+                            command.Parameters.AddWithValue("@AbsenceTypeID", iAbsence.AbsenceTypeID);
+                            command.Parameters.AddWithValue("@TeamID",iAbsence.TeamID_FK);
+                            command.Parameters.AddWithValue("@AbsentUserID", iAbsence.AbsentUserID);
+                            command.Parameters.AddWithValue("@Comments", iAbsence.Comments);
+                            command.Parameters.AddWithValue("@CreateUserID", createdBy);
+                            command.Parameters.AddWithValue("@AbsenceDate", iAbsence.AbsenceDate);
 
                             conn.Open();
                             command.ExecuteNonQuery();
                         }
                         catch (Exception ex)
                         {
+                            ErrorLogger.LogError(ex, "AddAbsence", "nothing");
                         }
                         finally
                         {
@@ -58,19 +60,64 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             }
             catch (Exception ex)
             {
-                ErrorLogger.LogError(ex, "AddPoints", "");
+                ErrorLogger.LogError(ex, "AddAbsence", "");
             }
         }
 
-        public IAbsenceDO ViewPointsByID(int iAbsenceID)
+        public static List<IAbsenceDO> ViewAbsencesByUserID(int userID)
         {
-            var listOfAbsenceDOs = new AbsenceDO();
+            var listOfAbsenceDOs = new List<IAbsenceDO>();
 
             try
             {
-                using(SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings[""].ConnectionString))
+                using(SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
-                    using(SqlCommand viewComm  = new SqlCommand("sp_GetPointsByID", conn))
+                    using(SqlCommand viewComm  = new SqlCommand("sp_GetPointsByUserID", conn))
+                    {
+                        viewComm.CommandType = CommandType.StoredProcedure;
+                        viewComm.CommandTimeout = 35;
+                        viewComm.Parameters.AddWithValue("@UserID", userID);
+                        conn.Open();
+
+                        using (SqlDataReader reader = viewComm.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                IAbsenceDO absence = new AbsenceDO();
+
+                                absence.AbsenceTypeID = reader.GetInt32(reader.GetOrdinal("AbsenceTypeID"));
+                                absence.Comments = reader["Comment"].ToString();
+                                absence.Point = Convert.ToDecimal( reader["Point"]);
+                                absence.Active = Convert.ToBoolean((int)reader["Active"]);
+                                absence.TeamID_FK = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                absence.AbsenceDate= Convert.ToDateTime(reader["AbsenceDate"]);
+                                absence.AbsentUserID= reader.GetInt32(reader.GetOrdinal("UserID"));
+                                absence.Name= reader["EmployeeName"].ToString();
+                                absence.TeamMgtID = reader.GetInt32(reader.GetOrdinal("TeamMgtID"));
+
+                                listOfAbsenceDOs.Add(absence);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "ViewAbsencesByUserID", "nothing");
+            }
+
+            return listOfAbsenceDOs;
+        }
+
+        public static List<IAbsenceDO> ViewAllAbsences()
+        {
+            var listOfAbsenceDOs = new List<IAbsenceDO>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_ConnectionString))
+                {
+                    using (SqlCommand viewComm = new SqlCommand("sp_GetAllPoints", conn))
                     {
                         viewComm.CommandType = CommandType.StoredProcedure;
                         viewComm.CommandTimeout = 35;
@@ -80,13 +127,19 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             while (reader.Read())
                             {
-                                IAbsenceDO absenceDO = new AbsenceDO();
+                                IAbsenceDO absence = new AbsenceDO();
 
-                                absenceDO.AbsenceTypeID = reader.GetInt32(0);
-                                absenceDO.Name = reader.GetString(1);
-                                absenceDO.Point = reader.GetDecimal(2);
-                                absenceDO.Active = reader.GetBoolean(3);
-                                absenceDO.TeamID_FK = reader.GetInt32(4);
+                                absence.AbsenceTypeID = reader.GetInt32(reader.GetOrdinal("AbsenceTypeID"));
+                                absence.Comments = reader["Comment"].ToString();
+                                absence.Point = Convert.ToDecimal(reader["Point"]);
+                                absence.Active = Convert.ToBoolean((int) reader["Active"]);
+                                absence.TeamID_FK = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                absence.AbsenceDate = Convert.ToDateTime(reader["AbsenceDate"]);
+                                absence.AbsentUserID = reader.GetInt32(reader.GetOrdinal("UserID"));
+                                absence.Name = reader["EmployeeName"].ToString();
+                                absence.TeamMgtID= reader.GetInt32(reader.GetOrdinal("TeamMgtID"));
+
+                                listOfAbsenceDOs.Add(absence);
                             }
                         }
                     }
@@ -94,18 +147,18 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             }
             catch (Exception ex)
             {
+                ErrorLogger.LogError(ex, "ViewAbsencesByUserID", "nothing");
             }
 
             return listOfAbsenceDOs;
         }
 
-        public void UdpateAbsenceInformation(IAbsenceDO iAbsence)
+        public static void UdpateAbsenceInformation(IAbsenceDO iAbsence,int updatedBy)
         {
-            var selectedAbsence = new AbsenceDO();
 
             try
             {
-                using(SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings[""].ConnectionString))
+                using(SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
                     using(SqlCommand updateComm = new SqlCommand("sp_PointsUpdate", conn))
                     {
@@ -113,28 +166,20 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             updateComm.CommandType = CommandType.StoredProcedure;
                             updateComm.CommandTimeout = 35;
-
-                            updateComm.Parameters.AddWithValue("@PointBankID", SqlDbType.Int);
-                            updateComm.Parameters.AddWithValue("@@PointValue", SqlDbType.Int);
-                            updateComm.Parameters.AddWithValue("@AbsenceTypeID", SqlDbType.Int);
-                            updateComm.Parameters.AddWithValue("@TeamManagementID", SqlDbType.Int);
-                            updateComm.Parameters.AddWithValue("@UpdateUserID", SqlDbType.Int);
-                            updateComm.Parameters.AddWithValue("@Active", SqlDbType.Int);
-
-                            var absenceID = selectedAbsence.AbsenceTypeID;
-                            var id = 0;
-
-                            // Ensures ID is valid before executing request: Whitelists the expected ID
-                            if (!int.TryParse(absenceID.ToString(), out id))
-                            {
-                                throw new ApplicationException("Absence ID was not an integer");
-                            }
-
+                           
+                            updateComm.Parameters.AddWithValue("@AbsenceTypeID", iAbsence.AbsenceTypeID);
+                            updateComm.Parameters.AddWithValue("@@TeamMgtID", iAbsence.TeamMgtID);
+                            updateComm.Parameters.AddWithValue("@AbsentUserID", iAbsence.AbsentUserID);
+                            updateComm.Parameters.AddWithValue("@AbsenceDate",iAbsence.AbsenceDate);
+                            updateComm.Parameters.AddWithValue("@UpdatedUserID", updatedBy);
+                            updateComm.Parameters.AddWithValue("@Active", iAbsence.Active);
+                             
                             conn.Open();
                             updateComm.ExecuteNonQuery();
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            ErrorLogger.LogError(ex, "UdpateAbsenceInformation", "nothing");
                         }
                         finally
                         {

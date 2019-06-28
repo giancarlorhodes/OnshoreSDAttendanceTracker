@@ -41,6 +41,40 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             return listOfAbsencePOs;
         }
 
+        public static List<DashboardViewModel> MapListOfPOsToListOfVMs(List<IAbsencePO> absencePOs)
+        {
+            var listOfAbsenceVMs = new List<DashboardViewModel>();
+
+            // Map each object in the list
+            foreach (IAbsencePO entry in absencePOs)
+            {
+                var absenceVM = new DashboardViewModel();
+                absenceVM.EmployeeName = entry.Name;
+                absenceVM.Points = entry.RunningTotal;
+                absenceVM.Status = entry.Status;
+                listOfAbsenceVMs.Add(absenceVM);
+            }
+
+            return listOfAbsenceVMs;
+        }
+
+        public static List<IAbsencePO> MapListOfBOsToListOfPOs(List<IAbsenceBO> absenceBOs)
+        {
+            var listOfAbsencePOs = new List<IAbsencePO>();
+
+            // Map each object in the list
+            foreach (IAbsenceBO entry in absenceBOs)
+            {
+                var absenceVM = new AbsencePO();
+                absenceVM.Name = entry.Name;
+                absenceVM.RunningTotal = entry.RunningTotal;
+                absenceVM.Status = entry.Status;
+                listOfAbsencePOs.Add(absenceVM);
+            }
+
+            return listOfAbsencePOs;
+        }
+
         public static AbsencePO MapAbsenceBOtoPO(AbsenceBO absenceBO)
         {
             var oAbsence = new AbsencePO();
@@ -49,6 +83,12 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Point = absenceBO.Point;
             oAbsence.Active = absenceBO.Active;
             oAbsence.TeamID_FK = absenceBO.TeamID_FK;
+            oAbsence.AbsenceDate = absenceBO.AbsenceDate;
+            oAbsence.AbsentUserID = absenceBO.AbsentUserID;
+            oAbsence.Comments = absenceBO.Comments;
+            oAbsence.RunningTotal = absenceBO.RunningTotal;
+            oAbsence.TeamMgtID = absenceBO.TeamMgtID;
+            oAbsence.EmployeeName = absenceBO.EmployeeName;
 
             return oAbsence;
         }
@@ -61,7 +101,12 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Point = absenceDO.Point;
             oAbsence.Active = absenceDO.Active;
             oAbsence.TeamID_FK = absenceDO.TeamID_FK;
-
+            oAbsence.AbsenceDate = absenceDO.AbsenceDate;
+            oAbsence.AbsentUserID = absenceDO.AbsentUserID;
+            oAbsence.Comments = absenceDO.Comments;
+            oAbsence.RunningTotal = absenceDO.RunningTotal;
+            oAbsence.TeamMgtID = absenceDO.TeamMgtID;
+            oAbsence.EmployeeName = absenceDO.EmployeeName;
             return oAbsence;
         }
 
@@ -73,6 +118,12 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Point = absenceDO.Point;
             oAbsence.Active = absenceDO.Active;
             oAbsence.TeamID_FK = absenceDO.TeamID_FK;
+            oAbsence.AbsenceDate = absenceDO.AbsenceDate;
+            oAbsence.AbsentUserID = absenceDO.AbsentUserID;
+            oAbsence.Comments = absenceDO.Comments;
+            oAbsence.RunningTotal = absenceDO.RunningTotal;
+            oAbsence.TeamMgtID = absenceDO.TeamMgtID;
+            oAbsence.EmployeeName = absenceDO.EmployeeName;
 
             return oAbsence;
         }
@@ -85,7 +136,12 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Point = absencePO.Point;
             oAbsence.Active = absencePO.Active;
             oAbsence.TeamID_FK = absencePO.TeamID_FK;
-
+            oAbsence.AbsenceDate = absencePO.AbsenceDate;
+            oAbsence.AbsentUserID = absencePO.AbsentUserID;
+            oAbsence.Comments = absencePO.Comments;
+            oAbsence.RunningTotal = absencePO.RunningTotal;
+            oAbsence.TeamMgtID = absencePO.TeamMgtID;
+            oAbsence.EmployeeName = absencePO.EmployeeName;
             return oAbsence;
         }
     }

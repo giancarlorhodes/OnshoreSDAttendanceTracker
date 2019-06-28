@@ -27,6 +27,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 using (SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
+                    // TODO: Need to fix issues with stored procedure decimal values
                     using (SqlCommand createComm = new SqlCommand("sp_MakeAttendanceTypeByUserId", conn))
                     {
                         try
@@ -34,10 +35,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             createComm.CommandType = CommandType.StoredProcedure;
                             createComm.CommandTimeout = 35;
 
-                            createComm.Parameters.AddWithValue("@TeamId", SqlDbType.Int).Value = iAbsence.TeamID_FK;
-                            createComm.Parameters.AddWithValue("@CreatedByUserId", SqlDbType.Int).Value = createdByUserID;
+                            createComm.Parameters.AddWithValue("@TeamMgtId", SqlDbType.Int);                            
                             createComm.Parameters.AddWithValue("@Name", SqlDbType.Int).Value = iAbsence.Name;
                             createComm.Parameters.AddWithValue("@Point", SqlDbType.VarChar).Value = iAbsence.Point;
+                            createComm.Parameters.AddWithValue("@CreatedByUserId", SqlDbType.Int).Value = createdByUserID;
 
                         }
                         catch (Exception ex)
@@ -80,7 +81,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                 using (SqlConnection conn = new SqlConnection(_ConnectionString))
                 {
 
-                    using (SqlCommand getComm = new SqlCommand("sp_GetAttendances"))
+                    using (SqlCommand getComm = new SqlCommand("sp_GetAllAbsencesAdmin", conn))
                     {
                         getComm.CommandType = CommandType.StoredProcedure;
                         getComm.CommandTimeout = 35;
@@ -91,11 +92,15 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             while (reader.Read())
                             {
                                 IAbsenceDO absenceType = new AbsenceDO();
-                                absenceType.AbsenceTypeID = reader.GetInt32(reader.GetOrdinal("AbsenceTypeID"));
-                                absenceType.Name = (string)reader["Name"];
-                                absenceType.Point = reader.GetInt32(reader.GetOrdinal("Point"));
-                                absenceType.Active = (bool)reader["Active"];
-                                absenceType.TeamID_FK = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                absenceType.AbsenceTypeID = reader.GetInt32(0);
+                                absenceType.EmployeeName = reader.GetValue(reader.GetOrdinal("EmployeeName")).ToString();
+                                absenceType.Name = reader.GetString(2);
+                                absenceType.Point = reader.GetDecimal(3);
+                                absenceType.Comments = reader.GetString(4);
+                                absenceType.AbsenceDate = reader.GetDateTime(5);
+                                absenceType.AbsentUserID = reader.GetInt32(7);
+                                absenceType.TeamID_FK = reader.GetInt32(8);
+                                absenceType.TeamMgtID = (int)reader["TeamMgtID"];
 
                                 listOfAbsenceTypes.Add(absenceType);
                             }

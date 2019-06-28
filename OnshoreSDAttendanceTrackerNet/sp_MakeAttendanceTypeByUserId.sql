@@ -19,11 +19,11 @@ GO
 -- Create date: <05/08/2019>
 -- Description:	Create attendance types
 -- =============================================
-ALTER PROCEDURE sp_MakeAttendanceTypeByUserId
-	@TeamMgtId int,
-    @CreatedByUserId int,
+ALTER PROCEDURE sp_MakeAttendanceTypeByUserId   
+	@TeamMgtId int output,
     @Name varchar(100),
-	@Point decimal
+	@Point decimal,
+	@CreatedByUserId int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -39,24 +39,25 @@ BEGIN
 	   raiserror (@msg,15,-1)
     END
 
-    if ISNULL(@TeamMgtId,0) <= 0
-	BEGIN
-	   set @msg='team management id must be greater than 0'
-	   raiserror (@msg,15,-1)
-    END
-
 	if COALESCE(@Name,@Point,0) = 0
 	BEGIN
 	   set @msg ='input parameters cannot be null'
 	   raiserror (@msg,15,-1)
     END
 
+	select @teamId=TeamID_FK from dbo.[TeamManagement] where TeamManagementID=CAST(SCOPE_IDENTITY() AS INT) and Active=@active
 
-	select @teamId=TeamID_FK from dbo.[TeamManagement] where TeamManagementID=@TeamMgtId and Active=@active
+	if ISNULL(TeamManagementID,0) <= 0
+		BEGIN
+		   set @msg='team management id must be greater than 0'
+		   raiserror (@msg,15,-1)
+		END
+
 	BEGIN TRANSACTION 
 	BEGIN TRY
 	    insert into dbo.[AbsenceType] (Name,Point,Active,TeamID_FK,CreateDate,CreateUser_FK,ModifiedDate,ModifiedUser_FK)
 	    values (@Name,@Point,@active,@teamId,GetDate(),@CreatedByUserId,GetDate(),@CreatedByUserId)
+		SET @TeamMgtId = SCOPE_IDENTITY()
     END TRY
 	BEGIN CATCH
         ROLLBACK TRANSACTION

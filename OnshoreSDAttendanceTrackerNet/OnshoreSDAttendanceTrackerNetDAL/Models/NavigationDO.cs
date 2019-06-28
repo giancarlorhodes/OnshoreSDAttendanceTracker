@@ -13,5 +13,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Models
         public string MenuItem { get; set; }
         public string URL { get; set; }
         public int RoleID { get; set; }
+        public int ParentNavigationID { get; set; }
+        public int Order { get; set; }
     }
 }

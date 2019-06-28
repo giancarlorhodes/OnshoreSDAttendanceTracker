@@ -4,31 +4,34 @@
 
 @{
 
-    UserPO _ul = Session["UserModel"] as UserPO;
+    //UserLoginPO _ul = Session["UserModel"] as UserLoginPO;
 
-    if (_ul != null)
-    {
-        if (_ul.RoleName == "Administrator")
-        {
-            Layout = "~/Views/Shared/_Layout_Admin.cshtml";
-        }
-        else if (_ul.RoleName == "Service Manager")
-        {
-            Layout = "~/Views/Shared/_Layout_Service_Manager.cshtml";
-        }
-        else if (_ul.RoleName == "Team Lead")
-        {
-            Layout = "~/Views/Shared/_Layout_Team_Lead.cshtml";
-        }
-        else
-        {
-            Layout = "~/Views/Shared/_Layout.cshtml";
-        }
-    }
-    else {
+    //reverting to use dynamic Menu
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+    //if (_ul != null)
+    //{
+    //    if (_ul.UserRole == RoleEnum.Administrator)
+    //    {
+    //        Layout = "~/Views/Shared/_Layout.cshtml";
+    //    }
+    //    else if (_ul.UserRole == RoleEnum.Service_Manager)
+    //    {
+    //        Layout = "~/Views/Shared/_Layout_Service_Manager.cshtml";
+    //    }
+    //    else if (_ul.UserRole == RoleEnum.Team_Lead)
+    //    {
+    //        Layout = "~/Views/Shared/_Layout_Team_Lead.cshtml";
+    //    }
+    //    else
+    //    {
+    //        Layout = "~/Views/Shared/_Layout.cshtml";
+    //    }
+    //}
+    //else {
+
+    //    Layout = "~/Views/Shared/_Layout.cshtml";
+    //}
 
 
 

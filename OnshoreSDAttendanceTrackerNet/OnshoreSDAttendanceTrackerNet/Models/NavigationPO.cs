@@ -14,5 +14,8 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public int RoleID { get; set; }
         public int ParentNavigationID { get; set; }
         public int Order { get; set; }
+
+        public bool HasChild { get; set; }
+        public List<INavigationPO> Children { get; set; }
     }
 }

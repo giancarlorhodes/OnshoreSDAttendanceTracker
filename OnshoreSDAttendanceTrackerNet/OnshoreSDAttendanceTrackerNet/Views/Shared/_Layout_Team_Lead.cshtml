@@ -1,4 +1,4 @@
-﻿@using OnshoreSDAttendanceTrackerNet.Models
+﻿@using OnshoreSDAttendanceTrackerNet.Models;
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,38 +9,68 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Onshore SD Attendance Tracker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
-                    <li>@Html.ActionLink("My Team", "Team", "Home")</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
-                    @{ UserLoginPO user = (UserLoginPO)Session["UserModel"];
+    @{
 
+    }
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">
+                    @Html.ActionLink("Onshore SD Attendance Tracker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Menu -->
+            @foreach (NavigationPO menu in (List<NavigationPO>)Session["MenuItems"])
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" href="@menu.URL">
+                        <!--<i class="fas fa-fw fa-cog"></i>-->
+                        @menu.MenuItem
+                    </a>
+                    @if (menu.ParentNavigationID > 0)
+                    {
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <!--<h6 class="collapse-header">Custom Components:</h6>-->
+                                <a class="collapse-item" href="@menu.URL">@menu.MenuItem</a>
+                            </div>
+                        </div>
                     }
-                    <li><a>Welcome @user.FirstName, Your Role is Team Lead</a></li>
-                </ul>
+
+                </li>
+            }
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-        </div>
+
+        </ul>
     </div>
-    <div class="container body-content">
-        @RenderBody()
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            @RenderBody()
+        </div>
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Onshore SD Attendance Tracker Application</p>
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>&copy; @DateTime.Now.Year - Onshore SD Attendance Tracker Application</span>
+                </div>
+            </div>
         </footer>
+        <!-- End of Footer -->
+        
     </div>
 
     @Scripts.Render("~/bundles/jquery")

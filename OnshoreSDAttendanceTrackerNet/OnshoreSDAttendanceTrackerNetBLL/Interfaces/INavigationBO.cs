@@ -14,5 +14,7 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Interfaces
         int RoleID { get; set; }
         int ParentNavigationID { get; set; }
         int Order { get; set; }
+        bool HasChild { get; set; }
+        List<INavigationBO> Children { get; set; }
     }
 }

@@ -195,7 +195,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
             if (ModelState.IsValid)
             {
-                if (userPO.Email != null && userPO.RoleID_FK < 0 && userPO.RoleID_FK <= 2)
+                if (userPO.Email != null && userPO.RoleID_FK > 0 && userPO.RoleID_FK <= 2)
                 {
                     try
                     {

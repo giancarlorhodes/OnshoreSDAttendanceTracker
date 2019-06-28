@@ -49,7 +49,7 @@
         public ActionResult Login()
         {
             //Init Menus
-           // Session["MenuItems"] = HomeController.GetMenuItem(HttpContext.Session);
+            Session["MenuItems"]= HomeController.GetMenuItem(HttpContext.Session);
             return View();
         }
 
@@ -71,9 +71,11 @@
                 _iUserPO = Mapper.Map<IUserBO, IUserPO>(returnUserBO);
                
                 FormsAuthentication.SetAuthCookie(_iUserPO.Email, false);
-              
+                Session["UserModel"] = _iUserPO;
 
-                oResponse = RedirectToAction("Index", "Home");
+                //Refresh Menus
+                Session["MenuItems"] = HomeController.GetMenuItem(HttpContext.Session);
+                oResponse = RedirectToAction("Dashboards", "Home");
             }
             else
             {
@@ -108,8 +110,10 @@
 
                 //TODO: pull all roles names and Ids for dropDown List
 
+                //refresh Menu for User
+                Session["MenuItems"] = HomeController.GetMenuItem(HttpContext.Session);
 
-                oResponse = View();
+                oResponse = RedirectToAction("Dashboards","Home");
             }
             else
             {

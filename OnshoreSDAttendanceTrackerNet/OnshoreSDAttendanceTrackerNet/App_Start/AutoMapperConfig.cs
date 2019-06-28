@@ -55,8 +55,16 @@ namespace OnshoreSDAttendanceTrackerNet.App_Start
                 cfg.CreateMap<AbsenceBO, AbsencePO>();
                 cfg.CreateMap<AbsenceBO, AbsencePO>();
                 cfg.CreateMap<AbsencePO, IAbsenceDO>();
+                cfg.CreateMap<IAbsenceBO, DashboardViewModel>();
+                cfg.CreateMap<AbsenceBO, DashboardViewModel>();
+                cfg.CreateMap<IAbsencePO, DashboardViewModel>();
+                cfg.CreateMap<AbsencePO, DashboardViewModel>();
                 cfg.CreateMap<List<IAbsenceDO>, List<IAbsenceBO>>();
                 cfg.CreateMap<List<IAbsenceDO>, List<AbsencePO>>();
+                cfg.CreateMap<List<IAbsencePO>, List<DashboardViewModel>>();
+                cfg.CreateMap<List<AbsencePO>, List<DashboardViewModel>>();
+                cfg.CreateMap<List<IAbsenceBO>, List<DashboardViewModel>>();
+                cfg.CreateMap<List<AbsenceBO>, List<DashboardViewModel>>();
 
                 //exception mappings
                 cfg.CreateMap<ExceptionBO, ExceptionPO>();
@@ -66,6 +74,13 @@ namespace OnshoreSDAttendanceTrackerNet.App_Start
                 cfg.CreateMap<List<IExceptionDO>,List<IExceptionBO>>();
                 cfg.CreateMap<List<IExceptionDO>, List<IExceptionPO>>();
 
+                //Navigation mappings
+                cfg.CreateMap<INavigationDO, INavigationBO>();
+                cfg.CreateMap<INavigationDO, INavigationPO>();
+                cfg.CreateMap<INavigationBO, INavigationPO>();
+                cfg.CreateMap<List<INavigationDO>, List<INavigationBO>>();
+                cfg.CreateMap<List<INavigationDO>, List<INavigationPO>>();
+                cfg.CreateMap<List<INavigationBO>, List<INavigationPO>>();
                 //cfg.AddProfile(new UserProfile());
                 //cfg.AddProfile(new PostProfile());
             });

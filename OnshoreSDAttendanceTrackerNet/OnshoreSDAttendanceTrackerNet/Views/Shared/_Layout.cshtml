@@ -44,11 +44,12 @@
                     <li class="nav-item">
                         @if (menu.ParentNavigationID == 0)
                         {
-                            <a class="nav-link" data-toggle="collapse" data-target="#collapse_@menu.NavigationID" aria-expanded="true" aria-controls="collapse_@menu.NavigationID" href="#">
-                                @menu.MenuItem
-                            </a>
-                            if (menu.HasChild==true)
+
+                            if (menu.HasChild == true)
                             {
+                                <a class="nav-link" data-toggle="collapse" data-target="#collapse_@menu.NavigationID" aria-expanded="true" aria-controls="collapse_@menu.NavigationID" href="#">
+                                    @menu.MenuItem
+                                </a>
                                 <div id="collapse_@menu.NavigationID" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                     <div class="bg-gray-500 py-2 collapse-inner rounded">
                                         <!--<h6 class="collapse-header">Custom Components:</h6>-->
@@ -58,6 +59,12 @@
                                         }
                                     </div>
                                 </div>
+                            }
+                            else
+                            {
+                                <a class="nav-link" aria-expanded="true" href="@menu.URL">
+                                    @menu.MenuItem
+                                </a>
                             }
                         }
 
@@ -112,15 +119,14 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        @if (Session["MenuItems"] != null)
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <li><a></a></li>
+                        <!-- Nav Item - User Information -->
+                        @if (Session["UserModel"] != null)
                         {
-                            <div class="topbar-divider d-none d-sm-block"></div>
-
-                            UserPO user = (UserPO)Session["UserModel"];
-
-
-                            <li><a></a></li>
-                            <!-- Nav Item - User Information -->
+                            IUserPO user = (IUserPO)Session["UserModel"];
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-700 large-text">Welcome @user.FirstName! </span>
@@ -151,6 +157,16 @@
                                 </div>
                             </li>
                         }
+                        else
+                        {
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="/Account/Login" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-700 large-text">LogIn </span>
+
+                                </a>
+                            </li>
+                        }
+
                     </ul>
 
                 </nav>
@@ -194,27 +210,9 @@
 
 
         </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
-        <li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                    <li>@Html.ActionLink("Create A User", "CreateUser", "Account")</li>
-                    <li>@Html.ActionLink("View A User", "ViewUserByUserID", "Account")</li>
-                    <li>@Html.ActionLink("View All Users", "ViewAllUsers", "Account")</li>
-                </ul>
-            </div>
-            
-        </div>
+             
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Onshore SD Attendance Tracker Application</p>
-        </footer>
-    </div>
+    
 
 
 

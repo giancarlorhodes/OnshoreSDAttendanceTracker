@@ -1968,6 +1968,7 @@
     <Content Include="Views\Account\UpdateUserInfo.cshtml" />
     <Content Include="Views\Maint\ViewUsersByTeamID.cshtml" />
     <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="Views\Home\LeadDashboard.cshtml" />
     <Content Include="Views\Account\CreateUser.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewAllUsers.cshtml" />

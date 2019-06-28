@@ -12,10 +12,11 @@ namespace OnshoreSDAttendanceTrackerNetBLL
     public static class NavigationBusinessLogic
     {
 
-        public static List<INavigationBO> NavReOrder(List<INavigationBO> menu)
+        public static List<INavigationBO> NavReOrder(List<INavigationBO> menu, int userID)
         {
             List<INavigationBO> orderedMenu = new List<INavigationBO>();
             IdentifySubMenus(menu);
+            ReplaceNavURLs(menu, userID);
 
             foreach (INavigationBO menuItem in menu)
             {
@@ -29,6 +30,21 @@ namespace OnshoreSDAttendanceTrackerNetBLL
             }
 
             return orderedMenu;
+        }
+
+        public static void ReplaceNavURLs(List<INavigationBO> menu, int userID)
+        {
+            // last / of string
+            for (int i = 0; i < menu.Count(); i++)
+            {
+                if (menu[i].URL.Contains("{userID}"))
+                {
+                    //  menu[i].URL.Replace("{userID}", userID.ToString());
+                    int lastChar = menu[i].URL.LastIndexOf('/') ;
+                    menu[i].URL = menu[i].URL.Substring(0, lastChar) + "?userID=" + userID.ToString();
+                }
+
+            } 
         }
 
         private static void IdentifySubMenus(List<INavigationBO> menu)

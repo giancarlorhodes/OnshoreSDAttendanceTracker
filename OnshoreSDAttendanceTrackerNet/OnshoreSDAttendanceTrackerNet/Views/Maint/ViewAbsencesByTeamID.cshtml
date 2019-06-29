@@ -12,6 +12,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Employee Name</th>
                 <th>Name</th>
                 <th>Point</th>
                 <th>Active</th>
@@ -21,6 +22,7 @@
             @foreach (AbsencePO absence in Model.ListOfAbsencePO)
             {
                 <tr>
+                    <td>@absence.EmployeeName</td>
                     <td>@absence.Name</td>
                     <td>@absence.Point</td>
                     <td>@absence.Active</td>

@@ -111,7 +111,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    using (SqlCommand com = new SqlCommand("sp_TeamUpdate", con))
+                    using (SqlCommand com = new SqlCommand("sp_getTeamNameByID", con))
                     {
                         try
                         {
@@ -122,11 +122,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             con.Open();
                             using (SqlDataReader reader = com.ExecuteReader())
                             {
-                                newTeam.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
-                                newTeam.Name = reader["Name"].ToString();
-                                newTeam.Comment = reader["Comment"].ToString();
-                                var active = reader.GetInt32(3);
-                                newTeam.Active = active != 0;
+                                while (reader.Read())
+                                {
+                                    newTeam.Name = reader.GetString(0);
+                                }
                             }
 
                         }

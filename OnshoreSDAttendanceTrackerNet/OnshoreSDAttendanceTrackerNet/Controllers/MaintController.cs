@@ -480,6 +480,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         foreach(IAbsenceDO absence in absences)
                         {
                             selectedTeamAbsences.Absence = AbsenceMapper.MapAbsenceDOtoPO(absence);
+                            selectedTeamAbsences.ListOfAbsencePO.Add(selectedTeamAbsences.Absence);
                         }
 
                         oResponse = View(selectedTeamAbsences);

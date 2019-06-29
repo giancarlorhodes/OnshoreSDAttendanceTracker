@@ -137,14 +137,19 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
                             using (SqlDataReader reader = getAbsenceTypesByTeamComm.ExecuteReader())
                             {
-                                IAbsenceDO absenceType = new AbsenceDO();
-                                absenceType.AbsenceTypeID = reader.GetInt32(reader.GetOrdinal("AbsenceTypeID"));
-                                absenceType.Name = (string)reader["Name"];
-                                absenceType.Point = reader.GetInt32(reader.GetOrdinal("Point"));
-                                absenceType.Active = (bool)reader["Active"];
-                                absenceType.TeamID_FK = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                while (reader.Read())
+                                {
+                                    IAbsenceDO absenceType = new AbsenceDO();
+                                    absenceType.AbsenceTypeID = reader.GetInt32(0);
+                                    absenceType.EmployeeName = reader.GetString(1);
+                                    absenceType.Name = reader.GetString(2);
+                                    absenceType.Point = reader.GetDecimal(3);                                     
+                                    var active = reader.GetInt32(4);
+                                    absenceType.Active = active != 0;
+                                    absenceType.TeamID_FK = reader.GetInt32(5);
 
-                                listAbsenceTypesByTeam.Add(absenceType);
+                                    listAbsenceTypesByTeam.Add(absenceType);
+                                }
                             }
                         }
                         catch (Exception ex)

@@ -199,7 +199,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 {
                     try
                     {
-                        // Stores users for a team
+                        // Stores employees for a team
                         List<IUserDO> iUsers = _TeamDataAccess.ViewUsersByTeamID(teamID);
 
                         // Map iUsers from data objects to presentation objects
@@ -268,6 +268,8 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var userPO = (IUserPO)Session["UserModel"];
+            iTeam.User.Email = userPO.Email;
+            iTeam.User.RoleID_FK = userPO.RoleID_FK;
 
             // Ensure user is authenticated
             if (userPO.Email != null && userPO.RoleID_FK == 1)

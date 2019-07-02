@@ -15,7 +15,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
 {
     public class UserMapper
     {
-        public static List<IUserBO> MapListOfDOsToListOfBOs(List<IUserBO> userDOs)
+        public static List<IUserBO> MapListOfDOsToListOfBOs(List<IUserDO> userDOs)
         {
             var listOfUsers = new List<IUserBO>();
 

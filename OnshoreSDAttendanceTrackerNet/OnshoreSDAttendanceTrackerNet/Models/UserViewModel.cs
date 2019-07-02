@@ -61,7 +61,6 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public int RoleID { get; set; }
         public string RoleNameShort { get; set; }
         public string RoleNameLong { get ; set; }
-
-       
+        public decimal RunningTotal { get; set; }
     }
 }

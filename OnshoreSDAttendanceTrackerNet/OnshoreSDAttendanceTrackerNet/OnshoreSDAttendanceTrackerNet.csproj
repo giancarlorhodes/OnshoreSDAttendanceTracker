@@ -157,6 +157,7 @@
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\AbsencePO.cs" />
     <Compile Include="Models\AbsenceViewModel.cs" />
+    <Compile Include="Models\TeamAttendanceHelper.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\ExceptionPO.cs" />
     <Compile Include="Models\NavigationPO.cs" />

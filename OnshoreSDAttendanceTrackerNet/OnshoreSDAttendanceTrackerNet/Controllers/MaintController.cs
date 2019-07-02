@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 using System.Web.Mvc;
+using System.Linq;
+using OnshoreSDAttendanceTrackerNetBLL;
+using OnshoreSDAttendanceTrackerNetBLL.Models;
 
 namespace OnshoreSDAttendanceTrackerNet.Controllers
 {
@@ -17,6 +20,8 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
     {
         private TeamDataAccess _TeamDataAccess;
         private AbsenceDataAccess _AbsenceDataAccess;
+        private UserDataAccess _UserDataAccess;
+        private TeamBusinessLogic _TeamBusinessLogic;
 
         public MaintController()
         {
@@ -24,6 +29,8 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             string absenceConn = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
             _TeamDataAccess = new TeamDataAccess();
             _AbsenceDataAccess = new AbsenceDataAccess();
+            _UserDataAccess = new UserDataAccess();
+            _TeamBusinessLogic = new TeamBusinessLogic();
         }
 
         #region Team
@@ -53,7 +60,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
             return oResponse;
         }
-        
+
         [HttpPost]
         // TODO: Uncomment when ready to touch OWASP
         // [Authorize][ValidateAntiForgeryToken]
@@ -210,7 +217,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     catch (Exception ex)
                     {
                         ErrorLogger.LogError(ex, "ViewUserByTeamID", "Maint");
-                        selectedUsers.ErrorMessage = "Failed to load users. Please try again. If the issue persists reach out to IT."; 
+                        selectedUsers.ErrorMessage = "Failed to load users. Please try again. If the issue persists reach out to IT.";
 
                         oResponse = View(selectedUsers);
                     }
@@ -380,7 +387,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             var userPO = (IUserPO)Session["UserModel"];
 
             // User is authenticated(Admin, Service Manager or Team Lead)
-            if(userPO.Email != null && userPO.RoleID_FK < 4 && userPO.RoleID_FK > 0)
+            if (userPO.Email != null && userPO.RoleID_FK < 4 && userPO.RoleID_FK > 0)
             {
                 if (ModelState.IsValid)
                 {
@@ -425,7 +432,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             var ViewAllAbsenceEntries = new AbsenceViewModel();
 
             // User can view all absences if Admin
-            if(userPO.Email != null && userPO.RoleID_FK == 1)
+            if (userPO.Email != null && userPO.RoleID_FK == 1)
             {
                 try
                 {
@@ -463,6 +470,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         {
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
+            var topTeam = new TeamAttendanceHelper();
             var userPO = (IUserPO)Session["UserModel"];
             // TODO: Query name of team based off teamID parameter.
 
@@ -473,17 +481,73 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     try
                     {
                         // Stores list of absences by TeamID
-                        var absences = new List<IAbsenceDO>();
-                        absences = _AbsenceDataAccess.GetAbsenceTypesByTeamID(teamID);
+                        var absences = _AbsenceDataAccess.GetAbsenceTypesByTeamID(teamID);
                         var teamName = _TeamDataAccess.GetTeamByID(teamID);
-                        selectedTeamAbsences.Team.Name = teamName.Name;
+
+                        var allAbsences = _AbsenceDataAccess.GetAbsenceTypes();
+                        var allTeams = _TeamDataAccess.GetAllTeams();
+                        var allUsers = _UserDataAccess.GetAllUsers();
+
+                        
 
                         // Maps list of absences from DO to PO
-                        foreach(IAbsenceDO absence in absences)
+                        foreach (IAbsenceDO absence in absences)
                         {
                             selectedTeamAbsences.Absence = AbsenceMapper.MapAbsenceDOtoPO(absence);
                             selectedTeamAbsences.ListOfAbsencePO.Add(selectedTeamAbsences.Absence);
                         }
+                        foreach (ITeamDO team in allTeams)
+                        {
+                            selectedTeamAbsences.Team = TeamMapper.MapTeamDOtoPO(team);
+
+                        }
+
+                        //var bestStandingTeam = (from team in allTeams
+                        //                   join absence in allAbsences 
+                        //                   on team.TeamID equals absence.TeamID_FK into selectedAbsences
+                        //                   select new { Team = team.Name, Points = selectedAbsences.Sum(x => x.Point) })
+                        //                   .Distinct().OrderByDescending(t => t.Points).LastOrDefault();
+
+                        //var worstStandingTeam = (from team in allTeams
+                        //                         join absence in allAbsences
+                        //                         on team.TeamID equals absence.TeamID_FK into selectedAbsences
+                        //                         select new { Team = team.Name, Points = selectedAbsences.Sum(x => x.Point) })
+                        //                   .Distinct().OrderByDescending(t => t.Points).FirstOrDefault();
+                        selectedTeamAbsences.Team.Name = teamName.Name;
+
+                        //var teamRanking = (from team in allTeams
+                        //                   join absence in allAbsences
+                        //                   on team.TeamID equals absence.TeamID_FK into selectedAbsences
+                        //                   select new { Team = team.Name, Points = selectedAbsences.Sum(x => x.Point) })
+                        //                   .Distinct().OrderByDescending(t => t.Points);
+
+                        //var bestStandingMember = (from team in allTeams
+                        //                          join absence in allAbsences
+                        //                          on team.TeamID equals absence.TeamID_FK into AllTeamAbsences
+                        //                          from entry in AllTeamAbsences
+                        //                          join employee in allUsers
+                        //                          on entry.AbsentUserID equals employee.UserID
+                        //                          select new { Employee = employee.FirstName + " " + employee.LastName,
+                        //                              Points = AllTeamAbsences.Sum(x => x.Point)}).Distinct().OrderByDescending(t => t.Points).LastOrDefault();
+
+                        var topMemeberBOs = UserMapper.MapListOfDOsToListOfBOs(allUsers);
+                        var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                        var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                        var topEmployee = _TeamBusinessLogic.QueryBestStandingEmployee(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences, topMemeberBOs);
+                        var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+
+                        foreach(var item in teamRanker)
+                        {
+                            selectedTeamAbsences.TeamRanker.Team.Name = item.Item1;
+                            selectedTeamAbsences.TeamRanker.Absence.Point = item.Item2;
+                        }
+                        
+                        selectedTeamAbsences.TopTeam.Team.Name = bestStandingTeam.Item1;
+                        selectedTeamAbsences.TopTeam.Absence.RunningTotal = bestStandingTeam.Item2;
+                        selectedTeamAbsences.BottomTeam.Team.Name = bottomStandingTeam.Item1;
+                        selectedTeamAbsences.BottomTeam.Absence.RunningTotal = bottomStandingTeam.Item2;
+                        ViewBag.Employee = topEmployee.Item1;
+                        selectedTeamAbsences.TopEmployee.Absence.Point = topEmployee.Item2;
 
                         oResponse = View(selectedTeamAbsences);
                     }
@@ -549,7 +613,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         private void InitializeViewData(AbsenceViewModel selectedTeamAbsences, UserPO userPO)
-        {               
+        {
             var smName = new StringBuilder(selectedTeamAbsences.User.FirstName, 25);
             ViewBag.Name = smName.Append(" " + selectedTeamAbsences.User.LastName);
         }
@@ -558,12 +622,12 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         ///<summary>
         /// Retrieves form for the given absence selected
         /// </summary>
-        public ActionResult UpdateAbsenceEntry(IAbsenceDO iAbsence,int absenceID)
+        public ActionResult UpdateAbsenceEntry(IAbsenceDO iAbsence, int absenceID)
         {
             ActionResult oResponse = null;
             var userPO = (IUserPO)Session["UserModel"];
 
-            if(userPO.Email != null && userPO.RoleID_FK > 0 && userPO.RoleID_FK <= 3)
+            if (userPO.Email != null && userPO.RoleID_FK > 0 && userPO.RoleID_FK <= 3)
             {
                 var absenceVM = new AbsenceViewModel();
 
@@ -579,7 +643,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             else
             {
                 // User doesn't have priveleges redirect home
-                oResponse = RedirectToAction("Index","Home");
+                oResponse = RedirectToAction("Index", "Home");
             }
 
             return oResponse;

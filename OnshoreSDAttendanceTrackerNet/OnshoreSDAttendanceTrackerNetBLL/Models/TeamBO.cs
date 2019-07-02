@@ -10,5 +10,6 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Models
         public string Name { get; set; }
         public string Comment { get; set; }
         public bool Active { get; set; }
+        public decimal RunningTotal { get; set; }
     }
 }

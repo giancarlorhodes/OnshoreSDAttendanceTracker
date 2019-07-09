@@ -25,7 +25,7 @@ namespace OnshoreSDAttendanceTrackerNet.Models
             TopEmployee = new TeamAttendanceHelper();
         }
 
-        // TODO: If you deciding to use annotations use the display for formatting labels for properties
+        // annotations use the display for formatting labels for properties
         public AbsencePO Absence { get; set; }
         public TeamPO Team { get; set; }
         public UserPO User { get; set; }

@@ -114,9 +114,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         }
 
 
-
-
-
         public List<IUserDO> GetAllUsers()
         {
             var listOfDBUsers = new List<IUserDO>();

@@ -39,6 +39,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         #region Team
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Gets form for creating a new team
         /// </summary>
@@ -48,7 +49,6 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             var userPO = (IUserPO)Session["UserModel"];
 
             // Ensure user is authenticated
-            // TODO: Implement session checks after session has been handled
             if (userPO != null && userPO.RoleID_FK == (int)RoleEnum.Administrator)
             {
                 var teamVM = new TeamViewModel();
@@ -64,9 +64,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             return oResponse;
         }
 
-        [HttpPost]
-        // TODO: Uncomment when ready to touch OWASP
-        // [Authorize][ValidateAntiForgeryToken]
+        [HttpPost]        
         ///<summary>
         /// Sends request to database for creating a new team
         /// </summary>
@@ -92,7 +90,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     catch (Exception ex)
                     {
                         ErrorLogger.LogError(ex, "AddTeam", "Maint");
-                        iViewModel.ErrorMessage = ""; // TODO: Add meaningful message
+                        iViewModel.ErrorMessage = "There was an issue adding a new team. Please try again. If the problem persists contact your IT department.";
 
                         oResponse = View(iViewModel);
                     }
@@ -112,6 +110,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Views all teams(admin)
         /// </summary>
@@ -149,6 +148,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves all Teams by a given user(i.e. Service Manager with multiple teams) 
         /// </summary>
@@ -201,51 +201,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        ///<summary>
-        /// Retrieves all users for a given team
-        /// </summary>
-        public ActionResult ViewUsersByTeamID(int teamID)
-        {
-            ActionResult oResponse = null;
-            var selectedUsers = new UserViewModel();
-            var userPO = (IUserPO)Session["UserModel"];
-
-            if (ModelState.IsValid)
-            {
-                if (userPO.Email != null && userPO.RoleID_FK >= (int)RoleEnum.Administrator && userPO.RoleID_FK <= (int)RoleEnum.Service_Manager)
-                {
-                    try
-                    {
-                        // Stores employees for a team
-                        List<IUserDO> iUsers = _TeamDataAccess.ViewUsersByTeamID(teamID);
-
-                        // Map iUsers from data objects to presentation objects
-                        selectedUsers.ListOfUserPO = UserMapper.MapListOfDOsToListOfPOs(iUsers);
-
-                        oResponse = View(selectedUsers);
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorLogger.LogError(ex, "ViewUserByTeamID", "Maint");
-                        selectedUsers.ErrorMessage = "Failed to load users. Please try again. If the issue persists reach out to IT.";
-
-                        oResponse = View(selectedUsers);
-                    }
-                }
-                else
-                {
-                    oResponse = View(selectedUsers);
-                }
-            }
-            else
-            {
-                oResponse = View(selectedUsers);
-            }
-
-            return oResponse;
-        }
-
-        [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves form for updating team information
         /// </summary>
@@ -304,7 +260,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     catch (Exception ex)
                     {
                         ErrorLogger.LogError(ex, "UpdateTeamInformation", "Maint");
-                        iTeam.ErrorMessage = "There was an issue with updating the selected team. Please try again. If the problem persists contact your IT team."; // TODO Add meaningful message for user
+                        iTeam.ErrorMessage = "There was an issue with updating the selected team. Please try again. If the problem persists contact your IT team.";
 
                         oResponse = View(iTeam);
                     }
@@ -319,6 +275,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Attempts to deactivate team
         /// </summary>
@@ -337,7 +294,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 {
                     var error = new TeamViewModel();
                     ErrorLogger.LogError(ex, "DeactivateTeam", "Maint");
-                    error.ErrorMessage = "There was an issue with archiving the selected team. Please try again. If the problem persists contact your IT team."; // TODO: Add meaningful message to user
+                    error.ErrorMessage = "There was an issue with archiving the selected team. Please try again. If the problem persists contact your IT team.";
                 }
                 finally
                 {
@@ -358,6 +315,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         #region AttendanceType
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves form for creating a new absence entry
         /// </summary>
@@ -427,6 +385,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Admin view all absences by all employees
         /// </summary>
@@ -490,6 +449,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Views all absences by for a given team(TL, SM, Admin)
         /// </summary>
@@ -499,7 +459,6 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             ActionResult oResponse = null;
             var selectedTeamAbsences = new AbsenceViewModel();
             var userPO = (IUserPO)Session["UserModel"];
-            // TODO: Query name of team based off teamID parameter.
 
             if (userPO.Email != null && userPO.RoleID_FK <= (int)RoleEnum.Team_Lead && userPO.RoleID_FK >= (int)RoleEnum.Administrator)
             {
@@ -508,7 +467,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     try
                     {
                         // Stores list of absences by TeamID
-                        var absences = _AbsenceDataAccess.GetAbsenceTypesByTeamID(teamID);
+                        var absences = _AbsenceDataAccess.GetAbsencesByTeamID(teamID);
                         var teamName = _TeamDataAccess.GetTeamNameByID(teamID);
 
                         // Retrieve lists for LINQ queries
@@ -594,6 +553,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Views all absences for all teams under a Service Manager -- Check to see if this already exists
         /// </summary>
@@ -645,6 +605,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves form for the given absence selected
         /// </summary>

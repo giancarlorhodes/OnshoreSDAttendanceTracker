@@ -21,5 +21,6 @@ namespace OnshoreSDAttendanceTrackerNet.Interfaces
         decimal RunningTotal { get; set; }
         string Status { get; set; }
         string EmployeeName { get; set; }
+        int PointBankID { get; set; }
     }
 }

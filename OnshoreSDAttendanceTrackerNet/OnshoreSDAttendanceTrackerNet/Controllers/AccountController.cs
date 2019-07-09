@@ -88,6 +88,7 @@
 
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Gets form for creating a new User
         ///first, last, email, team, role(Admin, SM, TL)
@@ -124,8 +125,6 @@
         }
 
         [HttpPost]
-        // TODO: Uncomment when ready to touch OWASP
-        // [Authorize][ValidateAntiForgeryToken]
         ///<summary>
         /// Sends request to database for creating a new team
         /// </summary>
@@ -149,7 +148,7 @@
                     catch (Exception ex)
                     {
                         ErrorLogger.LogError(ex, "CreateUser", "Account");
-                        newUser.ErrorMessage = ""; // TODO: Add meaningful message
+                        newUser.ErrorMessage = "There was an issue with creating a new employee. Please try again. If the problem persists contact your IT department.";
 
                         oResponse = View(newUser);
                     }
@@ -165,6 +164,7 @@
         
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves user by userID
         /// </summary>
@@ -191,7 +191,7 @@
                     catch (Exception ex)
                     {
                         ErrorLogger.LogError(ex, "ViewUserByUserID", "Account");
-                        selectedUser.ErrorMessage = "Cannot view user"; // TODO: Add meaningful message to the user
+                        selectedUser.ErrorMessage = "The was an issue with retrieving the selected employee. Please try again. If the problem persists contact your IT department."; 
 
                         oResponse = View(selectedUser);
                     }
@@ -234,7 +234,7 @@
                     catch (Exception ex)
                     {
                         ErrorLogger.LogError(ex, "UpdateUserInfo", "Account");
-                        userToUpdateVM.ErrorMessage = "Cannot update user info"; // TODO Add meaningful message for user
+                        userToUpdateVM.ErrorMessage = "The was an issue with updating employee information. Please try again. If the problem persists contact your IT department.";
 
                         oResponse = View(userToUpdateVM);
                     }
@@ -248,6 +248,7 @@
 
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteUser(int userToDelId, int modifiedByUserId, int teamID)
         {
             _uda.RemoveUser(userToDelId, modifiedByUserId);
@@ -258,6 +259,7 @@
 
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public ActionResult PasswordReset(int UserID)
         {
             UserViewModel userToUpdate = new UserViewModel();
@@ -281,6 +283,7 @@
 
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         ///<summary>
         /// Views all users by team
         /// </summary>
@@ -308,7 +311,7 @@
                 catch (Exception ex)
                 {
                     ErrorLogger.LogError(ex, "ViewAllUsers", "Account");
-                    ViewAllUsersVM.ErrorMessage = ""; // TODO: Add meaningful front end message
+                    ViewAllUsersVM.ErrorMessage = "There was an issue retrieving employees. Please try again. If the problem persists contact your IT department."; 
                 }
             }
             else

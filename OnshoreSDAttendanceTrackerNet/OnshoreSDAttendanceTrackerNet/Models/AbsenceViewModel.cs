@@ -9,37 +9,34 @@ using System.Web.Mvc;
 
 namespace OnshoreSDAttendanceTrackerNet.Models
 {
-    public class AbsenceViewModel
+    public class AbsenceViewModel : IListOfPOs<AbsencePO>
     {
         public AbsenceViewModel()
         {
             Absence = new AbsencePO();
             Team = new TeamPO();
             User = new UserPO();
-            ListOfAbsencePO = new List<AbsencePO>();
-            ListOfAbsenceDO = new List<AbsenceDO>();
-            AbsenceTypes = new List<SelectListItem>();
-            TeamRunningTotals = new List<TeamPO>();
+            ListOfPos = new List<AbsencePO>();
+            Absences = new List<SelectListItem>();
             TopTeam = new TeamAttendanceHelper();
             BottomTeam = new TeamAttendanceHelper();
             SMRanker = new TeamAttendanceHelper();
             TeamRanker = new TeamAttendanceHelper();
             TopEmployee = new TeamAttendanceHelper();
-
         }
 
+        // TODO: If you deciding to use annotations use the display for formatting labels for properties
         public AbsencePO Absence { get; set; }
         public TeamPO Team { get; set; }
         public UserPO User { get; set; }
+        public List<AbsencePO> ListOfPos { get; set; }
         public TeamAttendanceHelper TopTeam { get; set; }
         public TeamAttendanceHelper BottomTeam { get; set; }
         public TeamAttendanceHelper SMRanker { get; set; }
         public TeamAttendanceHelper TeamRanker { get; set; }
         public TeamAttendanceHelper TopEmployee { get; set; }
-        public List<AbsencePO> ListOfAbsencePO { get; set; }
-        public List<AbsenceDO> ListOfAbsenceDO { get; set; }       
+        public List<SelectListItem> Absences { get; set; }
         public List<SelectListItem> AbsenceTypes { get; set; }
-        public List<TeamPO> TeamRunningTotals { get; set; }
         public string ErrorMessage { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
     public interface IAbsenceDO
     {
         int AbsenceTypeID { get; set; }
+        string TeamName { get; set; }
         string Name { get; set; }
         string Comments { get; set; }
         decimal Point { get; set; }

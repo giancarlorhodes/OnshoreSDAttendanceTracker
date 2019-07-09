@@ -19,5 +19,6 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Models
         public int TeamMgtID { get; set; }
         public string Status { get; set; }
         public string EmployeeName { get; set; }
+        public string TeamName { get; set; }
     }
 }

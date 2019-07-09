@@ -1,4 +1,5 @@
-﻿using OnshoreSDAttendanceTrackerNetDAL.Models;
+﻿using OnshoreSDAttendanceTrackerNet.Interfaces;
+using OnshoreSDAttendanceTrackerNetDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,20 +7,18 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Models
 {
-    public class TeamViewModel
+    public class TeamViewModel : IListOfPOs<TeamPO>
     {
         public TeamViewModel()
         {
             Team = new TeamPO();
             User = new UserPO();
-            ListOfTeamPO = new List<TeamPO>();
-            ListOfTeamDO = new List<TeamDO>();
+            ListOfPos = new List<TeamPO>();
         }
         
         public TeamPO Team { get; set; }
         public UserPO User { get; set; }
-        public List<TeamPO> ListOfTeamPO { get; set; }
-        public List<TeamDO> ListOfTeamDO { get; set; }
         public string ErrorMessage { get; set; }
+        public List<TeamPO> ListOfPos { get; set; }
     }
 }

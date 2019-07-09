@@ -77,6 +77,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             var oAbsence = new AbsencePO();
             oAbsence.AbsenceTypeID = absenceBO.AbsenceTypeID;
             oAbsence.Name = absenceBO.Name;
+            oAbsence.TeamName = absenceBO.TeamName;
             oAbsence.Point = absenceBO.Point;
             oAbsence.Active = absenceBO.Active;
             oAbsence.TeamID_FK = absenceBO.TeamID_FK;
@@ -94,6 +95,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             var oAbsence = new AbsencePO();
             oAbsence.AbsenceTypeID = absenceBO.AbsenceTypeID;
             oAbsence.Name = absenceBO.Name;
+            oAbsence.TeamName = absenceBO.TeamName;
             oAbsence.Point = absenceBO.Point;
             oAbsence.Active = absenceBO.Active;
             oAbsence.TeamID_FK = absenceBO.TeamID_FK;
@@ -113,6 +115,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             IAbsenceBO oAbsence = new AbsenceBO();
             oAbsence.AbsenceTypeID = absenceDO.AbsenceTypeID;
             oAbsence.Name = absenceDO.Name;
+            oAbsence.TeamName = absenceDO.TeamName;
             oAbsence.Point = absenceDO.Point;
             oAbsence.Active = absenceDO.Active;
             oAbsence.TeamID_FK = absenceDO.TeamID_FK;
@@ -130,6 +133,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             var oAbsence = new AbsencePO();
             oAbsence.AbsenceTypeID = absenceDO.AbsenceTypeID;
             oAbsence.Name = absenceDO.Name;
+            oAbsence.TeamName = absenceDO.TeamName;
             oAbsence.Point = absenceDO.Point;
             oAbsence.Active = absenceDO.Active;
             oAbsence.TeamID_FK = absenceDO.TeamID_FK;
@@ -148,6 +152,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             IAbsenceDO oAbsence = new AbsenceDO();
             oAbsence.AbsenceTypeID = absencePO.AbsenceTypeID;
             oAbsence.Name = absencePO.Name;
+            oAbsence.TeamName = absencePO.TeamName;
             oAbsence.Point = absencePO.Point;
             oAbsence.Active = absencePO.Active;
             oAbsence.TeamID_FK = absencePO.TeamID_FK;

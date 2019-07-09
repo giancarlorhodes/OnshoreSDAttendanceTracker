@@ -8,6 +8,7 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Interfaces
     {
         int AbsenceTypeID { get; set; }
         string Name { get; set; }
+        string TeamName { get; set; }
         string Comments { get; set; }
         decimal Point { get; set; }
         bool Active { get; set; }

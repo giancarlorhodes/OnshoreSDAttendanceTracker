@@ -8,6 +8,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Models
     public class AbsenceDO : IAbsenceDO
     {
         public int AbsenceTypeID { get; set; }
+        public string TeamName { get; set; }
         public string Name { get; set; }
         public decimal Point { get; set; }
         public bool Active { get; set; }
@@ -18,5 +19,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Models
         public DateTime AbsenceDate { get; set; }
         public int TeamMgtID { get; set; }
         public string EmployeeName { get; set; }
+        public int PointBankID { get; set; }
     }
 }

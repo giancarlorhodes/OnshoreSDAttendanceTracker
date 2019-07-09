@@ -20,53 +20,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
     {
         private string _ConnectionString = (ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString);
 
-        #region GetAbsenceTypes
-
-        // TODO: Implement with correct SP this is calling Absence Types not absences
-        // Retrieves all absences -- Check Points for duplication
-        public List<IAbsenceDO> GetAllAbsences()
-        {
-            var listOfAbsenceTypes = new List<IAbsenceDO>();
-
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(_ConnectionString))
-                {
-
-                    using (SqlCommand getComm = new SqlCommand("sp_GetAllAbsenceTypes", conn))
-                    {
-                        getComm.CommandType = CommandType.StoredProcedure;
-                        getComm.CommandTimeout = 35;
-                        conn.Open();
-
-                        using (SqlDataReader reader = getComm.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                // TODO: Associate with columns
-                                IAbsenceDO absenceType = new AbsenceDO();
-                                absenceType.AbsenceTypeID = reader.GetInt32(0);
-                                absenceType.Name = reader.GetString(1);
-                                var active = reader.GetInt32(2);
-                                absenceType.Active = active != 0;
-
-                                listOfAbsenceTypes.Add(absenceType);
-                            }
-                        }
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorLogger.LogError(ex, "GetAbsenceTypes", "nothing");
-            }
-
-            return listOfAbsenceTypes;
-        }
+       
 
         // Gets absences for a given team -- Check points for duplication
-        public List<IAbsenceDO> GetAbsenceTypesByTeamID(int iTeamID)
+        public List<IAbsenceDO> GetAbsencesByTeamID(int iTeamID)
         {
             List<IAbsenceDO> listAbsenceTypesByTeam = new List<IAbsenceDO>();
 
@@ -74,7 +31,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 using (SqlConnection con = new SqlConnection(_ConnectionString))
                 {
-                    using (SqlCommand getAbsenceTypesByTeamComm = new SqlCommand("sp_GetAttendanceTypesByTeamID", con))
+                    using (SqlCommand getAbsenceTypesByTeamComm = new SqlCommand("sp_GetAbsencesByTeamID", con))
                     {
                         try
                         {
@@ -88,38 +45,36 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             {
                                 while (reader.Read())
                                 {
-                                    // TODO: Associate with column name SQL
-                                    IAbsenceDO absenceType = new AbsenceDO();
-                                    absenceType.AbsenceTypeID = reader.GetInt32(0);
-                                    absenceType.EmployeeName = reader.GetString(1);
-                                    absenceType.Name = reader.GetString(2);
-                                    absenceType.Point = reader.GetDecimal(3);                                     
-                                    var active = reader.GetInt32(4);
-                                    absenceType.Active = active != 0;
-                                    absenceType.TeamID_FK = reader.GetInt32(5);
+                                    IAbsenceDO absence = new AbsenceDO();
+                                    absence.PointBankID = (int)reader["PointBankID"];
+                                    absence.EmployeeName = reader["EmployeeName"].ToString();
+                                    absence.Name = reader["AbsenceType"].ToString();
+                                    absence.Point = (decimal)reader["Point"];                                     
+                                    var active = (int)reader["Active"];
+                                    absence.Active = active != 0;
+                                    absence.TeamID_FK = (int)reader["TeamID_FK"];
 
-                                    listAbsenceTypesByTeam.Add(absenceType);
+                                    listAbsenceTypesByTeam.Add(absence);
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            ErrorLogger.LogError(ex, "GetAbsenceTypesByTeamID", "nothing");
+                            ErrorLogger.LogError(ex, "GetAbsencesByTeamID", "nothing");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                ErrorLogger.LogError(ex, "GetAbsenceTypesByTeamID", "nothing");
+                ErrorLogger.LogError(ex, "GetAbsencesByTeamID", "nothing");
             }
 
             return listAbsenceTypesByTeam;
 
         }
 
-        // Gets selected absence by PointBankID -- Check points for duplication
-        // TODO: Add PointBankID to the query
+        // Gets selected absence by PointBankID
         public IAbsenceDO GetAbsenceByID(int pointBankID)
         {
             var iAbsence = new AbsenceDO();
@@ -141,12 +96,11 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             {
                                 while (reader.Read())
                                 {
-                                    // TODO: Associate with SQL columns
                                     var absenceDO = new AbsenceDO();
-                                    absenceDO.PointBankID = reader.GetInt32(0);
-                                    absenceDO.EmployeeName = reader.GetString(1);
-                                    absenceDO.Name = reader.GetString(2);
-                                    absenceDO.Point = reader.GetDecimal(3);
+                                    absenceDO.PointBankID = (int)reader["PointBankID"];
+                                    absenceDO.EmployeeName = reader["Employee"].ToString();
+                                    absenceDO.Name = reader["AbsenceType"].ToString();
+                                    absenceDO.Point = (decimal)reader["Point"];
                                 }
                             }
                         }
@@ -163,43 +117,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             }
             return iAbsence;
         }
-
-        #endregion GetAbsenceTypes
-
-
-        #region UpdateAbsenceType
-
-        public IAbsenceDO UpdateAbsenceType(IAbsenceDO iAbsence, int ModifiedByUserID)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(_ConnectionString))
-                {
-                    using (SqlCommand updateComm = new SqlCommand("sp_UpdateAttendanceTypeById", conn))
-                    {
-                        try
-                        {
-                            updateComm.Parameters.AddWithValue("@AttendanceTypeId", iAbsence.AbsenceTypeID);
-                            updateComm.Parameters.AddWithValue("@ModifiedByUserId", ModifiedByUserID);
-                            updateComm.Parameters.AddWithValue("@Name", iAbsence.Name);
-                            updateComm.Parameters.AddWithValue("@Point", iAbsence.Point);
-
-                            return iAbsence;
-                        }
-                        catch (Exception ex)
-                        {
-                            ErrorLogger.LogError(ex, "UpdateAbsenceType", "nothing");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorLogger.LogError(ex, "UpdateAbsenceType", "nothing");
-            }
-            return iAbsence;
-        }
-
+        
         // Retrieves absences by UserID(SM, TL)
         public List<IAbsenceDO> GetAbsencesAssociatedWithUserID(int userID)
         {
@@ -223,16 +141,16 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             {
                                 while (reader.Read())
                                 {
-                                    // Associate with SQL columns
                                     IAbsenceDO absenceType = new AbsenceDO();                                    
-                                    absenceType.EmployeeName = reader.GetString(0);
-                                    absenceType.TeamName = reader.GetString(1);
-                                    absenceType.Name = reader.GetString(2);
-                                    absenceType.AbsenceDate = reader.GetDateTime(3);
-                                    absenceType.Point = reader.GetDecimal(4);
-                                    absenceType.AbsenceTypeID = reader.GetInt32(5);
-                                    absenceType.AbsentUserID = reader.GetInt32(6);
-                                    absenceType.TeamMgtID = reader.GetInt32(7);
+                                    absenceType.EmployeeName = reader["Employee"].ToString();
+                                    absenceType.TeamName = reader["Team"].ToString();
+                                    absenceType.Name = reader["Type"].ToString();
+                                    absenceType.AbsenceDate = (DateTime)reader["AbsenceDate"];
+                                    absenceType.Point = (decimal)reader["Point"];
+                                    absenceType.AbsenceTypeID = (int)reader["AbsenceTypeID"];
+                                    absenceType.AbsentUserID = (int)reader["UserID"];
+                                    absenceType.TeamMgtID = (int)reader["TeamManagementID"];
+                                    absenceType.PointBankID = (int)reader["PointBankID"];
 
                                     absenceDOs.Add(absenceType);
                                 }
@@ -253,10 +171,53 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             return absenceDOs;
         }
 
-        #endregion Absences
 
         #region AbsenceTypes
-        // TODO: Add Absence Types for admininstrative actions for CRUD
+
+        public string CreateAbsenceType(IAbsenceDO absence, int userID)
+        {
+            string result;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_ConnectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("sp_TeamAddNew", connection))
+                    {
+                        try
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.CommandTimeout = 35;
+
+                            command.Parameters.AddWithValue("@AbsenceTypeID",SqlDbType.Int).Value = absence.AbsenceTypeID;
+                            command.Parameters.AddWithValue("@AbsenceName",SqlDbType.VarChar).Value = absence.Name;
+                            command.Parameters.AddWithValue("@Point",SqlDbType.Decimal).Value = absence.Point;
+                            command.Parameters.AddWithValue("@Active",SqlDbType.Int).Value = absence.Active;
+                            command.Parameters.AddWithValue("@TeamID_FK",SqlDbType.Int).Value = absence.TeamID_FK;
+                            command.Parameters.AddWithValue("@CreateDate",SqlDbType.DateTime).Value = absence.AbsenceDate;
+                            command.Parameters.AddWithValue("@CreateUser_FK",SqlDbType.Int).Value = userID;
+                            command.Parameters.AddWithValue("@ModifiedDate",SqlDbType.DateTime).Value = DateTime.Now;
+                            command.Parameters.AddWithValue("@ModifiedUser_FK",SqlDbType.Int).Value = userID;
+                            command.ExecuteNonQuery();
+
+                            result = "Success";
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrorLogger.LogError(ex, "CreateAbsenceType", "nothing");
+                            result = "fail";
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.LogError(e, "CreateAbsenceType", "nothing");
+                result = "fail";
+            }
+
+            return result;
+        }
+
         public List<IAbsenceDO> GetAllAbsenceTypes()
         {
             var listOfAbsenceTypes = new List<IAbsenceDO>();
@@ -276,11 +237,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             while (reader.Read())
                             {
-                                // TODO: Associate with columns
                                 IAbsenceDO absenceType = new AbsenceDO();
-                                absenceType.AbsenceTypeID = reader.GetInt32(0);
-                                absenceType.Name = reader.GetString(1);
-                                var active = reader.GetInt32(2);
+                                absenceType.AbsenceTypeID = (int)reader["AbsenceTypeID"];
+                                absenceType.Name = reader["Name"].ToString();
+                                var active = (int)reader["Active"];
                                 absenceType.Active = active != 0;
 
                                 listOfAbsenceTypes.Add(absenceType);
@@ -297,6 +257,75 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
             return listOfAbsenceTypes;
         }
+
+        public IAbsenceDO UpdateAbsenceType(IAbsenceDO iAbsence, int ModifiedByUserID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_ConnectionString))
+                {
+                    using (SqlCommand updateComm = new SqlCommand("sp_UpdateAttendanceTypeById", conn))
+                    {
+                        try
+                        {
+                            updateComm.Parameters.AddWithValue("@AttendanceTypeId", SqlDbType.Int).Value = iAbsence.AbsenceTypeID;
+                            updateComm.Parameters.AddWithValue("@ModifiedByUserId", SqlDbType.Int).Value = ModifiedByUserID;
+                            updateComm.Parameters.AddWithValue("@Name", SqlDbType.VarChar).Value = iAbsence.Name;
+                            updateComm.Parameters.AddWithValue("@Point", SqlDbType.Decimal).Value = iAbsence.Point;
+
+                            return iAbsence;
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrorLogger.LogError(ex, "UpdateAbsenceType", "nothing");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "UpdateAbsenceType", "nothing");
+            }
+            return iAbsence;
+        }
+
+        public string DeactivateAbsenceType(int absenceTypeID)
+        {
+            string result;
+
+            try
+            {
+                using(SqlConnection connection = new SqlConnection(_ConnectionString))
+                {
+                    using(SqlCommand command = new SqlCommand("sp_DeactiveAbsenceType", connection))
+                    {
+                        try
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.CommandTimeout = 35;
+
+                            command.Parameters.Add(new SqlParameter("@AbsenceTypeID", absenceTypeID));
+                            command.ExecuteNonQuery();
+
+                            result = "Success";
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrorLogger.LogError(ex, "DeactivateAbsenceType", "nothing");
+                            result = "fail";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "DeactivateAbsenceType", "nothing");
+                result = "fail";
+            }
+
+            return result;
+        }
+
         #endregion
 
     }

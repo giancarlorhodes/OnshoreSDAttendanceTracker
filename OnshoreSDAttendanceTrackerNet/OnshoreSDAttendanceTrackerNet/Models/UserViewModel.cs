@@ -10,8 +10,6 @@ namespace OnshoreSDAttendanceTrackerNet.Models
 {
     public class UserViewModel : IUserPO,IUserCredentialsPO, ITeamPO, IRolePO
     {
-        // TODO: Implement the User View Model
-
         public UserViewModel()
         {
             User = new UserPO();

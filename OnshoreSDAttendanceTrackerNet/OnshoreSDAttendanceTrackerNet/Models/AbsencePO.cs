@@ -10,6 +10,7 @@ namespace OnshoreSDAttendanceTrackerNet.Models
     {
         public int AbsenceTypeID { get; set; }
         public string Name { get; set; }
+        public string TeamName { get; set; }
         public decimal Point { get; set; }
         public bool Active { get; set; }
         public int TeamID_FK { get; set; }

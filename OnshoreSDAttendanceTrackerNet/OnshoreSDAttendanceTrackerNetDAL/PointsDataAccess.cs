@@ -153,7 +153,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             return listOfAbsenceDOs;
         }
 
-        public static void UdpateAbsenceInformation(IAbsenceDO iAbsence,int updatedBy)
+        public static void UpdateAbsenceInformation(IAbsenceDO iAbsence,int updatedBy)
         {
 
             try

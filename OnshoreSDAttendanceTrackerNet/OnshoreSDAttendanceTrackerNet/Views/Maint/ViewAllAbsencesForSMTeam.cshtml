@@ -1,7 +1,7 @@
 ﻿@using OnshoreSDAttendanceTrackerNet.Models
 @model OnshoreSDAttendanceTrackerNet.Models.AbsenceViewModel
 @{
-    ViewBag.Title = @ViewBag.Name + "Team Absences";
+    ViewBag.Title = @ViewBag.Name + " Team Absences";
 }
 
 <h2>@ViewBag.Name</h2>
@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (AbsencePO absence in Model.ListOfAbsencePO)
+            @foreach (AbsencePO absence in Model.ListOfPos)
             {
                 <tr>
                     <td>@Model.User.FirstName @Model.User.LastName</td>

@@ -51,7 +51,7 @@ namespace OnshoreSDAttendanceTrackerNetBLL
             return worstStandingTeam;
         }
 
-        public Tuple<string, decimal> QueryBestStandingEmployee(List<ITeamBO> allTeams, List<IAbsenceDO> allAbsences, List<IUserBO> allUsers)
+        public Tuple<string, decimal> QueryBestStandingEmployee(List<ITeamDO> allTeams, List<IAbsenceDO> allAbsences, List<IUserDO> allUsers)
         {
             var topEmployee = (from team in allTeams
                                join absence in allAbsences
@@ -59,6 +59,27 @@ namespace OnshoreSDAttendanceTrackerNetBLL
                                from entry in AllTeamAbsences
                                join employee in allUsers
                                on entry.AbsentUserID equals employee.UserID
+                               select new
+                               {
+                                   Employee = employee.FirstName + " " + employee.LastName,
+                                   Points = AllTeamAbsences.Sum(x => x.Point)
+                               }).Distinct().OrderByDescending(t => t.Points).LastOrDefault();
+
+            Tuple<string, decimal> bestStandingEmployee = new Tuple<string, decimal>(topEmployee.Employee, topEmployee.Points);
+
+            return bestStandingEmployee;
+        }
+
+        // TODO: Correct issues with Top Employee query/Maybe write a SP instead?
+        public Tuple<string,decimal> QueryBestStandingTeamMember(List<ITeamDO> allTeams, List<IAbsenceDO> allAbsences, List<IUserDO> allUsers, int roleID)
+        {
+            var topEmployee = (from team in allTeams
+                               join absence in allAbsences
+                               on team.TeamID equals absence.TeamID_FK into AllTeamAbsences
+                               from entry in AllTeamAbsences
+                               join employee in allUsers
+                               on entry.AbsentUserID equals employee.UserID
+                               where employee.RoleID_FK == roleID
                                select new
                                {
                                    Employee = employee.FirstName + " " + employee.LastName,

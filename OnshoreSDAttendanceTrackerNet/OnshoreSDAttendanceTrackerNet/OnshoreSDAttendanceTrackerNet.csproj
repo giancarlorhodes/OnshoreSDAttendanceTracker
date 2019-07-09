@@ -144,6 +144,8 @@
     </Compile>
     <Compile Include="Interfaces\IAbsencePO.cs" />
     <Compile Include="Interfaces\IExceptionPO.cs" />
+    <Compile Include="Interfaces\IListOfPOs.cs" />
+    <Compile Include="Interfaces\IListOfDOs.cs" />
     <Compile Include="Interfaces\INavigationPO.cs" />
     <Compile Include="Interfaces\IRolePO.cs" />
     <Compile Include="Interfaces\ITeamPO.cs" />

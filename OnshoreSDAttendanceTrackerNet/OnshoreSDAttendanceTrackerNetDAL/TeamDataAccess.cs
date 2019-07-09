@@ -83,6 +83,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             while (reader.Read())
                             {
+                                // TODO: Access the actual column instead of the using the index for preventing issues with extensibility
                                 ITeamDO newTeam = new TeamDO();
                                 newTeam.TeamID = reader.GetInt32(0);
                                 newTeam.Name = reader.GetString(1);
@@ -102,8 +103,50 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             }
             return teams;
         }
+
+        // Retrieves all teams assigned to a service manager
+        public List<ITeamDO> GetAllSMTeams()
+        {
+            var teams = new List<ITeamDO>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    using (SqlCommand com = new SqlCommand("sp_GetAllSMTeams", con))
+                    {
+                        com.CommandType = CommandType.StoredProcedure;
+                        com.CommandTimeout = 35;
+
+                        con.Open();
+                        using (SqlDataReader reader = com.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // TODO: Access the actual column instead of the using the index for preventing issues with extensibility
+                                ITeamDO newTeam = new TeamDO();
+                                newTeam.TeamID = reader.GetInt32(0);
+                                newTeam.Name = reader.GetString(1);
+                                newTeam.Comment = reader["Comment"].ToString();
+                                var active = reader.GetInt32(3);
+                                newTeam.Active = active != 0;
+                                teams.Add(newTeam);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.LogError(e, "GetAllTeams", "nothing");
+
+            }
+            return teams;
+        }
+
+        // TODO: Find a better way if time allows
         //GetTeamByID
-        public ITeamDO GetTeamByID(int teamID)
+        public ITeamDO GetTeamNameByID(int teamID)
         {
             ITeamDO newTeam = new TeamDO();
 
@@ -150,7 +193,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             return newTeam;
         }
 
-        public List<ITeamDO> GetAllTeamsByID(int userID)
+        // Retrieves all SM teams
+        public List<ITeamDO>GetAllSMTeamAbsencesByUserID (int userID)
         {
             var listOfTeams = new List<ITeamDO>();
             var newTeam = new TeamDO();
@@ -158,7 +202,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 using (SqlConnection connection = new SqlConnection(conString))
                 {
-                    using (SqlCommand command = new SqlCommand("sp_GetAllTeamsByID", connection))
+                    using (SqlCommand command = new SqlCommand("sp_GetAllSMTeamsByUserID", connection))
                     {
                         try
                         {
@@ -171,25 +215,24 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             {
                                 while (reader.Read())
                                 {
-                                    newTeam.TeamID = reader.GetInt32(0);
-                                    newTeam.Name = reader.GetString(1);
-                                    newTeam.Comment = reader.GetString(2);
-                                    var active = reader.GetInt32(3);
-                                    newTeam.Active = active != 0;
+                                    // TODO: Refactor to access column in SP
+                                    newTeam.TeamID = (int)reader["TeamID"];
+                                    newTeam.Name = reader["Name"].ToString();
+                                    newTeam.RunningTotal = (int)reader["Points"];
                                     listOfTeams.Add(newTeam);
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            ErrorLogger.LogError(ex, "GetAllTeamsByID", "nothing");
+                            ErrorLogger.LogError(ex, "GetAllSMTeamAbsencesByUserID", "nothing");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                ErrorLogger.LogError(ex, "GetAllTeamsByID", "nothing");
+                ErrorLogger.LogError(ex, "GetAllSMTeamAbsencesByUserID", "nothing");
             }
             return listOfTeams;
         }
@@ -221,12 +264,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             ErrorLogger.LogError(ex, "UpdateTeams", "nothing");
                             result = "fail";
-                        }
-                        finally
-                        {
-                            con.Close();
-                            con.Dispose();
-                            con.Dispose();
                         }
                     }
                 }
@@ -261,6 +298,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             {
                                 while (reader.Read())
                                 {
+                                    // TODO: Change to access columns
                                     newUser.FirstName = reader.GetString(0);
                                     newUser.LastName = reader.GetString(1);
                                     newUser.Email = reader.GetString(2);
@@ -283,6 +321,8 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             }
             return listOfUsers;
         }
+
+        // TODO: Implement correct DA call for retrieving full object for update
 
         //DELETe
         public string DeactivateTeam(int teamID)
@@ -308,12 +348,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         {
                             ErrorLogger.LogError(ex, "DeleteTeam", "nothing");
                             result = "fail";
-                        }
-                        finally
-                        {
-                            con.Close();
-                            con.Dispose();
-                            con.Dispose();
                         }
                     }
                 }

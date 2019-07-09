@@ -4,6 +4,28 @@
     ViewBag.Title = "All Absences";
 }
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            $(".AbsenceListBox").change(function () {
+                AbsenceList_Changed()
+            });
+                @*TODO: Add functionality for populating widget*@
+            },
+            function AbsenceList_Changed() {
+                $("#ModelsList > option").remove();
+
+                var absenceId = $("AbsenceListBox option:selected").val;
+                alert(absenceId)
+                $.post(""){
+                    data = $.map(data, function (item, a) {
+                        return "<option value=" + item.Value + ">" + item.Text + "</option>";
+                    });
+                }
+            }
+        });
+    </script>
+
 <h2>@ViewBag.Title</h2>
 @Html.HiddenFor(model => Model.Absence.AbsenceTypeID)
 @Html.HiddenFor(model => Model.Absence.TeamID_FK)
@@ -11,7 +33,41 @@
 @Html.HiddenFor(model => Model.Absence.AbsentUserID)
 
 <div>
-    <table class="table">
+
+    <div class="row">
+        @using (Html.BeginForm("DoIt", "Maint", FormMethod.Post))
+        {
+            <div class="col-6" style="background-color: deepskyblue">
+               @* @Html.ListBox("Absence", Model.AbsenceTypes, new { @class = "AbsenceListBox"})*@
+                @*TODO: Style this to look more presentable*@
+                @*@Html.LabelFor(model => Model.Team.Name)
+                    @Html.Label(String.Join(",",Model.AbsenceTypes))*@
+            </div>
+            <button type="submit">Click It!</button>
+        }
+        <div class="col-6" style="background-color: lightcoral">
+            @*TODO:Add absence details here on click of Employee Details*@
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6" style="background-color:lightseagreen">
+            @*TODO: Best standing team data for widget*@
+            @Html.LabelFor(model => Model.TopTeam.Team.Name, "Team Name: ")
+            @Html.TextBoxFor(model => Model.TopTeam.Team.Name)
+            <br />
+            @Html.LabelFor(model => Model.TopTeam.Absence.RunningTotal)
+            @Html.TextBoxFor(model => Model.TopTeam.Absence.RunningTotal)
+        </div>
+        <div class="col-6" style="background-color:darkkhaki">
+            @*TODO: Lowest standing team data for widget*@
+            @Html.LabelFor(model => Model.BottomTeam.Team.Name)
+            @Html.TextBoxFor(model => Model.BottomTeam.Team.Name)
+            <br />
+            @Html.LabelFor(model => Model.BottomTeam.Absence.RunningTotal)
+            @Html.TextBoxFor(model => Model.BottomTeam.Absence.RunningTotal)
+        </div>
+    </div>
+    @*<table class="table">
         <thead>
             <tr>
                 <th>Employee Name</th>
@@ -22,7 +78,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (AbsencePO absence in Model.ListOfAbsencePO)
+            @foreach (AbsencePO absence in Model.ListOfPos)
             {
                 <tr>
                     <td>@absence.EmployeeName</td>
@@ -31,9 +87,11 @@
                     <td>@absence.Point</td>
                     <td>@absence.Comments</td>
                     @*Modal for details for an absence or section that will load based off the selected absence.*@
-                    @*TODO: Add modals, graphs and other BA centric sugar*@
-                </tr>
-            }
-        </tbody>
-    </table>
+    @*TODO: Add modals, graphs and other BA centric sugar*@
+    @*</tr>
+                }
+
+            </tbody>
+        </table>*@
+    
 </div>

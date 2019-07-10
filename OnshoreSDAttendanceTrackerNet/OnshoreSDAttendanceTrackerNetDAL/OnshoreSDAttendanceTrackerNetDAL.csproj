@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbsenceDataAccess.cs" />
+    <Compile Include="AbsenceTypeDataAccess.cs" />
     <Compile Include="ExceptionDataAccess.cs" />
     <Compile Include="Interfaces\IAbsenceDO.cs" />
     <Compile Include="Interfaces\IExceptionDO.cs" />

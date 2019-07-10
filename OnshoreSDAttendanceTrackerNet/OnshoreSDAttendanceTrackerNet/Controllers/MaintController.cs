@@ -22,7 +22,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
     public class MaintController : Controller
     {
         private TeamDataAccess _TeamDataAccess;
-        private AbsenceDataAccess _AbsenceDataAccess;
+        private AbsenceTypeDataAccess _AbsenceDataAccess;
         private UserDataAccess _UserDataAccess;
         private TeamBusinessLogic _TeamBusinessLogic;
 
@@ -31,7 +31,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             string teamConn = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
             string absenceConn = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
             _TeamDataAccess = new TeamDataAccess();
-            _AbsenceDataAccess = new AbsenceDataAccess();
+            _AbsenceDataAccess = new AbsenceTypeDataAccess();
             _UserDataAccess = new UserDataAccess();
             _TeamBusinessLogic = new TeamBusinessLogic();
         }
@@ -467,7 +467,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     try
                     {
                         // Stores list of absences by TeamID
-                        var absences = _AbsenceDataAccess.GetAbsencesByTeamID(teamID);
+                        var absences = PointsDataAccess.GetAbsencesByTeamID(teamID);
                         var teamName = _TeamDataAccess.GetTeamNameByID(teamID);
 
                         // Retrieve lists for LINQ queries
@@ -571,7 +571,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     {
                         var absences = new List<IAbsenceDO>();
                         // Stores list of absences by UserID
-                        absences = _AbsenceDataAccess.GetAbsencesAssociatedWithUserID(userID);
+                        absences = PointsDataAccess.ViewAbsencesByUserID(userID);
                         InitializeViewData(selectedTeamAbsences, (UserPO)userPO, absences);
 
                         oResponse = View(selectedTeamAbsences);
@@ -619,7 +619,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 var absenceVM = new AbsenceViewModel();
 
                 // Retrieve selected absence
-                var absenceDO = _AbsenceDataAccess.GetAbsenceByID(pointBankID);
+                var absenceDO = PointsDataAccess.GetAbsenceByID(pointBankID);
                 ViewBag.Name = "Modify Employee Absence";
 
                 // Maps absence DO to PO

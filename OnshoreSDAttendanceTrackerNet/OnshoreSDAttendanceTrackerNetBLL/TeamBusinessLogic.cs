@@ -15,13 +15,13 @@ namespace OnshoreSDAttendanceTrackerNetBLL
     public class TeamBusinessLogic
     {
         private TeamDataAccess _TeamDataAccess;
-        private AbsenceDataAccess _AbsenceDataAccess;
+        private AbsenceTypeDataAccess _AbsenceDataAccess;
         private UserDataAccess _UserDataAccess;
 
         public TeamBusinessLogic()
         {
             _TeamDataAccess = new TeamDataAccess();
-            _AbsenceDataAccess = new AbsenceDataAccess();
+            _AbsenceDataAccess = new AbsenceTypeDataAccess();
             _UserDataAccess = new UserDataAccess();
         }
 

@@ -88,6 +88,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.TeamMgtID = absenceBO.TeamMgtID;
             oAbsence.Status = absenceBO.Status;
             oAbsence.PointBankID = absenceBO.PointBankID;
+            oAbsence.EmployeeName = absenceBO.EmployeeName;
 
             return oAbsence;
         }
@@ -128,6 +129,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.TeamMgtID = absenceDO.TeamMgtID;
             oAbsence.EmployeeName = absenceDO.EmployeeName;
             oAbsence.PointBankID = absenceDO.PointBankID;
+            
             return oAbsence;
         }
 

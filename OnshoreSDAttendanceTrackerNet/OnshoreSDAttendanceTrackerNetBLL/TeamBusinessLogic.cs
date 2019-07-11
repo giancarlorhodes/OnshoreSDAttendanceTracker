@@ -109,5 +109,29 @@ namespace OnshoreSDAttendanceTrackerNetBLL
 
             return teamRankings;
         }
+
+        public List<Tuple<string, string, decimal, DateTime>> QueryTeamAbsences(List<ITeamDO> allTeams, List<IAbsenceDO> allAbsences, List<IUserDO> allUsers)
+        {
+            var teamAbsences = new List<Tuple<string, string, decimal, DateTime>>();
+
+            var listOfTeamAbsences = (from absence in allAbsences
+                                      join team in allTeams on absence.TeamID_FK equals team.TeamID
+                                      join user in allUsers on absence.AbsentUserID equals user.UserID
+                                      select new
+                                      {
+                                          Employee = user.FirstName + ' ' + user.LastName,
+                                          TeamName = team.Name,
+                                          Points = absence.Point,
+                                          absence.AbsenceDate
+                                      }).Distinct().OrderBy(d => d.AbsenceDate);
+
+            foreach(var item in listOfTeamAbsences)
+            {
+                Tuple<string, string, decimal, DateTime> absence = new Tuple<string, string, decimal, DateTime>(item.Employee, item.TeamName, item.Points, item.AbsenceDate);
+                teamAbsences.Add(absence);
+            }
+
+            return teamAbsences;
+        }
     }
 }

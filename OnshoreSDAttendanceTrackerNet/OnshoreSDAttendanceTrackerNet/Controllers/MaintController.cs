@@ -112,31 +112,68 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         [HttpGet]
         [ValidateAntiForgeryToken]
         ///<summary>
-        /// Views all teams(admin)
+        /// Views all teams(admin, service manager and team leads)
         /// </summary>
         public ActionResult ViewAllTeams()
         {
             ActionResult oResponse = null;
-            var ViewAllTeamsVM = new TeamViewModel();
+            var viewAllTeamsVM = new TeamViewModel();
             var userPO = (IUserPO)Session["UserModel"];
 
             // Ensures authenticated
-            if (userPO.Email != null && userPO.RoleID_FK == (int)RoleEnum.Administrator)
+            if (userPO.Email != null && userPO.RoleID_FK >= (int)RoleEnum.Administrator && (int)RoleEnum.Team_Lead <=3)
             {
                 try
                 {
-                    // Calls GetAllTeams from DAL and stores in allTeams
-                    List<ITeamDO> allTeams = _TeamDataAccess.GetAllTeams();
+                    var allTeams = _TeamDataAccess.GetAllTeams();
+                    var smAllTeams = _TeamDataAccess.GetAllSMTeamsByUserID(userPO.UserID);
+                    var smTeams = _TeamDataAccess.GetAllSMTeams();
+                    var allUsers = _UserDataAccess.GetAllUsers();
+                    var allAbsences = PointsDataAccess.ViewAllAbsences();
 
-                    // Maps from data objects to presentation objects.
-                    ViewAllTeamsVM.ListOfPos = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
+                    switch (userPO.RoleID_FK)
+                    {
+                        case 1:
+                            // TODO: Add widget data to view model/view                            
+                            // Maps from data objects to presentation objects.
+                            viewAllTeamsVM.ListOfPos = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
+                            var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                            var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                            var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                            AssociateAdminValues(viewAllTeamsVM, bestStandingTeam, bottomStandingTeam, allAbsences);
 
-                    oResponse = View(ViewAllTeamsVM);
+                            oResponse = View(viewAllTeamsVM);
+                            break;
+                        case 2:
+                            // TODO: Add Widget data to view model/view
+
+                            // Maps from data objects to presentation objects.
+                            viewAllTeamsVM.ListOfPos = TeamMapper.MapListOfDOsToListOfPOs(smAllTeams);
+                            //var teamAbsences = allAbsences.Where(a => a.); Need to retrieve absences by Team
+                            // TODO: list of service manager team absences
+                            viewAllTeamsVM.ListOfTeamAbsences = AbsenceMapper.MapListOfDOsToListOfPOs(allAbsences);
+                            var topEmployee = _TeamBusinessLogic.QueryBestStandingTeamMember(smTeams, allAbsences, allUsers, userPO.RoleID_FK);
+
+                            oResponse = View(viewAllTeamsVM);
+                            break;
+                        case 3:
+                            // TODO: Finish DA call for Team Lead lolololol
+                            var getAllTeams = _TeamDataAccess.GetAllTeamsByUserID(userPO.UserID);
+                            viewAllTeamsVM.ListOfPos = TeamMapper.MapListOfDOsToListOfPOs(getAllTeams);
+                            var topTeamMember = _TeamBusinessLogic.QueryBestStandingTeamMember(smTeams, allAbsences, allUsers, userPO.RoleID_FK);
+
+                            oResponse = View(viewAllTeamsVM);
+                            break;
+                        default:
+                            oResponse = View("Index", "Home");
+                            break;
+                    }
+
                 }
                 catch (Exception ex)
                 {
                     ErrorLogger.LogError(ex, "ViewAllTeams", "Maint");
-                    ViewAllTeamsVM.ErrorMessage = ""; // TODO: Add meaningful front end message
+                    viewAllTeamsVM.ErrorMessage = "There was an issure retrieving the view all teams. Please try again. If the problem persists contact your IT department.";
                 }
             }
             else
@@ -147,11 +184,29 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             return oResponse;
         }
 
+        private void AssociateAdminValues(TeamViewModel viewAllTeamsVM, Tuple<string, decimal> bestStandingTeam, Tuple<string, decimal> bottomStandingTeam, List<IAbsenceDO> absenceDOs)
+        {
+            // Assign values to model for widgets
+            viewAllTeamsVM.TopTeam.Team.Name = bestStandingTeam.Item1;
+            viewAllTeamsVM.TopTeam.Absence.RunningTotal = bestStandingTeam.Item2;
+            viewAllTeamsVM.BottomTeam.Team.Name = bottomStandingTeam.Item1;
+            viewAllTeamsVM.BottomTeam.Absence.RunningTotal = bottomStandingTeam.Item2;
+
+            // Map absences from DO to PO for displaying to the user
+            viewAllTeamsVM.ListOfTeamAbsences = AbsenceMapper.MapListOfDOsToListOfPOs(absenceDOs);
+
+            foreach (var absence in absenceDOs)
+            {
+                viewAllTeamsVM.Absences.Add(new SelectListItem() { Text = absence.Name, Value = absence.Name });
+            }
+        }
+
         [HttpGet]
         [ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves all Teams by a given user(i.e. Service Manager with multiple teams) 
         /// </summary>
+        /// TODO: Remove the reference to this as ViewAllTeams has all three roles captured!!!!
         public ActionResult ViewTeamsByUserID(int userID)
         {
             ActionResult oResponse = null;
@@ -165,8 +220,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     try
                     {
                         // Stores teams of user using their id
-                        var allTeams = _TeamDataAccess.GetAllSMTeamAbsencesByUserID(userID);
-
+                        var allTeams = _TeamDataAccess.GetAllSMTeamsByUserID(userID);
                         // Retrieve lists of absences and users for LINQ
                         var allAbsences = PointsDataAccess.ViewAllAbsences();
                         var allUsers = _UserDataAccess.GetAllUsers();
@@ -697,6 +751,54 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
 
         // TODO: Create method for reusability for navigation based of Role Enum
 
+        #endregion
+
+        #region TestDACalls
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        ///<summary>
+        /// Views all teams(admin)
+        /// </summary>
+        public ActionResult TestViews()
+        {
+            ActionResult oResponse = null;
+            var ViewAllTeamsVM = new TeamViewModel();
+            var userPO = (IUserPO)Session["UserModel"];
+
+            // Ensures authenticated
+            if (userPO.Email != null && userPO.RoleID_FK == (int)RoleEnum.Administrator)
+            {
+                try
+                {
+                    // Test for retrieves
+                    var allTeams = _TeamDataAccess.GetAllTeams();
+                    var allSMTeams = _TeamDataAccess.GetAllSMTeams();
+                    var team = _TeamDataAccess.GetTeamNameByID(5);
+                    var allSMTeamAbsences = _TeamDataAccess.GetAllSMTeamsByUserID(8);
+                    var viewUserAbsence = PointsDataAccess.GetAbsenceByID(4);
+                    var viewAllAbsences = PointsDataAccess.ViewAllAbsences();
+                    var teamAbsences = PointsDataAccess.GetAbsencesByTeamID(5);
+                    var viewUserAbsences = PointsDataAccess.ViewAbsencesByUserID(8);
+
+                    // Maps from data objects to presentation objects.
+                    ViewAllTeamsVM.ListOfPos = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
+
+                    oResponse = View(ViewAllTeamsVM);
+                }
+                catch (Exception ex)
+                {
+                    ErrorLogger.LogError(ex, "ViewAllTeams", "Maint");
+                    ViewAllTeamsVM.ErrorMessage = ""; // TODO: Add meaningful front end message
+                }
+            }
+            else
+            {
+                oResponse = RedirectToAction("Index", "Home");
+            }
+
+            return oResponse;
+        }
         #endregion
     }
 }

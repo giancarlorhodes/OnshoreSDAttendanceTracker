@@ -190,7 +190,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         }
 
         // Retrieves all SM teams
-        public List<ITeamDO>GetAllSMTeamAbsencesByUserID (int userID)
+        public List<ITeamDO>GetAllSMTeamsByUserID (int userID)
         {
             var listOfTeams = new List<ITeamDO>();
             var newTeam = new TeamDO();
@@ -231,6 +231,14 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                 ErrorLogger.LogError(ex, "GetAllSMTeamAbsencesByUserID", "nothing");
             }
             return listOfTeams;
+        }
+        
+        // TODO: Need to create SP for Retrieve team lead team(s)
+        public List<ITeamDO> GetAllTeamsByUserID(int userID)
+        {
+            var testList = new List<ITeamDO>();
+
+            return testList;
         }
 
         //UPDATE

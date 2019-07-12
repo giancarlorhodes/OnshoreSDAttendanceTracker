@@ -390,6 +390,17 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             if (userPO.Email != null && userPO.RoleID_FK == (int)RoleEnum.Administrator)
             {
                 var absenceVM = new AbsenceViewModel();
+                var absenceTypes = _AbsenceDataAccess.GetAllAbsenceTypes();
+                var absencePOs = AbsenceMapper.MapListOfDOsToListOfPOs(absenceTypes);
+                absenceVM.AbsenceTypes = absencePOs.ConvertAll(a =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = a.AbsenceTypeID.ToString(),
+                        Value = a.Name,
+                        Selected = false
+                    };
+                });
 
                 oResponse = View(absenceVM);
             }
@@ -420,6 +431,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 {
                     try
                     {
+
                         // Maps absence PO to DO during creation
                         IAbsenceDO lAbsenceForm = AbsenceMapper.MapAbsencePOtoDO(iViewModel.Absence);
 

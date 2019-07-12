@@ -12,7 +12,7 @@
     @Html.HiddenFor(model=>model.Absence.AbsenceTypeID)
     <div class="form-group">
         @Html.LabelFor(model => Model.Absence.Name, "Absence Type")
-        @Html.DropDownListFor(model => Model.Absence.AbsenceTypeID, Model.AbsenceTypes)
+        @Html.DropDownListFor(model => Model.AbsenceTypes, new SelectList(Model.AbsenceTypes, "Text", "Value", null), htmlAttributes: new { @class="form-control", id = "AbsenceTypeID"})
         @Html.ValidationMessageFor(model => Model.Absence.Name, "", new { @class = "text-danger" })
     </div>
     <div>

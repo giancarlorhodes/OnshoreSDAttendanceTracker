@@ -141,7 +141,10 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                 absence.AbsenceDate = Convert.ToDateTime(reader["AbsenceDate"]);
                                 absence.AbsentUserID = reader.GetInt32(reader.GetOrdinal("UserID"));
                                 absence.Name = reader["EmployeeName"].ToString();
+                                absence.TeamName = reader["TeamName"].ToString();
                                 absence.TeamMgtID= reader.GetInt32(reader.GetOrdinal("TeamMgtID"));
+                                absence.AbsenceType = reader["AbsenceType"].ToString();
+                                absence.PointBankID = (long)reader["PointBankID"];
 
                                 listOfAbsenceDOs.Add(absence);
                             }

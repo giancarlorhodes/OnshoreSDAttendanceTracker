@@ -39,10 +39,11 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         #region Team
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Gets form for creating a new team
         /// </summary>
+        /// TODO: Style more on the view
         public ActionResult AddTeam()
         {
             ActionResult oResponse = null;
@@ -84,7 +85,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         ITeamDO lTeamForm = TeamMapper.MapTeamPOtoDO(iViewModel.Team);
 
                         // Passes form to AddTeam method
-                        _TeamDataAccess.CreateNewTeam(lTeamForm, lTeamForm.TeamID);
+                        _TeamDataAccess.CreateNewTeam(lTeamForm, userPO.UserID);
                         oResponse = RedirectToAction("ViewAllTeams", "Maint");
                     }
                     catch (Exception ex)
@@ -110,7 +111,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Views all teams(admin, service manager and team leads)
         /// </summary>
@@ -140,7 +141,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                             var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                             var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                             var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
-                            AssociateAdminValues(viewAllTeamsVM, bestStandingTeam, bottomStandingTeam, allAbsences, teamRanker);
+                            AssociateAdminValues(viewAllTeamsVM, bestStandingTeam, bottomStandingTeam, allAbsences, teamRanker,userPO);
 
                             oResponse = View(viewAllTeamsVM);
                             break;
@@ -184,7 +185,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             return oResponse;
         }
 
-        private void AssociateAdminValues(TeamViewModel viewAllTeamsVM, Tuple<string, decimal> bestStandingTeam, Tuple<string, decimal> bottomStandingTeam, List<IAbsenceDO> absenceDOs, List<Tuple<string, decimal>> teamRanker)
+        private void AssociateAdminValues(TeamViewModel viewAllTeamsVM, Tuple<string, decimal> bestStandingTeam, Tuple<string, decimal> bottomStandingTeam, List<IAbsenceDO> absenceDOs, List<Tuple<string, decimal>> teamRanker, IUserPO userPO)
         {
             // Assign values to model for widgets
             viewAllTeamsVM.TopTeam.Team.Name = bestStandingTeam.Item1;
@@ -204,11 +205,12 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 viewAllTeamsVM.TeamRanker.Team.Name = item.Item1;
                 viewAllTeamsVM.TeamRanker.Absence.Point = item.Item2;
             }
-
+            viewAllTeamsVM.User.RoleID_FK = userPO.RoleID_FK;
+            viewAllTeamsVM.User.Email = userPO.Email;
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves all Teams by a given user(i.e. Service Manager with multiple teams) 
         /// </summary>
@@ -232,10 +234,11 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         var allUsers = _UserDataAccess.GetAllUsers();
 
                         // TODO: Fix LINQ query or create SQL Join
-                        var topEmployee = _TeamBusinessLogic.QueryBestStandingTeamMember(allTeams, allAbsences, allUsers, userPO.RoleID_FK);
+                        //var topEmployee = _TeamBusinessLogic.QueryBestStandingTeamMember(allTeams, allAbsences, allUsers, userPO.RoleID_FK);
 
                         // Maps Team from data objects to presentation objects
                         selectedUserTeams.ListOfPos = TeamMapper.MapListOfDOsToListOfPOs(allTeams);
+                        selectedUserTeams.ListOfPos.FirstOrDefault(team => team.Name != null);
 
                         oResponse = View(selectedUserTeams);
                     }
@@ -261,7 +264,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves form for updating team information
         /// </summary>
@@ -335,7 +338,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Attempts to deactivate team
         /// </summary>
@@ -375,7 +378,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         #region AttendanceType
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves form for creating a new absence entry
         /// </summary>
@@ -445,7 +448,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Admin view all absences by all employees
         /// </summary>
@@ -468,8 +471,17 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     // Retrieve widget values
                     var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                     var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                    var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                    foreach(var item in teamRanker)
+                    {
+                        viewAllAbsenceEntries.TeamRanker.Team.Name = item.Item1;
+                        viewAllAbsenceEntries.TeamRanker.Absence.RunningTotal = item.Item2;
+                    }
 
                     AssociateAdminValues(viewAllAbsenceEntries, bestStandingTeam, bottomStandingTeam, allAbsences);
+
+                    viewAllAbsenceEntries.User.RoleID_FK = userPO.RoleID_FK;
+                    viewAllAbsenceEntries.User.Email = userPO.Email;
 
                     oResponse = View(viewAllAbsenceEntries);
                 }
@@ -502,14 +514,14 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             // Map absences from DO to PO for displaying to the user
             viewAllAbsenceEntries.ListOfPos = AbsenceMapper.MapListOfDOsToListOfPOs(allAbsences);
 
-            foreach (var absence in allAbsences)
-            {
-                viewAllAbsenceEntries.Absences.Add(new SelectListItem() { Text = absence.Name, Value = absence.Name });
-            }
+            //foreach (var absence in allAbsences)
+            //{
+            //    viewAllAbsenceEntries.Absences.Add(new SelectListItem() { Text = absence.Name, Value = absence.Name });
+            //}
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Views all absences by for a given team(TL, SM, Admin)
         /// </summary>
@@ -629,7 +641,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Views all absences for all teams under a Service Manager -- Check to see if this already exists
         /// </summary>
@@ -681,7 +693,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         ///<summary>
         /// Retrieves form for the given absence selected
         /// </summary>

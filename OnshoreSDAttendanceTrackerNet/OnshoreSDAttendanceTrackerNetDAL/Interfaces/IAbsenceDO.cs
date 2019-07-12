@@ -9,7 +9,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
     public interface IAbsenceDO
     {
         int AbsenceTypeID { get; set; }
-        int PointBankID { get; set;}
+        long PointBankID { get; set;}
         string TeamName { get; set; }
         string Name { get; set; }
         string Comments { get; set; }
@@ -21,6 +21,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
         DateTime AbsenceDate { get; set; }
         decimal RunningTotal { get; set; }
         string EmployeeName { get; set; }
+        string AbsenceType { get; set; }
     }
 
 

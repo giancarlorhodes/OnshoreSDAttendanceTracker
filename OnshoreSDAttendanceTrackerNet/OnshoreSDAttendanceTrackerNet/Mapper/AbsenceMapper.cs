@@ -89,6 +89,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Status = absenceBO.Status;
             oAbsence.PointBankID = absenceBO.PointBankID;
             oAbsence.EmployeeName = absenceBO.EmployeeName;
+            oAbsence.AbsenceType = absenceBO.AbsenceType;
 
             return oAbsence;
         }
@@ -109,6 +110,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.Status = absenceBO.Status;
             oAbsence.EmployeeName = absenceBO.EmployeeName;
             oAbsence.PointBankID = absenceBO.PointBankID;
+            oAbsence.AbsenceType = absenceBO.AbsenceType;
 
             return oAbsence;
         }
@@ -129,6 +131,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.TeamMgtID = absenceDO.TeamMgtID;
             oAbsence.EmployeeName = absenceDO.EmployeeName;
             oAbsence.PointBankID = absenceDO.PointBankID;
+            oAbsence.AbsenceType = absenceDO.AbsenceType;
             
             return oAbsence;
         }
@@ -149,6 +152,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.TeamMgtID = absenceDO.TeamMgtID;
             oAbsence.EmployeeName = absenceDO.EmployeeName;
             oAbsence.PointBankID = absenceDO.PointBankID;
+            oAbsence.AbsenceType = absenceDO.AbsenceType;
 
             return oAbsence;
         }
@@ -169,6 +173,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oAbsence.TeamMgtID = absencePO.TeamMgtID;
             oAbsence.EmployeeName = absencePO.EmployeeName;
             oAbsence.PointBankID = absencePO.PointBankID;
+            oAbsence.AbsenceType = absencePO.AbsenceType;
 
             return oAbsence;
         }

@@ -19,6 +19,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Models
         public DateTime AbsenceDate { get; set; }
         public int TeamMgtID { get; set; }
         public string EmployeeName { get; set; }
-        public int PointBankID { get; set; }
+        public long PointBankID { get; set; }
+        public string AbsenceType { get; set; }
     }
 }

@@ -141,7 +141,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                             var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                             var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                             var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
-                            AssociateAdminValues(viewAllTeamsVM, bestStandingTeam, bottomStandingTeam, allAbsences, teamRanker,userPO);
+                            AssociateAdminValues(viewAllTeamsVM, bestStandingTeam, bottomStandingTeam, allAbsences, teamRanker, userPO);
 
                             oResponse = View(viewAllTeamsVM);
                             break;
@@ -472,7 +472,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                     var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                     var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                     var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
-                    foreach(var item in teamRanker)
+                    foreach (var item in teamRanker)
                     {
                         viewAllAbsenceEntries.TeamRanker.Team.Name = item.Item1;
                         viewAllAbsenceEntries.TeamRanker.Absence.RunningTotal = item.Item2;
@@ -548,17 +548,18 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                         var allUsers = _UserDataAccess.GetAllUsers();
                         var topMemeberBOs = UserMapper.MapListOfDOsToListOfBOs(allUsers);
 
+                        // LINQ Queries
+                        var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                        var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                        var topEmployee = _TeamBusinessLogic.QueryBestStandingEmployee(allTeams, allAbsences, allUsers);
+                        var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
+                        MapAdminObjects(selectedTeamAbsences, allTeams, absences);
+
                         switch (userPO.RoleID_FK)
                         {
                             // Admin
                             case 1:
-                                var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
-                                var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
-                                var topEmployee = _TeamBusinessLogic.QueryBestStandingEmployee(allTeams, allAbsences, allUsers);
-                                var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
-
-                                // TODO: Switch Case to determine how to associate the values using session role id
-                                MapAdminObjects(selectedTeamAbsences, allTeams, absences);
+                                selectedTeamAbsences.ListOfPos = AbsenceMapper.MapListOfDOsToListOfPOs(absences);
                                 AssociateAdminValues(selectedTeamAbsences, teamRanker, teamName, bestStandingTeam, bottomStandingTeam, topEmployee);
                                 break;
                             // Service Manager
@@ -566,10 +567,14 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                                 var teamAbsences = AbsenceMapper.MapListOfDOsToListOfPOs(absences);
                                 var smTeams = _TeamDataAccess.GetAllSMTeamsByUserID(userPO.UserID);
                                 selectedTeamAbsences.SMTeams = TeamMapper.MapListOfDOsToListOfPOs(smTeams);
-                                selectedTeamAbsences.ListOfPos = teamAbsences;
-                                var bestStandingMember = _TeamBusinessLogic.QueryBestStandingTeamMember(allTeams, allAbsences, allUsers, userPO.RoleID_FK);
-                                selectedTeamAbsences.TopEmployee.Name = bestStandingMember.Item1;
-                                selectedTeamAbsences.TopEmployee.Absence.Point = bestStandingMember.Item2;
+                                AssociateAdminValues(selectedTeamAbsences, teamRanker, teamName, bestStandingTeam, bottomStandingTeam, topEmployee);
+                                //selectedTeamAbsences.ListOfPos = teamAbsences;
+                                //selectedTeamAbsences.TopTeam.Team.Name = bestStandingTeam.Item1;
+                                //selectedTeamAbsences.TopTeam.Absence.Point = bestStandingTeam.Item2;
+                                //selectedTeamAbsences.BottomTeam.Team.Name = bottomStandingTeam.Item1;
+                                //selectedTeamAbsences.BottomTeam.Absence.Point = bottomStandingTeam.Item2;
+                                //selectedTeamAbsences.TopEmployee.Name = topEmployee.Item1;
+                                //selectedTeamAbsences.TopEmployee.Absence.Point = topEmployee.Item2;
                                 //MapServiceManagerObjects(selectedTeamAbsences, allTeams, absences);
                                 //AssociateServiceManagerObjects(selectedTeamAbsences, topEmployee);
 
@@ -578,10 +583,14 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                             // Team Lead
                             case 3:
                                 var tlAbsences = AbsenceMapper.MapListOfDOsToListOfPOs(absences);
-                                var tlTopTeamMember = _TeamBusinessLogic.QueryBestStandingTeamMember(allTeams, allAbsences, allUsers, userPO.RoleID_FK);
                                 selectedTeamAbsences.ListOfPos = tlAbsences;
-                                selectedTeamAbsences.TopEmployee.Name = tlTopTeamMember.Item1;
-                                selectedTeamAbsences.TopEmployee.Absence.Point = tlTopTeamMember.Item2;
+                                AssociateAdminValues(selectedTeamAbsences, teamRanker, teamName, bestStandingTeam, bottomStandingTeam, topEmployee);
+                                //selectedTeamAbsences.TopTeam.Team.Name = bestStandingTeam.Item1;
+                                //selectedTeamAbsences.TopTeam.Absence.Point = bestStandingTeam.Item2;
+                                //selectedTeamAbsences.BottomTeam.Team.Name = bottomStandingTeam.Item1;
+                                //selectedTeamAbsences.BottomTeam.Absence.Point = bottomStandingTeam.Item2;
+                                //selectedTeamAbsences.TopEmployee.Name = topEmployee.Item1;
+                                //selectedTeamAbsences.TopEmployee.Absence.Point = topEmployee.Item2;
 
                                 oResponse = View(selectedTeamAbsences);
                                 break;
@@ -621,7 +630,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             selectedTeamAbsences.TopTeam.Absence.RunningTotal = bestStandingTeam.Item2;
             selectedTeamAbsences.BottomTeam.Team.Name = bottomStandingTeam.Item1;
             selectedTeamAbsences.BottomTeam.Absence.RunningTotal = bottomStandingTeam.Item2;
-            ViewBag.Employee = topEmployee.Item1;
+            selectedTeamAbsences.TopEmployee.User.Employee = topEmployee.Item1;
             selectedTeamAbsences.TopEmployee.Absence.Point = topEmployee.Item2;
         }
 

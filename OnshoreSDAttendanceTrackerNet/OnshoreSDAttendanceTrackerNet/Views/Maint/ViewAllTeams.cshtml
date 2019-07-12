@@ -16,8 +16,8 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Best Standing Team</div>
 
-                        <!--<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TopTeam.Name</div>-->
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Name</div>
+                        <!--<div class="h5 mb-0 font-weight-bold text-gray-800"></div>-->
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TopTeam.Team.Name</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TopTeam.Absence.RunningTotal</div>
                     </div>
                     <div class="col-auto">
@@ -34,9 +34,9 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Team Ranker</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TeamRanker.Team.Name</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TeamRanker.Absence.Point</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Bottom Team</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.BottomTeam.Team.Name</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.BottomTeam.Absence.Point</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user-friends fa-2x text-gray-300"></i>
@@ -52,9 +52,9 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Team Ranker</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TeamRanker.Team.Name</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TeamRanker.Absence.Point</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Top Employee</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">John Doe</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">-2.5</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user-friends fa-2x text-gray-300"></i>
@@ -79,7 +79,7 @@
                     <td>@team.Comment</td>
                     <td>@team.Active</td>
 
-                    <td>@Html.ActionLink("Details", "Details", "Artist", new { id = team.TeamID}, new { @class = "btn btn-info" })</td>
+                    <td>@Html.ActionLink("Details", "ViewAbsencesByTeamID", "Maint", new { TeamID = team.TeamID}, new { @class = "btn btn-info" })</td>
                     @if (Model.User.Email != null && Model.User.RoleID_FK == 1)
                     {
                         <td>

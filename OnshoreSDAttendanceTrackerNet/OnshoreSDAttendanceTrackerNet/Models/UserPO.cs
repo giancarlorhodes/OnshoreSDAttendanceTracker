@@ -16,6 +16,6 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public string RoleName { get; set; }
         public string Email { get; set; }
         public bool Active { get; set; }
-      
+        public string Employee { get; set; }
     }
 }

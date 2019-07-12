@@ -57,7 +57,7 @@
             // Emp Name-> Points-> Status
             // if ((UserPO)Session["UserModel"] != null)
             // {
-            var loggedUSer =  (UserPO)Session["UserModel"];
+            var loggedUSer =  (IUserPO)Session["UserModel"];
             List<DashboardViewModel> emps = AbsenceMapper.MapListOfPOsToListOfVMs(AbsenceMapper.MapListOfBOsToListOfPOs(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(AbsenceMapper.MapListOfDOsToListOfBOs(PointsDataAccess.ViewAbsencesByUserID(loggedUSer.UserID)))));
             //TODO: Implement AutoMapper Mapper.Map<List<IAbsenceBO>, List<DashboardViewModel>>(AbsenceBusinessLogic.DetermineEmployeeAbsenceStatus(Mapper.Map<List<IAbsenceDO>, List<IAbsenceBO>>(PointsDataAccess.ViewAbsencesByUserID(loggedUSer.UserID))));
             //  }

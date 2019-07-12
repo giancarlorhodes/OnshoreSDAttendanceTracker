@@ -17,6 +17,7 @@ namespace OnshoreSDAttendanceTrackerNet.Models
             Team = new TeamPO();
             User = new UserPO();
             ListOfPos = new List<AbsencePO>();
+            SMTeams = new List<TeamPO>();
             Absences = new List<SelectListItem>();
             TopTeam = new TeamAttendanceHelper();
             BottomTeam = new TeamAttendanceHelper();
@@ -29,7 +30,9 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public AbsencePO Absence { get; set; }
         public TeamPO Team { get; set; }
         public UserPO User { get; set; }
+
         public List<AbsencePO> ListOfPos { get; set; }
+        public List<TeamPO> SMTeams { get; set; }
         public TeamAttendanceHelper TopTeam { get; set; }
         public TeamAttendanceHelper BottomTeam { get; set; }
         public TeamAttendanceHelper SMRanker { get; set; }

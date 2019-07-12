@@ -64,7 +64,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             return oResponse;
         }
 
-        [HttpPost]        
+        [HttpPost]
         ///<summary>
         /// Sends request to database for creating a new team
         /// </summary>
@@ -121,7 +121,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             var userPO = (IUserPO)Session["UserModel"];
 
             // Ensures authenticated
-            if (userPO.Email != null && userPO.RoleID_FK >= (int)RoleEnum.Administrator && (int)RoleEnum.Team_Lead <=3)
+            if (userPO.Email != null && userPO.RoleID_FK >= (int)RoleEnum.Administrator && (int)RoleEnum.Team_Lead <= 3)
             {
                 try
                 {
@@ -140,7 +140,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                             var bestStandingTeam = _TeamBusinessLogic.QueryBestStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                             var bottomStandingTeam = _TeamBusinessLogic.QueryWorstStandingTeam(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
                             var teamRanker = _TeamBusinessLogic.QueryTeamRanker(TeamMapper.MapListOfDOsToListOfBOs(allTeams), allAbsences);
-                            AssociateAdminValues(viewAllTeamsVM, bestStandingTeam, bottomStandingTeam, allAbsences);
+                            AssociateAdminValues(viewAllTeamsVM, bestStandingTeam, bottomStandingTeam, allAbsences, teamRanker);
 
                             oResponse = View(viewAllTeamsVM);
                             break;
@@ -184,7 +184,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             return oResponse;
         }
 
-        private void AssociateAdminValues(TeamViewModel viewAllTeamsVM, Tuple<string, decimal> bestStandingTeam, Tuple<string, decimal> bottomStandingTeam, List<IAbsenceDO> absenceDOs)
+        private void AssociateAdminValues(TeamViewModel viewAllTeamsVM, Tuple<string, decimal> bestStandingTeam, Tuple<string, decimal> bottomStandingTeam, List<IAbsenceDO> absenceDOs, List<Tuple<string, decimal>> teamRanker)
         {
             // Assign values to model for widgets
             viewAllTeamsVM.TopTeam.Team.Name = bestStandingTeam.Item1;
@@ -199,6 +199,12 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             {
                 viewAllTeamsVM.Absences.Add(new SelectListItem() { Text = absence.Name, Value = absence.Name });
             }
+            foreach (var item in teamRanker)
+            {
+                viewAllTeamsVM.TeamRanker.Team.Name = item.Item1;
+                viewAllTeamsVM.TeamRanker.Absence.Point = item.Item2;
+            }
+
         }
 
         [HttpGet]
@@ -496,9 +502,9 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             // Map absences from DO to PO for displaying to the user
             viewAllAbsenceEntries.ListOfPos = AbsenceMapper.MapListOfDOsToListOfPOs(allAbsences);
 
-            foreach(var absence in allAbsences)
+            foreach (var absence in allAbsences)
             {
-                viewAllAbsenceEntries.Absences.Add(new SelectListItem() { Text = absence.Name, Value = absence.Name});
+                viewAllAbsenceEntries.Absences.Add(new SelectListItem() { Text = absence.Name, Value = absence.Name });
             }
         }
 
@@ -545,11 +551,27 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                                 break;
                             // Service Manager
                             case 2:
+                                var teamAbsences = AbsenceMapper.MapListOfDOsToListOfPOs(absences);
+                                var smTeams = _TeamDataAccess.GetAllSMTeamsByUserID(userPO.UserID);
+                                selectedTeamAbsences.SMTeams = TeamMapper.MapListOfDOsToListOfPOs(smTeams);
+                                selectedTeamAbsences.ListOfPos = teamAbsences;
+                                var bestStandingMember = _TeamBusinessLogic.QueryBestStandingTeamMember(allTeams, allAbsences, allUsers, userPO.RoleID_FK);
+                                selectedTeamAbsences.TopEmployee.Name = bestStandingMember.Item1;
+                                selectedTeamAbsences.TopEmployee.Absence.Point = bestStandingMember.Item2;
                                 //MapServiceManagerObjects(selectedTeamAbsences, allTeams, absences);
                                 //AssociateServiceManagerObjects(selectedTeamAbsences, topEmployee);
+
+                                oResponse = View(selectedTeamAbsences);
                                 break;
                             // Team Lead
                             case 3:
+                                var tlAbsences = AbsenceMapper.MapListOfDOsToListOfPOs(absences);
+                                var tlTopTeamMember = _TeamBusinessLogic.QueryBestStandingTeamMember(allTeams, allAbsences, allUsers, userPO.RoleID_FK);
+                                selectedTeamAbsences.ListOfPos = tlAbsences;
+                                selectedTeamAbsences.TopEmployee.Name = tlTopTeamMember.Item1;
+                                selectedTeamAbsences.TopEmployee.Absence.Point = tlTopTeamMember.Item2;
+
+                                oResponse = View(selectedTeamAbsences);
                                 break;
                             default:
                                 break;
@@ -574,7 +596,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
         }
 
         // TODO: Rename and add switch/case for role decisions
-        private void AssociateAdminValues(AbsenceViewModel selectedTeamAbsences, List<Tuple<string, decimal>> teamRanker, ITeamDO teamName, 
+        private void AssociateAdminValues(AbsenceViewModel selectedTeamAbsences, List<Tuple<string, decimal>> teamRanker, ITeamDO teamName,
             Tuple<string, decimal> bestStandingTeam, Tuple<string, decimal> bottomStandingTeam, Tuple<string, decimal> topEmployee)
         {
             foreach (var item in teamRanker)
@@ -617,7 +639,7 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
             var selectedTeamAbsences = new AbsenceViewModel();
             var userPO = (IUserPO)Session["UserModel"];
 
-            if (userPO.Email != null && userPO.RoleID_FK <= (int)RoleEnum.Service_Manager && userPO.RoleID_FK >=(int)RoleEnum.Administrator)
+            if (userPO.Email != null && userPO.RoleID_FK <= (int)RoleEnum.Service_Manager && userPO.RoleID_FK >= (int)RoleEnum.Administrator)
             {
                 if (ModelState.IsValid)
                 {

@@ -17,6 +17,7 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public TeamPO Team { get; set; }
         public AbsencePO Absence { get; set; }
         public UserPO User { get; set; }
+        public List<>
         public string Name { get; set; }
     }
 }

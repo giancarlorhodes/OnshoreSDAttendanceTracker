@@ -24,7 +24,7 @@
                 }
             }
         });
-    </script>
+</script>
 
 <h2>@ViewBag.Title</h2>
 @Html.HiddenFor(model => Model.Absence.AbsenceTypeID)
@@ -33,54 +33,18 @@
 @Html.HiddenFor(model => Model.Absence.AbsentUserID)
 
 <div>
-
-    <div class="row">
-        @using (Html.BeginForm("DoIt", "Maint", FormMethod.Post))
-        {
-            <div class="col-6" style="background-color: deepskyblue">
-                @* @Html.ListBox("Absence", Model.AbsenceTypes, new { @class = "AbsenceListBox"})*@
-                @*TODO: Style this to look more presentable*@
-                @*@Html.LabelFor(model => Model.Team.Name)
-                    @Html.Label(String.Join(",",Model.AbsenceTypes))*@
-            </div>
-            <button type="submit">Click It!</button>
-        }
-        <div class="col-6" style="background-color: lightcoral">
-            @*TODO:Add absence details here on click of Employee Details*@
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6" style="background-color:lightseagreen">
-            @*TODO: Best standing team data for widget*@
-            @Html.LabelFor(model => Model.TopTeam.Team.Name, "Team Name: ")
-            @Html.TextBoxFor(model => Model.TopTeam.Team.Name)
-            <br />
-            @Html.LabelFor(model => Model.TopTeam.Absence.RunningTotal)
-            @Html.TextBoxFor(model => Model.TopTeam.Absence.RunningTotal)
-        </div>
-        <div class="col-6" style="background-color:darkkhaki">
-            @*TODO: Lowest standing team data for widget*@
-            @Html.LabelFor(model => Model.BottomTeam.Team.Name)
-            @Html.TextBoxFor(model => Model.BottomTeam.Team.Name)
-            <br />
-            @Html.LabelFor(model => Model.BottomTeam.Absence.RunningTotal)
-            @Html.TextBoxFor(model => Model.BottomTeam.Absence.RunningTotal)
-        </div>
-    </div>
-
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-4 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Absences</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">John Doe</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Alice Rivers</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Timmy Grover</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rachel Dime</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Top Team</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(Model => Model.TopTeam.Team.Name)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(Model => Model.TopTeam.Absence.RunningTotal)</div>
+
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user-friends fa-2x text-gray-300"></i>
@@ -91,15 +55,15 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-4 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Doris Lane</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Call-in</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">1 point</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">2019-Jul-08</div>
+                        <div class="colmr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Bottom Team</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(Model => Model.BottomTeam.Team.Name)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(Model => Model.BottomTeam.Absence.RunningTotal)</div>
+
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user-friends fa-2x text-gray-300"></i>
@@ -109,14 +73,14 @@
             </div>
         </div>
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-4 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Top Standing Employee</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Jane Doe</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">.5</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Top Ranked Team</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(Model => Model.TeamRanker.Team.Name)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(Model => Model.TeamRanker.Absence.RunningTotal)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                         </div>
                         <div class="col-auto">
@@ -128,49 +92,65 @@
         </div>
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Team Ranker</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Finlocker</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Sneider</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Nike</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-user-friends fa-2x text-gray-300"></i>
+        @*<div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Team Ranker</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Finlocker</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Sneider</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Nike</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user-friends fa-2x text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>*@
     </div>
-    @*<table class="table">
-        <thead>
-            <tr>
-                <th>Employee Name</th>
-                <th>Team Name</th>
-                <th>Absence Date</th>
-                <th>Points</th>
-                <th>Comments</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (AbsencePO absence in Model.ListOfPos)
-            {
+    <div>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@absence.EmployeeName</td>
+                    <th>Employee Name</th>
+                    <th>Team Name</th>
+                    <th>Absence Type</th>
+                    <th>Points</th>
+                    <th>Absence Date</th>                    
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AbsencePO absence in Model.ListOfPos)
+                {
+                <tr>
                     <td>@absence.Name</td>
-                    <td>@absence.AbsenceDate</td>
+                    <td>@absence.TeamName</td>
+                    <td>@absence.AbsenceType</td>
                     <td>@absence.Point</td>
+                    <td>@absence.AbsenceDate</td>
                     <td>@absence.Comments</td>
-                    @*Modal for details for an absence or section that will load based off the selected absence.*@
-    @*TODO: Add modals, graphs and other BA centric sugar*@
-    @*</tr>
+                    @*<td>@Html.ActionLink("Details", "Details", "Artist", new { id = absence.PointBankID }, new { @class = "btn btn-info" })</td>*@
+                    @*@if (Model.User.Email != null && Model.User.RoleID_FK == 1)
+                    {
+                        <td>
+                            @Html.ActionLink("Modify", "UpdateAbsenceEntry", "Maint", new { PointBankID = absence.PointBankID }, new { @class = "btn btn-warning" })
+                        </td>*@
+                        @*<td class="text-center">
+                     @Html.ActionLink("Deactivate", "DeactivateTeam", "Maint", new { PointBankID = absence.PointBankID }, new
+            {
+                @class = "btn btn-danger",
+                @onclick = string.Format("return confirm('Are you sure you want to deactivate {0}? All employees assigned will need to be re-assigned to a new team by an Admin.')", Model.Team.Name)
+            })
+                 </td>*@
+                    @*}
+                    else { }*@
+                </tr>
                 }
-
             </tbody>
-        </table>*@
-
+        </table>
+    </div>
 </div>
+@*Modal for details for an absence or section that will load based off the selected absence.*@

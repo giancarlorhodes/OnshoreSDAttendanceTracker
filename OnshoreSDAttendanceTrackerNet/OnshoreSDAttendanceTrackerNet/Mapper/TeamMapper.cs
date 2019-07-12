@@ -47,6 +47,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oTeam.Name = teamBO.Name;
             oTeam.Comment = teamBO.Comment;
             oTeam.Active = teamBO.Active;
+            oTeam.RunningTotal = teamBO.RunningTotal;
 
             return oTeam;
         }
@@ -58,6 +59,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oTeam.Name = teamDO.Name;
             oTeam.Comment = teamDO.Comment;
             oTeam.Active = teamDO.Active;
+            oTeam.RunningTotal = teamDO.RunningTotal;
 
             return oTeam;
         }
@@ -69,6 +71,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oTeam.Name = teamDO.Name;
             oTeam.Comment = teamDO.Comment;
             oTeam.Active = teamDO.Active;
+            oTeam.RunningTotal = teamDO.RunningTotal;
 
             return oTeam;
         }
@@ -80,6 +83,7 @@ namespace OnshoreSDAttendanceTrackerNet.AutoMapper
             oTeam.Name = teamPO.Name;
             oTeam.Comment = teamPO.Comment;
             oTeam.Active = teamPO.Active;
+            oTeam.RunningTotal = teamPO.RunningTotal;
 
             return oTeam;
         }

@@ -38,6 +38,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             com.Parameters.Add(new SqlParameter("@TeamName", newTeam.Name));
                             com.Parameters.Add(new SqlParameter("@Comment", newTeam.Comment));
                             com.Parameters.Add(new SqlParameter("@CreatedUser", userID));
+                            con.Open();
                             com.ExecuteNonQuery();
 
                             result = "Success";
@@ -211,10 +212,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             {
                                 while (reader.Read())
                                 {
-                                    newTeam.TeamID = (int)reader["TeamID"];
-                                    newTeam.Name = reader["Team"].ToString();
-                                    newTeam.Comment = reader["Comment"].ToString();
-                                    newTeam.RunningTotal = (decimal)reader["Points"];
+                                    newTeam.TeamID = reader.GetInt32(0);
+                                    newTeam.Name = reader.GetString(1);
+                                    newTeam.RunningTotal = reader.GetDecimal(2);
                                     listOfTeams.Add(newTeam);
                                 }
                             }

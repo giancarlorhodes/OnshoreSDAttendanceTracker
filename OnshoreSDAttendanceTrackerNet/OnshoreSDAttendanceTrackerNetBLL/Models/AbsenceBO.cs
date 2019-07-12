@@ -20,6 +20,7 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Models
         public string Status { get; set; }
         public string EmployeeName { get; set; }
         public string TeamName { get; set; }
-        public int PointBankID { get; set; }
+        public long PointBankID { get; set; }
+        public string AbsenceType { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace OnshoreSDAttendanceTrackerNet.Models
         public TeamAttendanceHelper TopEmployee { get; set; }
         public List<SelectListItem> Absences { get; set; }
         public IEnumerable<SelectListItem> AbsenceTypes { get; set; }
+        public IEnumerable<SelectListItem> Users { get; set; }
         public string ErrorMessage { get; set; }
     }
 }

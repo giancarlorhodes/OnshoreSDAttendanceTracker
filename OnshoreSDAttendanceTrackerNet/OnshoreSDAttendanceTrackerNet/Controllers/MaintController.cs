@@ -392,6 +392,17 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 var absenceVM = new AbsenceViewModel();
                 var absenceTypes = _AbsenceDataAccess.GetAllAbsenceTypes();
                 var absencePOs = AbsenceMapper.MapListOfDOsToListOfPOs(absenceTypes);
+                var users = _UserDataAccess.GetAllUsers();
+                var userPOs = UserMapper.MapListOfDOsToListOfPOs(users);
+                absenceVM.Users = userPOs.ConvertAll(a =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = a.UserID.ToString(),
+                        Value = a.FirstName + " " + a.LastName,
+                        Selected = false
+                    };
+                });
                 absenceVM.AbsenceTypes = absencePOs.ConvertAll(a =>
                 {
                     return new SelectListItem()
@@ -431,10 +442,12 @@ namespace OnshoreSDAttendanceTrackerNet.Controllers
                 {
                     try
                     {
+                        var absenceTypes = _AbsenceDataAccess.GetAllAbsenceTypes();
+                        var absenceTypePOs = AbsenceMapper.MapListOfDOsToListOfPOs(absenceTypes);
 
                         // Maps absence PO to DO during creation
                         IAbsenceDO lAbsenceForm = AbsenceMapper.MapAbsencePOtoDO(iViewModel.Absence);
-
+                        var absenceType = absenceTypePOs.Where(at => at.AbsenceTypeID == iViewModel.Absence.AbsenceTypeID);
                         // Passes form to data access to add event to db
                         PointsDataAccess.AddAbsence(lAbsenceForm, userPO.UserID);
                         oResponse = RedirectToAction("ViewAllAbsence", "Maint");

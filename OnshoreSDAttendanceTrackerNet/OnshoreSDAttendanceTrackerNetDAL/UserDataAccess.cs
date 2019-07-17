@@ -47,10 +47,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                 ErrorLogger.LogError(ex, "CreateUser", "nothing");
             }
 
-            finally
-            {
-
-            }
         }
 
         #endregion

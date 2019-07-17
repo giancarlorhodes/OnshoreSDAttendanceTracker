@@ -4,6 +4,7 @@ using OnshoreSDAttendanceTrackerNetDAL.Interfaces;
 using OnshoreSDAttendanceTrackerNetDAL.Models;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace OnshoreSDAttendanceTrackerNet.Tests
 {
@@ -11,6 +12,14 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
     public class UserDALTest
     {
         private static UserDataAccess _UserDataAccess;
+        private static TeamDataAccess _TeamDataAccess;
+        private readonly static ITeamDO TESTCREATETEAMDATA = new TeamDO
+        {
+            TeamID = 1,
+            RunningTotal = 0,
+            Active = true,
+            Name = "test"
+        };
         private readonly IUserDO TESTCREATEUSERDATA1 = new UserDO
         {
             UserID = 1,
@@ -39,6 +48,7 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
         public static void TestFixtureSetup(TestContext context)
         {
             _UserDataAccess = new UserDataAccess();
+            _TeamDataAccess = new TeamDataAccess();
         }       
 
         [TestMethod]
@@ -48,35 +58,36 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
                 Assert.AreEqual(users.Count, 0);   
         }
 
-        //[TestMethod]
-        //public void testCreateUser()
-        //{
-        //    Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA1));
-        //    Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA2));         
-        //}
-
-        //[TestMethod]
-        //public void testUpdateUser()
-        //{
-        //    Assert.IsTrue(_UserDataAccess.UpdateUser(TESTUPDATEUSERDATA, TESTCREATEUSERDATA1.TeamID));
-        //    Assert.AreEqual(TESTCREATEUSERDATA1.TeamID, TESTUPDATEUSERDATA.TeamID);
-        //}
-
+        [TestMethod]
+        public void testCreateUser()
+        {
+           _TeamDataAccess.CreateNewTeam(TESTCREATETEAMDATA, TESTCREATEUSERDATA1.UserID);
+           _UserDataAccess.CreateUser(TESTCREATEUSERDATA1,TESTCREATETEAMDATA.TeamID);
+           Assert.AreEqual(TESTCREATEUSERDATA1.LastName,_UserDataAccess.GetAllUsers().Where(
+               u => u.UserID == 1 && u.FirstName == "TestUser" && u.LastName == "Test").Single().LastName);    
+        }
         [TestMethod]
         public void testGetUserById()
         {
             Assert.AreSame(_UserDataAccess.GetUserByID(TESTCREATEUSERDATA1.UserID), TESTCREATEUSERDATA1);
         }
 
-        //[TestMethod]
-        //public void testRemoveUser()
-        //{
-        //    foreach (IUserDO user in _UserDataAccess.GetAllUsers())
-        //    {
-        //        Assert.IsTrue(_UserDataAccess.RemoveUser(user.UserID, user.UserID));
-        //    }
-        //    testGetAllUsers();
-        //}
+        [TestMethod]
+        public void testUpdateUser()
+        {
+            _UserDataAccess.UpdateUser(TESTUPDATEUSERDATA);
+            Assert.AreEqual(TESTCREATEUSERDATA1.FirstName, TESTUPDATEUSERDATA.FirstName);
+        }
+
+      
+
+        [TestMethod]
+        public void testRemoveUser()
+        {
+            _UserDataAccess.RemoveUser(TESTCREATEUSERDATA1.UserID, TESTCREATEUSERDATA2.UserID);
+           
+            Assert.AreEqual(0, _UserDataAccess.GetAllUsers().Count);
+        }
 
         [ClassCleanup]
         public static void TestFixtureTearDown()
@@ -92,6 +103,7 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
                     command.ExecuteNonQuery();
                 }
             }
+            _TeamDataAccess.DeactivateTeam(TESTCREATETEAMDATA.TeamID);
         }
     }
 }

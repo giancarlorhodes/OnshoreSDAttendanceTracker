@@ -21,17 +21,16 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         //    conString = connString;
         //}
         //CREATe
-        public string CreateNewTeam(ITeamDO newTeam, int userID)
+        public bool CreateNewTeam(ITeamDO newTeam, int userID)
         {
-            string result;
+            bool result=false;
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     using (SqlCommand com = new SqlCommand("sp_TeamAddNew", con))
                     {
-                        try
-                        {
+                       
                             com.CommandType = CommandType.StoredProcedure;
                             com.CommandTimeout = 35;
 
@@ -41,28 +40,15 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             con.Open();
                             com.ExecuteNonQuery();
 
-                            result = "Success";
-                        }
-                        catch (Exception ex)
-                        {
-                            ErrorLogger.LogError(ex, "CreateTeams", "nothing");
-                            result = "fail";
-                        }
-                        finally
-                        {
-                            con.Close();
-                            con.Dispose();
-                            con.Dispose();
-                        }
+                            result = true;
+                       
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ErrorLogger.LogError(e, "CreateTeams", "nothing");
-                result = "fail";
+                ErrorLogger.LogError(ex, "CreateTeams", "nothing");
             }
-
             return result;
         }
         //READ

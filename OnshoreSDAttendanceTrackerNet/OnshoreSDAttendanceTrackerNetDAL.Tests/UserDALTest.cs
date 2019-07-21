@@ -18,7 +18,8 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
             TeamID = 1,
             RunningTotal = 0,
             Active = true,
-            Name = "test"
+            Name = "test",
+            Comment="test"
         };
         private readonly IUserDO TESTCREATEUSERDATA1 = new UserDO
         {
@@ -61,8 +62,8 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
         [TestMethod]
         public void testCreateUser()
         {
-           _TeamDataAccess.CreateNewTeam(TESTCREATETEAMDATA, TESTCREATEUSERDATA1.UserID);
-           _UserDataAccess.CreateUser(TESTCREATEUSERDATA1,TESTCREATETEAMDATA.TeamID);
+           Assert.IsTrue(_TeamDataAccess.CreateNewTeam(TESTCREATETEAMDATA, TESTCREATEUSERDATA1.UserID));
+           Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA1,TESTCREATETEAMDATA.TeamID));
            Assert.AreEqual(TESTCREATEUSERDATA1.LastName,_UserDataAccess.GetAllUsers().Where(
                u => u.UserID == 1 && u.FirstName == "TestUser" && u.LastName == "Test").Single().LastName);    
         }

@@ -13,5 +13,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL.Interfaces
         string RoleName { get; set; }
         string Email { get; set; }
         bool Active { get; set; }
+        int TeamID { get; set; }
     }
 }

@@ -14,31 +14,28 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         public string ConnectionParms { get; private set; } = ConfigurationManager.ConnectionStrings["OnshoreSDAttendanceTracker"].ConnectionString;
       
         #region CreateUser
-        public void CreateUser(IUserDO iUser, int TeamID)
+        public bool CreateUser(IUserDO iUser, int TeamID)
         {
+            bool result = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionParms))
                 {
                     using (SqlCommand createComm = new SqlCommand("sp_MakeUser", conn))
                     {
-                        try
-                        {
+                     
                             createComm.CommandType = CommandType.StoredProcedure;
                             createComm.CommandTimeout = 35;
 
                             createComm.Parameters.AddWithValue("@CreatedByUserId", SqlDbType.Int).Value = iUser.UserID;
                             createComm.Parameters.AddWithValue("@TeamId", SqlDbType.Int).Value = TeamID;
-                            createComm.Parameters.AddWithValue("@RoldeId", SqlDbType.Int).Value = iUser.RoleID_FK;
+                            createComm.Parameters.AddWithValue("@RoleId", SqlDbType.Int).Value = iUser.RoleID_FK;
                             createComm.Parameters.AddWithValue("@Email", SqlDbType.VarChar).Value = iUser.Email;
                             createComm.Parameters.AddWithValue("@FName", SqlDbType.VarChar).Value = iUser.FirstName;
                             createComm.Parameters.AddWithValue("@LName", SqlDbType.VarChar).Value = iUser.LastName;
-
-                        }
-                        catch (Exception ex)
-                        {
-                            ErrorLogger.LogError(ex, "CreateUser", "nothing");
-                        }
+                        conn.Open();
+                        createComm.ExecuteNonQuery();
+                        result = true;
                     }
                 }
             }
@@ -46,7 +43,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 ErrorLogger.LogError(ex, "CreateUser", "nothing");
             }
-
+            return result;
         }
 
         #endregion
@@ -63,8 +60,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                 {
                     using (SqlCommand getUserComm = new SqlCommand("sp_GetUserById", con))
                     {
-                        try
-                        {
+
                             getUserComm.CommandType = CommandType.StoredProcedure;
                             getUserComm.CommandTimeout = 35;
 
@@ -85,18 +81,6 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                                     //user.TeamManagementID = reader.GetInt32(reader.GetOrdinal("TeamManagementID"));
                                 }
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            ErrorLogger.LogError(ex, "GetUserByID", "nothing");
-                        }
-                        finally
-                        {
-                            con.Close();
-                            con.Dispose();
-                            getUserComm.Dispose();
-                        }
-
                     }
                 }
             }
@@ -113,13 +97,12 @@ namespace OnshoreSDAttendanceTrackerNetDAL
         public List<IUserDO> GetAllUsers()
         {
             var listOfDBUsers = new List<IUserDO>();
-            SqlCommand getComm=null;
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionParms))
                 {
-
-                    using (getComm = new SqlCommand("sp_GetUsers"))
+                    using (SqlCommand getComm = new SqlCommand("sp_GetUsers"))
                     {
                         getComm.CommandType = CommandType.StoredProcedure;
                         getComm.CommandTimeout = 35;
@@ -133,13 +116,13 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             while (reader.Read())
                             {
                                 IUserDO user = new UserDO();
-                                user.UserID = reader.GetInt32(reader.GetOrdinal("UserID"));
+                                user.UserID = (int)reader["UserID"];
                                 user.FirstName = (string)reader["FirstName"];
                                 user.LastName = (string)reader["LastName"];
-                                user.RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID_FK"));
+                                user.RoleID_FK = (int)reader["RoleID"];
                                 user.Email = (string)reader["Email"];
-                                user.Active = Convert.ToBoolean(reader.GetOrdinal("Active"));
-                                // user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                user.Active = Convert.ToBoolean(reader["Active"]);
+                                user.TeamID =(int) reader["TeamID"];
                                 // user.NewTeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
 
                                 listOfDBUsers.Add(user);

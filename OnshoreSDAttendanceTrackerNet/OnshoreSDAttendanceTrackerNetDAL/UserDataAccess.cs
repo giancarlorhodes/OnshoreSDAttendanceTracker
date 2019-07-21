@@ -201,7 +201,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                             deleteComm.CommandTimeout = 35;
                             deleteComm.Parameters.AddWithValue("@UserId", userToDelID);
                             deleteComm.Parameters.AddWithValue("@ModifiedByUserId ", modifiedByUserID);
-                        conn.Open();
+                            conn.Open();
                             deleteComm.ExecuteNonQuery();
                         result = true;
                     }

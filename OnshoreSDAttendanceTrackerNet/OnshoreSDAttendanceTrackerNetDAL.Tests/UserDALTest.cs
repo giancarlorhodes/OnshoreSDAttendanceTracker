@@ -65,19 +65,19 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
            Assert.IsTrue(_TeamDataAccess.CreateNewTeam(TESTCREATETEAMDATA, TESTCREATEUSERDATA1.UserID));
            Assert.IsTrue(_UserDataAccess.CreateUser(TESTCREATEUSERDATA1,TESTCREATETEAMDATA.TeamID));
            Assert.AreEqual(TESTCREATEUSERDATA1.LastName,_UserDataAccess.GetAllUsers().Where(
-               u => u.UserID == 1 && u.FirstName == "TestUser" && u.LastName == "Test").Single().LastName);    
+               u => u.UserID == 1 && u.FirstName == "TestUser" && u.LastName == "Test").First().LastName);    
         }
         [TestMethod]
         public void testGetUserById()
         {
-            Assert.AreSame(_UserDataAccess.GetUserByID(TESTCREATEUSERDATA1.UserID), TESTCREATEUSERDATA1);
+            Assert.AreEqual(_UserDataAccess.GetUserByID(TESTCREATEUSERDATA1.UserID).UserID, TESTCREATEUSERDATA1.UserID);
         }
 
         [TestMethod]
         public void testUpdateUser()
         {
-            _UserDataAccess.UpdateUser(TESTUPDATEUSERDATA);
-            Assert.AreEqual(TESTCREATEUSERDATA1.FirstName, TESTUPDATEUSERDATA.FirstName);
+            Assert.IsTrue(_UserDataAccess.UpdateUser(TESTUPDATEUSERDATA,TESTCREATEUSERDATA2.UserID));
+            Assert.AreEqual(TESTCREATEUSERDATA1.UserID, TESTUPDATEUSERDATA.UserID);
         }
 
       
@@ -85,9 +85,9 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
         [TestMethod]
         public void testRemoveUser()
         {
-            _UserDataAccess.RemoveUser(TESTCREATEUSERDATA1.UserID, TESTCREATEUSERDATA2.UserID);
+            Assert.IsTrue(_UserDataAccess.RemoveUser(TESTCREATEUSERDATA1.UserID, TESTCREATEUSERDATA2.UserID));
            
-            Assert.AreEqual(0, _UserDataAccess.GetAllUsers().Count);
+            Assert.AreEqual(null, _UserDataAccess.GetUserByID(TESTCREATEUSERDATA1.UserID));
         }
 
         [ClassCleanup]

@@ -52,7 +52,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         public IUserDO GetUserByID(int iUserID)
         {
-            IUserDO user = new UserDO();
+            IUserDO user = null;
 
             try
             {
@@ -70,16 +70,20 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
                             using (SqlDataReader reader = getUserComm.ExecuteReader())
                             {
-                                while (reader.Read())
+
+                            while (reader.Read())
+                            {
+                                user = new UserDO
                                 {
-                                    user.UserID = reader.GetInt32(reader.GetOrdinal("UserID"));
-                                    user.FirstName = (string)reader["FirstName"];
-                                    user.LastName = (string)reader["LastName"];
-                                    user.RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID"));
-                                    user.Email = (string)reader["Email"];
-                                    // user.TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"));
+                                    UserID = reader.GetInt32(reader.GetOrdinal("UserID")),
+                                    FirstName = (string)reader["FirstName"],
+                                    LastName = (string)reader["LastName"],
+                                    RoleID_FK = reader.GetInt32(reader.GetOrdinal("RoleID")),
+                                    Email = (string)reader["Email"],
+                                    TeamID = reader.GetInt32(reader.GetOrdinal("TeamID"))
                                     //user.TeamManagementID = reader.GetInt32(reader.GetOrdinal("TeamManagementID"));
-                                }
+                                };
+                            }
                             }
                     }
                 }
@@ -144,8 +148,9 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         #region Updates
         //updates User info and takes in OldTeamID to update in SP where UserID & OldTeamID equal in TeamManagement table
-        public void UpdateUser(IUserDO iUser)
+        public bool UpdateUser(IUserDO iUser,int modifiedBy)
         {
+            bool result = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionParms))
@@ -155,14 +160,14 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         try
                         {
                             updateComm.Parameters.AddWithValue("@UserID", iUser.UserID);
-                            updateComm.Parameters.AddWithValue("@ModifiedByUserId", iUser.UserID);
+                            updateComm.Parameters.AddWithValue("@ModifiedByUserId", modifiedBy);
                             updateComm.Parameters.AddWithValue("@RoleId", iUser.RoleID_FK);
                             updateComm.Parameters.AddWithValue("@Email", iUser.Email);
                             updateComm.Parameters.AddWithValue("@FName", iUser.FirstName);
-                            updateComm.Parameters.AddWithValue("@LName", iUser.LastName);  
-                            // updateComm.Parameters.AddWithValue("@TeamId", iUser.TeamID);
-                           // updateComm.Parameters.AddWithValue("@TeamManagementId", iUser.TeamManagementID);
-
+                            updateComm.Parameters.AddWithValue("@LName", iUser.LastName);
+                            updateComm.Parameters.AddWithValue("@TeamId", iUser.TeamID);
+                            // updateComm.Parameters.AddWithValue("@TeamManagementId", iUser.TeamManagementID);
+                            result = true;
 
                         }
                         catch (Exception ex)
@@ -176,39 +181,29 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 ErrorLogger.LogError(ex, "UpdateUser", "nothing");
             }
+            return result;
         }
 
         #endregion
 
         #region Deletes
-        public void RemoveUser(int userToDelID, int modifiedByUserID)
+        public bool RemoveUser(int userToDelID, int modifiedByUserID)
         {
-
+            bool result = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionParms))
                 {
                     using (SqlCommand deleteComm = new SqlCommand("sp_RemoveUserById", conn))
                     {
-                        try
-                        {
+
                             deleteComm.CommandType = CommandType.StoredProcedure;
                             deleteComm.CommandTimeout = 35;
                             deleteComm.Parameters.AddWithValue("@UserId", userToDelID);
                             deleteComm.Parameters.AddWithValue("@ModifiedByUserId ", modifiedByUserID);
-
+                        conn.Open();
                             deleteComm.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            ErrorLogger.LogError(ex, "UpdateUser", "nothing");
-                        }
-                        finally
-                        {
-                            conn.Close();
-                            conn.Dispose();
-                            deleteComm.Dispose();
-                        }
+                        result = true;
                     }
                 }
 
@@ -217,6 +212,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
             {
                 ErrorLogger.LogError(ex, "UpdateUser", "nothing");
             }
+            return result;
         }
         #endregion
 

@@ -1986,6 +1986,7 @@
     <Content Include="Views\Account\CreateUser.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewAllUsers.cshtml" />
+    <Content Include="Views\Employee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

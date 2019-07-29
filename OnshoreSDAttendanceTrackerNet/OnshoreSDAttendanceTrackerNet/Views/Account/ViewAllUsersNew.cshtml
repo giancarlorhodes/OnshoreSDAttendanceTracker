@@ -1,31 +1,17 @@
-﻿@model OnshoreSDAttendanceTrackerNet.Models.UserViewModel
+﻿@model OnshoreSDAttendanceTrackerNet.Models.EmployeeViewModel
 
 @{
-    if (@Model.IsEmployeeView)
-    {
+
         ViewBag.Title = "ViewEmployees";
-    }
-    else
-    {
-        ViewBag.Title = "ViewUsers";
-    }
-}
-@if (@Model.IsEmployeeView)
-{
-    <h2 class="UserHeader">View Employees</h2>
-}
-else
-{
-    <h2 class="UserHeader">View Users</h2>
+
 }
 
+    <h2 class="UserHeader">View Employees</h2>
+
+
     <table class="UserTable">
-        <tr>
-            <th></th>
-            <th>Username</th>
-            <th>Role ID</th>
-        </tr>
-        @foreach (var user in Model.ListOfUserPO)
+        
+        @foreach (var employee in Model.Employees))
         {
             <tr>
                 <td>@Html.HiddenFor(m => user.UserID)</td>

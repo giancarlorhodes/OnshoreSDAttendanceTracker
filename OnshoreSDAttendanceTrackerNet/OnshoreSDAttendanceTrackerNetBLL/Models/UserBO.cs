@@ -14,6 +14,7 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Models
         public string RoleName { get; set; }
         public string Email { get; set; }
         public bool Active { get; set; }
+        public string TeamName { get; set; }
 
     }
 }

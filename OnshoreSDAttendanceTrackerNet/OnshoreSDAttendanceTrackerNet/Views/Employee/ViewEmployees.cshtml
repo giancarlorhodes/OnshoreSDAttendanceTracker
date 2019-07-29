@@ -1,0 +1,86 @@
+﻿@using OnshoreSDAttendanceTrackerNet.Common
+@model OnshoreSDAttendanceTrackerNet.Models.EmployeeViewModel
+@{
+    ViewBag.Title = "ViewEmployees";
+}
+
+<h2 class="UserHeader">View Employees</h2>
+@if ((RoleEnum)TempData["Role"] == RoleEnum.Administrator || (RoleEnum)TempData["Role"] == RoleEnum.Service_Manager)
+{
+    TempData["InTeamSel"] = true;
+    @using (Html.BeginForm("SelectTeam", "Employee", FormMethod.Post))
+    {
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(model => "Select Team:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+             
+             @Html.DropDownListFor(model => model.Team.Name, model.ListOfPos);
+              
+            </div>
+        </div>
+    }
+}
+@if (TempData["InTeamSel" = false])
+{
+<table class="UserTable">
+
+    @foreach (var user in Model.Employees)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => user.FirstName)</td>
+            <td>@Html.DisplayFor(m => user.LastName)</td>
+            <td>@Html.DisplayFor(m => user.Email)</td>
+            <td>@Html.DisplayFor(m => user.TeamName)</td>
+            <td>@Html.DisplayFor(m => user.RoleName)</td>
+            <td>@Html.DisplayFor(m => user.Active)</td>
+            <td>@Html.ActionLink("Edit User", "UpdateUserInfo", "Account", routeValues: new { UserID = user.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })</td>
+            <td>@Html.ActionLink("Remove User", "DeleteUser", "Account", routeValues: new { UserID = user.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm", onclick = "return confirm('Are you sure you want to delete this user?')" })</td>
+
+        </tr>
+
+    }
+
+</table>
+}
+<script>
+
+    function getTeamName(teamId)
+    {
+        var serviceURL = '@Url.Action("GenerateOrder","CustomerOrder")';
+        $.ajax({
+            type: "POST",
+            url: serviceURL,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        }).done(function (data, status) {
+            if (!data.Success) {
+                // error occurred on server
+                // redirect to new page
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("Server","Error")',
+                    async: false,
+                    data: { iErrCode: data.Msg },
+                    success: function (content, status, jqXHR) {
+                        document.write(content);
+                        document.close();
+                    },
+                    error: function (jqXHR, status, error) {
+                        // error occurred with ajax request
+                        window.location.href = '@Url.Action("Fatal","Error")';
+                    }
+                });
+            }
+            $("#newOrderSpan").show();
+            setInterval(flashButton, OneSecond);
+        });
+    }
+    $("#").click(function deleteAlert() {
+        {
+            alert("Are you sure you want to delete this User?");
+        }
+    });
+
+</script>

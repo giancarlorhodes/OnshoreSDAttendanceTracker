@@ -8,19 +8,11 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Models
 {
-    public class UserViewModel : IUserPO,IUserCredentialsPO, ITeamPO, IRolePO
+    public struct EmployeeViewModel 
     {
         public UserViewModel()
         {
-            User = new UserPO();
-            UserCred = new UserCredentialPO();
-            TeamPO = new TeamPO();
-            RolePO = new RolePO();
-            ListOfUserPO = new List<UserPO>();
-            ListOfUserDO = new List<UserDO>();
-            ListOfTeamPO = new List<ITeamPO>();
-            ListOfTeamDO = new List<TeamDO>();
-            ListOfRolePO = new List<RolePO>();
+            
         }
 
         public int userTeam { get; set; }

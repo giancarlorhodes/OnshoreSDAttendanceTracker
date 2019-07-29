@@ -167,6 +167,7 @@
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\AbsencePO.cs" />
     <Compile Include="Models\AbsenceViewModel.cs" />
+    <Compile Include="Models\EmployeeViewModel.cs" />
     <Compile Include="Models\TeamAttendanceHelper.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\ExceptionPO.cs" />
@@ -177,7 +178,6 @@
     <Compile Include="Models\UserCredentialPO.cs" />
     <Compile Include="Models\UserCredentialsViewModel.cs" />
     <Compile Include="Models\UserPO.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1986,7 +1986,7 @@
     <Content Include="Views\Account\CreateUser.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewAllUsers.cshtml" />
-    <Content Include="Views\Employee.cshtml" />
+    <Content Include="Views\Employee\ViewEmployees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

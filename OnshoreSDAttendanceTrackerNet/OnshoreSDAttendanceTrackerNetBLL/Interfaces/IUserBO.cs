@@ -13,6 +13,7 @@ namespace OnshoreSDAttendanceTrackerNetBLL.Interfaces
         string RoleName { get; set; }
         string Email { get; set; }
         bool Active { get; set; }
+        string TeamName { get; set; }
       
     }
 }

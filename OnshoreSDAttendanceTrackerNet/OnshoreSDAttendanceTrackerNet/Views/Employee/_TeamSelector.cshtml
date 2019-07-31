@@ -1,0 +1,14 @@
+﻿@model OnshoreSDAttendanceTrackerNet.Models.TeamViewModel
+@using (Html.BeginForm("SelectTeam", "Employee", FormMethod.Post))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(model => "Select Team:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Team.TeamID, @Model.ListOfPos.Select((item,idx)=> { var s = new SelectListItem(); s.Text = item.Name; s.Value = idx.ToString();  return s; }),
+           new { onchange = "this.form.submit();" });
+
+        </div>
+    </div>
+}

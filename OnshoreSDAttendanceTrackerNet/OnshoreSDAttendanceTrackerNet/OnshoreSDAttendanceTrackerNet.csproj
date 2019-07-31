@@ -1987,6 +1987,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewAllUsers.cshtml" />
     <Content Include="Views\Employee\ViewEmployees.cshtml" />
+    <Content Include="Views\Employee\_TeamSelector.cshtml" />
+    <Content Include="Views\Employee\_EmployeeAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

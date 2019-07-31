@@ -1,5 +1,5 @@
 ﻿@using OnshoreSDAttendanceTrackerNet.Common
-@model OnshoreSDAttendanceTrackerNet.Models.EmployeeViewModel
+@model Tuple<OnshoreSDAttendanceTrackerNet.Models.EmployeeViewModel,OnshoreSDAttendanceTrackerNet.Models.TeamViewModel>
 @{
     ViewBag.Title = "ViewEmployees";
 }
@@ -7,45 +7,40 @@
 <h2 class="UserHeader">View Employees</h2>
 @if ((RoleEnum)TempData["Role"] == RoleEnum.Administrator || (RoleEnum)TempData["Role"] == RoleEnum.Service_Manager)
 {
-    TempData["InTeamSel"] = true;
-    @using (Html.BeginForm("SelectTeam", "Employee", FormMethod.Post))
-    {
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            @Html.LabelFor(model => "Select Team:", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-             
-             @Html.DropDownListFor(model => model.Team.Name, model.ListOfPos);
-              
-            </div>
-        </div>
-    }
+    Html.RenderPartial("_TeamSelector", Model.Item2);
 }
-@if (TempData["InTeamSel" = false])
+@if ((RoleEnum)TempData["Role"] == RoleEnum.Team_Lead || (RoleEnum)TempData["Role"] == RoleEnum.Administrator || (RoleEnum)TempData["Role"] == RoleEnum.Service_Manager)
 {
-<table class="UserTable">
-
-    @foreach (var user in Model.Employees)
-    {
-        <tr>
-            <td>@Html.DisplayFor(m => user.FirstName)</td>
-            <td>@Html.DisplayFor(m => user.LastName)</td>
-            <td>@Html.DisplayFor(m => user.Email)</td>
-            <td>@Html.DisplayFor(m => user.TeamName)</td>
-            <td>@Html.DisplayFor(m => user.RoleName)</td>
-            <td>@Html.DisplayFor(m => user.Active)</td>
-            <td>@Html.ActionLink("Edit User", "UpdateUserInfo", "Account", routeValues: new { UserID = user.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })</td>
-            <td>@Html.ActionLink("Remove User", "DeleteUser", "Account", routeValues: new { UserID = user.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm", onclick = "return confirm('Are you sure you want to delete this user?')" })</td>
-
-        </tr>
-
-    }
-
-</table>
+    Html.RenderPartial("_EmployeeAdd");
 }
-<script>
+            @if ((Boolean)(TempData["InTeamSel"]) == false)
+            {
+                <table class="UserTable">
 
+                    @foreach (var user in Model.Item1.Employees)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => user.FirstName)</td>
+                            <td>@Html.DisplayFor(m => user.LastName)</td>
+                            <td>@Html.DisplayFor(m => user.Email)</td>
+                            <td>@Html.DisplayFor(m => user.TeamName)</td>
+                            <td>@Html.DisplayFor(m => user.RoleName)</td>
+                            <td>@Html.DisplayFor(m => user.Points)</td>
+                            <td>@Html.ActionLink("Details", "Details", "Employee", routeValues: new { UserID = user.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })</td>
+                            <td>@Html.ActionLink("Remove User", "DeleteUser", "Account", routeValues: new { UserID = user.UserID }, htmlAttributes: new { @class = "btn btn-primary btn-sm", onclick = "return confirm('Are you sure you want to delete this user?')" })</td>
+
+                        </tr>
+
+                    }
+
+                </table>
+            }
+                <script>
+ function SelectionChanged()
+ {
+  var url = '@Html.Raw(Url.Action("SelectTeam", "Employee", new { param1=5, param2=2 }))';
+  window.location = url;
+ }
     function getTeamName(teamId)
     {
         var serviceURL = '@Url.Action("GenerateOrder","CustomerOrder")';
@@ -76,11 +71,25 @@
             $("#newOrderSpan").show();
             setInterval(flashButton, OneSecond);
         });
-    }
+                    }
+
+
+  $("form").submit(function(e){
+
+    e.preventDefault(); // prevent default form submit behaviour
+
+    var selectedItem = $("#MovieType").val();
+    var url = '@Html.Raw(Url.Action("SelectTeam", "Employee", new { selelectItem='+}))'
+                        "@Url.Content("~")" + selectedItem + "/create";
+    alert(url);
+    window.location.href=url;
+
+  })
+
     $("#").click(function deleteAlert() {
         {
             alert("Are you sure you want to delete this User?");
         }
     });
 
-</script>
+                </script>

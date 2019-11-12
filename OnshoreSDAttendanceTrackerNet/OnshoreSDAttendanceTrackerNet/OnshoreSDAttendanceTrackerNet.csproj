@@ -178,6 +178,7 @@
     <Compile Include="Models\UserCredentialPO.cs" />
     <Compile Include="Models\UserCredentialsViewModel.cs" />
     <Compile Include="Models\UserPO.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

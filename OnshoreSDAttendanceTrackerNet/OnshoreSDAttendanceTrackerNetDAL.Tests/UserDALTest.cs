@@ -76,7 +76,7 @@ namespace OnshoreSDAttendanceTrackerNet.Tests
         [TestMethod]
         public void testUpdateUser()
         {
-            Assert.IsTrue(_UserDataAccess.UpdateUser(TESTUPDATEUSERDATA,TESTCREATEUSERDATA2.UserID));
+            Assert.IsTrue(_UserDataAccess.UpdateUser(TESTUPDATEUSERDATA));
             Assert.AreEqual(TESTCREATEUSERDATA1.UserID, TESTUPDATEUSERDATA.UserID);
         }
 

@@ -8,12 +8,12 @@ using System.Web;
 
 namespace OnshoreSDAttendanceTrackerNet.Models
 {
-    public struct EmployeeViewModel 
+    public struct UserViewModel
     {
-        public UserViewModel()
-        {
+        //public UserViewModel()
+        //{
             
-        }
+        //}
 
         public int userTeam { get; set; }
         public UserPO User { get; set; }

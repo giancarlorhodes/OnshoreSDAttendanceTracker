@@ -148,7 +148,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
 
         #region Updates
         //updates User info and takes in OldTeamID to update in SP where UserID & OldTeamID equal in TeamManagement table
-        public bool UpdateUser(IUserDO iUser,int modifiedBy)
+        public bool UpdateUser(IUserDO iUser)
         {
             bool result = false;
             try
@@ -160,7 +160,7 @@ namespace OnshoreSDAttendanceTrackerNetDAL
                         try
                         {
                             updateComm.Parameters.AddWithValue("@UserID", iUser.UserID);
-                            updateComm.Parameters.AddWithValue("@ModifiedByUserId", modifiedBy);
+                            updateComm.Parameters.AddWithValue("@ModifiedByUserId", iUser.UserID);
                             updateComm.Parameters.AddWithValue("@RoleId", iUser.RoleID_FK);
                             updateComm.Parameters.AddWithValue("@Email", iUser.Email);
                             updateComm.Parameters.AddWithValue("@FName", iUser.FirstName);

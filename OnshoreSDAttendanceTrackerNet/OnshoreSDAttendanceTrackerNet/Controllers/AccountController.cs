@@ -1,7 +1,6 @@
 ﻿namespace OnshoreSDAttendanceTrackerNet.Controllers
 {
     using OnshoreSDAttendanceTrackerErrorLogger;
-    using OnshoreSDAttendanceTrackerNet.Common;
     using OnshoreSDAttendanceTrackerNet.Models;
     using OnshoreSDAttendanceTrackerNetBLL;
     using OnshoreSDAttendanceTrackerNetBLL.Interfaces;
@@ -11,9 +10,6 @@
     using OnshoreSDAttendanceTrackerNetDAL.Models;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Principal;
-    using System.Threading;
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
